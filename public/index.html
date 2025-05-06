@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My App - Login</title>
   <link rel="stylesheet" href="/css/styles.css" />
-
-  <!-- Firebase SDKs -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    // Optional: export if needed
-    window.firebaseModules = { initializeApp, getAuth, getFirestore };
-  </script>
 </head>
 <body>
   <div class="login-container">
@@ -26,7 +16,7 @@
     <form id="login-form">
       <input type="email" id="email" placeholder="Email" required />
       <input type="password" id="password" placeholder="Password" required />
-      
+
       <select id="role">
         <option value="" disabled selected>Select role</option>
         <option value="student">Student</option>
@@ -43,9 +33,8 @@
     </p>
   </div>
 
-  <!-- Your app logic -->
+  <!-- Only use module scripts -->
   <script type="module" src="/js/firebaseConfig.js"></script>
   <script type="module" src="/js/auth.js"></script>
-  <script type="module" src="/js/router.js"></script>
 </body>
 </html>
