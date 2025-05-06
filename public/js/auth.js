@@ -6,7 +6,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const form = document.getElementById('login-form');
-const statusMessage = document.getElementById('status');
+const statusDiv = document.getElementById('status');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -15,45 +15,43 @@ form.addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value.trim();
   const role = document.getElementById('role').value;
 
-  if (!role) {
-    statusMessage.textContent = "⚠️ Please select a role.";
+  if (!email || !password || !role) {
+    statusDiv.textContent = 'Please fill all fields and select a role.';
     return;
   }
 
-  try {
-    statusMessage.textContent = "⏳ Logging in...";
+  statusDiv.textContent = 'Logging in...';
 
+  try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const uid = userCredential.user.uid;
 
-    // Check role from Firestore
-    const userDoc = await getDoc(doc(db, 'users', uid));
+    const userRef = doc(db, 'users', uid);
+    const userSnap = await getDoc(userRef);
 
-    if (!userDoc.exists()) {
-      statusMessage.textContent = "❌ No user data found. Please contact admin.";
+    if (!userSnap.exists()) {
+      statusDiv.textContent = 'User role not found. Please contact admin.';
       return;
     }
 
-    const userData = userDoc.data();
+    const userData = userSnap.data();
 
     if (userData.role !== role) {
-      statusMessage.textContent = `❌ Role mismatch. You are registered as '${userData.role}', not '${role}'.`;
+      statusDiv.textContent = `You are not registered as a ${role}. Please select the correct role.`;
       return;
     }
 
-    // Redirect based on role
-    if (role === "student") {
-      window.location.href = "/student.html";
-    } else if (role === "teacher") {
-      window.location.href = "/teacher.html";
-    } else if (role === "admin") {
-      window.location.href = "/admin.html";
-    } else {
-      statusMessage.textContent = "❌ Unknown role.";
+    // Redirect to appropriate dashboard
+    if (role === 'student') {
+      window.location.href = '/student.html';
+    } else if (role === 'teacher') {
+      window.location.href = '/teacher.html';
+    } else if (role === 'admin') {
+      window.location.href = '/admin.html';
     }
 
   } catch (error) {
-    console.error("Login failed:", error.message);
-    statusMessage.textContent = `❌ ${error.message}`;
+    console.error(error);
+    statusDiv.textContent = 'Login failed. Please check your credentials.';
   }
 });
