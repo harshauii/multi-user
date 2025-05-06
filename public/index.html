@@ -21,11 +21,19 @@
       <p>Sign in to continue</p>
     </div>
 
-    <button id="loginBtn" class="google-btn">
-      <span class="icon"></span>
-      <span class="btn-text">Continue with Google</span>
-      <div class="loading-spinner"></div>
-    </button>
+    <form id="login-form">
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  
+  <select id="role">
+    <option value="" disabled selected>Select role</option>
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+  </select>
+
+  <button type="submit">Login</button>
+</form>
+
 
     <div id="status" class="status-message"></div>
 
