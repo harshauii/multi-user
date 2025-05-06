@@ -1,48 +1,55 @@
-// Firebase App and Auth should be initialized in firebaseConfig.js and imported before this
-import { auth, db } from './firebaseConfig.js'; // Assuming you're using Firestore to store roles
+import { auth, db } from './firebaseConfig.js';
 
-// Login form submission
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
+let initialCheckDone = false; // 👈 Prevent infinite refresh loops
 
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const role = document.getElementById('role').value;
+document.addEventListener('DOMContentLoaded', () => {
+  // Attach login form event listener only once DOM is ready
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  try {
-    const userCredential = await auth.signInWithEmailAndPassword(email, password);
-    const user = userCredential.user;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role')?.value;
 
-    // Optional: Save the selected role to Firestore if needed (only on first login)
-    const userRef = db.collection('users').doc(user.uid);
-    const doc = await userRef.get();
-    if (!doc.exists) {
-      await userRef.set({ role: role, email: user.email });
-    }
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
 
-    console.log('Login successful. Waiting for role confirmation...');
+        // Optional: store selected role in Firestore on first login
+        const userRef = db.collection('users').doc(user.uid);
+        const doc = await userRef.get();
+        if (!doc.exists && role) {
+          await userRef.set({ role: role, email: user.email });
+        }
 
-  } catch (error) {
-    alert('Login error: ' + error.message);
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+      }
+    });
   }
-});
 
-// Check user state and route based on role
-auth.onAuthStateChanged(async (user) => {
-  if (user) {
-    const idTokenResult = await user.getIdTokenResult(true); // Force refresh to get latest claims
-    const role = idTokenResult.claims.role;
+  // Check current auth state and route once
+  auth.onAuthStateChanged(async (user) => {
+    if (!initialCheckDone) {
+      initialCheckDone = true;
 
-    if (role === 'admin') {
-      window.location.href = 'admin.html';
-    } else if (role === 'student') {
-      window.location.href = 'student.html';
-    } else if (role === 'teacher') {
-      window.location.href = 'teacher.html';
-    } else {
-      // No role yet - show waiting screen or block access
-      document.body.innerHTML = '<h2>Waiting for admin approval...</h2>';
-      auth.signOut(); // Optional: Sign out to prevent access
+      if (user) {
+        const tokenResult = await user.getIdTokenResult(true);
+        const role = tokenResult.claims.role;
+
+        if (role === 'admin') {
+          window.location.href = 'admin.html';
+        } else if (role === 'teacher') {
+          window.location.href = 'teacher.html';
+        } else if (role === 'student') {
+          window.location.href = 'student.html';
+        } else {
+          document.body.innerHTML = '<h2>Waiting for admin approval...</h2>';
+          // Don't sign out immediately, just block further navigation
+        }
+      }
     }
-  }
+  });
 });
