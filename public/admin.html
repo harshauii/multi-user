@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My App - Admin Panel</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/styles.css" />
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+<script src="firebaseConfig.js"></script>
+<script src="auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+
+</head>
+<body>
+  <div class="admin-panel-container">
+    <header>
+      <h1>Admin Panel</h1>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+    </header>
+
+    <main>
+      <section class="pending-users">
+        <h2>Pending Role Requests</h2>
+        <table id="pendingUsersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Requested Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Pending users will be populated here -->
+          </tbody>
+        </table>
+      </section>
+
+      <section class="all-users">
+        <h2>All Users</h2>
+        <table id="allUsersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- All users list will be populated here -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Firebase & App Scripts -->
+  <script src="/js/firebaseConfig.js" type="module"></script>
+  <script src="/js/auth.js" type="module"></script>
+  <script src="/js/admin.js" type="module"></script>
+</body>
+</html>
