@@ -1,23 +1,29 @@
-// auth.js
-
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // Initialize Firestore
 const db = getFirestore();
+const auth = getAuth();
 
 // Get the form and status elements
 const form = document.getElementById('login-form');
 const statusMessage = document.getElementById('status');
 
-// Set up the Firebase Auth instance
-const auth = getAuth();
+// Listen to authentication state changes to manage session persistence
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // If user is already logged in, redirect based on their role
+    redirectUserBasedOnRole(user.uid);
+  } else {
+    // If no user, continue to show login form
+    form.style.display = 'block';
+  }
+});
 
-// Listen for form submission
+// Handle form submission
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  // Get email, password, and selected role from the form
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const role = document.getElementById('role').value;
@@ -28,19 +34,17 @@ form.addEventListener('submit', async (event) => {
     return;
   }
 
-  // Attempt to sign in the user
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    
-    // Check if the user has a role in Firestore
+
+    // Check if the user's role exists in Firestore
     const userDocRef = doc(db, 'users', user.uid);
     const userDocSnap = await getDoc(userDocRef);
-    
+
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
-      
-      // If role exists, check if it matches the selected role
+
       if (userData.role !== role) {
         statusMessage.textContent = `Your role is ${userData.role}. Please select the correct role.`;
         statusMessage.style.color = 'red';
@@ -50,12 +54,12 @@ form.addEventListener('submit', async (event) => {
       // Redirect user based on their role
       redirectUserBasedOnRole(userData.role);
     } else {
-      // If no role is found, set the role for the user in Firestore
+      // Assign role in Firestore
       await setDoc(userDocRef, {
         role: role
       });
 
-      // Redirect user after role assignment
+      // Redirect user after assigning role
       redirectUserBasedOnRole(role);
     }
 
@@ -65,7 +69,7 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
-// Function to handle redirection based on user role
+// Redirect user based on role
 function redirectUserBasedOnRole(role) {
   if (role === 'student') {
     window.location.href = '/student.html';
