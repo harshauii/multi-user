@@ -1,65 +1,78 @@
-import { auth, db } from './firebaseConfig.js';
+// auth.js
 
-let authChecked = false;
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('login-form');
+// Initialize Firestore
+const db = getFirestore();
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+// Get the form and status elements
+const form = document.getElementById('login-form');
+const statusMessage = document.getElementById('status');
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const role = document.getElementById('role')?.value;
+// Set up the Firebase Auth instance
+const auth = getAuth();
 
-      try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+// Listen for form submission
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-        // First-time user: store selected role
-        const userRef = db.collection('users').doc(user.uid);
-        const doc = await userRef.get();
-        if (!doc.exists && role) {
-          await userRef.set({ role, email });
-        }
-      } catch (error) {
-        console.error("Login failed:", error);
-        alert("Login failed: " + error.message);
-      }
-    });
+  // Get email, password, and selected role from the form
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const role = document.getElementById('role').value;
+
+  if (!role) {
+    statusMessage.textContent = 'Please select a role';
+    statusMessage.style.color = 'red';
+    return;
   }
 
-  // 🔁 Auth check
-  auth.onAuthStateChanged(async (user) => {
-    if (authChecked) return;
-    authChecked = true;
-
-    if (user) {
-      try {
-        const token = await user.getIdTokenResult(true);
-        const role = token.claims.role;
-
-        console.log("User role:", role);
-
-        // Redirect only if not already on the destination page
-        const currentPage = window.location.pathname;
-
-        if (role === 'admin' && !currentPage.includes('admin.html')) {
-          window.location.href = 'admin.html';
-        } else if (role === 'teacher' && !currentPage.includes('teacher.html')) {
-          window.location.href = 'teacher.html';
-        } else if (role === 'student' && !currentPage.includes('student.html')) {
-          window.location.href = 'student.html';
-        } else if (!role) {
-          document.body.innerHTML = "<h2>Waiting for admin approval...</h2>";
-        }
-
-      } catch (err) {
-        console.error("Error getting token result:", err);
+  // Attempt to sign in the user
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // Check if the user has a role in Firestore
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      
+      // If role exists, check if it matches the selected role
+      if (userData.role !== role) {
+        statusMessage.textContent = `Your role is ${userData.role}. Please select the correct role.`;
+        statusMessage.style.color = 'red';
+        return;
       }
+
+      // Redirect user based on their role
+      redirectUserBasedOnRole(userData.role);
     } else {
-      console.log("No user signed in.");
+      // If no role is found, set the role for the user in Firestore
+      await setDoc(userDocRef, {
+        role: role
+      });
+
+      // Redirect user after role assignment
+      redirectUserBasedOnRole(role);
     }
-  });
+
+  } catch (error) {
+    statusMessage.textContent = `Error: ${error.message}`;
+    statusMessage.style.color = 'red';
+  }
 });
+
+// Function to handle redirection based on user role
+function redirectUserBasedOnRole(role) {
+  if (role === 'student') {
+    window.location.href = '/student.html';
+  } else if (role === 'teacher') {
+    window.location.href = '/teacher.html';
+  } else {
+    statusMessage.textContent = 'Role not recognized!';
+    statusMessage.style.color = 'red';
+  }
+}
