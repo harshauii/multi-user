@@ -9,32 +9,34 @@ const auth = getAuth();
 const form = document.getElementById('login-form');
 const statusMessage = document.getElementById('status');
 
-// Listen to authentication state changes to manage session persistence
+// Check if the user is already authenticated when the page loads
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // If user is already logged in, redirect based on their role
-    redirectUserBasedOnRole(user.uid);
+    // User is already logged in, redirect based on their role
+    handleRedirect(user.uid);
   } else {
-    // If no user, continue to show login form
+    // User is not logged in, show login form
     form.style.display = 'block';
   }
 });
 
 // Handle form submission
 form.addEventListener('submit', async (event) => {
-  event.preventDefault();
+  event.preventDefault();  // Prevent default form submission (refresh)
 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const role = document.getElementById('role').value;
 
+  // Validate the form fields
   if (!role) {
-    statusMessage.textContent = 'Please select a role';
+    statusMessage.textContent = 'Please select a role.';
     statusMessage.style.color = 'red';
     return;
   }
 
   try {
+    // Sign in the user using email and password
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -45,22 +47,21 @@ form.addEventListener('submit', async (event) => {
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
 
+      // If user data exists but role is different, show error
       if (userData.role !== role) {
-        statusMessage.textContent = `Your role is ${userData.role}. Please select the correct role.`;
+        statusMessage.textContent = `You are registered as a ${userData.role}, but you selected ${role}. Please select the correct role.`;
         statusMessage.style.color = 'red';
         return;
       }
 
-      // Redirect user based on their role
-      redirectUserBasedOnRole(userData.role);
+      // Role is valid, redirect the user
+      handleRedirect(userData.role);
     } else {
-      // Assign role in Firestore
-      await setDoc(userDocRef, {
-        role: role
-      });
+      // Assign role in Firestore for new users
+      await setDoc(userDocRef, { role: role });
 
-      // Redirect user after assigning role
-      redirectUserBasedOnRole(role);
+      // After assigning the role, redirect the user based on the role
+      handleRedirect(role);
     }
 
   } catch (error) {
@@ -69,14 +70,14 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
-// Redirect user based on role
-function redirectUserBasedOnRole(role) {
+// Function to handle redirection based on user role
+function handleRedirect(role) {
   if (role === 'student') {
-    window.location.href = '/student.html';
+    window.location.href = '/student.html';  // Redirect to student page
   } else if (role === 'teacher') {
-    window.location.href = '/teacher.html';
+    window.location.href = '/teacher.html';  // Redirect to teacher page
   } else {
-    statusMessage.textContent = 'Role not recognized!';
+    statusMessage.textContent = 'Invalid role detected!';
     statusMessage.style.color = 'red';
   }
 }
