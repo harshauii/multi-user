@@ -1,10 +1,10 @@
 import { auth, db } from './firebaseConfig.js';
 
-let initialCheckDone = false; // 👈 Prevent infinite refresh loops
+let authChecked = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Attach login form event listener only once DOM is ready
   const loginForm = document.getElementById('login-form');
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -17,39 +17,49 @@ document.addEventListener('DOMContentLoaded', () => {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
-        // Optional: store selected role in Firestore on first login
+        // First-time user: store selected role
         const userRef = db.collection('users').doc(user.uid);
         const doc = await userRef.get();
         if (!doc.exists && role) {
-          await userRef.set({ role: role, email: user.email });
+          await userRef.set({ role, email });
         }
-
       } catch (error) {
-        alert('Login failed: ' + error.message);
+        console.error("Login failed:", error);
+        alert("Login failed: " + error.message);
       }
     });
   }
 
-  // Check current auth state and route once
+  // 🔁 Auth check
   auth.onAuthStateChanged(async (user) => {
-    if (!initialCheckDone) {
-      initialCheckDone = true;
+    if (authChecked) return;
+    authChecked = true;
 
-      if (user) {
-        const tokenResult = await user.getIdTokenResult(true);
-        const role = tokenResult.claims.role;
+    if (user) {
+      try {
+        const token = await user.getIdTokenResult(true);
+        const role = token.claims.role;
 
-        if (role === 'admin') {
+        console.log("User role:", role);
+
+        // Redirect only if not already on the destination page
+        const currentPage = window.location.pathname;
+
+        if (role === 'admin' && !currentPage.includes('admin.html')) {
           window.location.href = 'admin.html';
-        } else if (role === 'teacher') {
+        } else if (role === 'teacher' && !currentPage.includes('teacher.html')) {
           window.location.href = 'teacher.html';
-        } else if (role === 'student') {
+        } else if (role === 'student' && !currentPage.includes('student.html')) {
           window.location.href = 'student.html';
-        } else {
-          document.body.innerHTML = '<h2>Waiting for admin approval...</h2>';
-          // Don't sign out immediately, just block further navigation
+        } else if (!role) {
+          document.body.innerHTML = "<h2>Waiting for admin approval...</h2>";
         }
+
+      } catch (err) {
+        console.error("Error getting token result:", err);
       }
+    } else {
+      console.log("No user signed in.");
     }
   });
 });
