@@ -14,17 +14,18 @@
     </div>
 
     <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  
+  <select id="role" required>
+    <option value="" disabled selected>Select role</option>
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+  </select>
 
-      <select id="role">
-        <option value="" disabled selected>Select role</option>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-      </select>
+  <button type="submit">Login</button>
+</form>
 
-      <button type="submit">Login</button>
-    </form>
 
     <div id="status" class="status-message"></div>
 
