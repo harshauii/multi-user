@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My App - Login</title>
-  <!-- CSS -->
   <link rel="stylesheet" href="/css/styles.css" />
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-<script src="firebaseConfig.js"></script>
-<script src="auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+    // Optional: export if needed
+    window.firebaseModules = { initializeApp, getAuth, getFirestore };
+  </script>
 </head>
 <body>
   <div class="login-container">
@@ -22,18 +24,17 @@
     </div>
 
     <form id="login-form">
-  <input type="email" id="email" placeholder="Email" required />
-  <input type="password" id="password" placeholder="Password" required />
-  
-  <select id="role">
-    <option value="" disabled selected>Select role</option>
-    <option value="student">Student</option>
-    <option value="teacher">Teacher</option>
-  </select>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      
+      <select id="role">
+        <option value="" disabled selected>Select role</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
 
-  <button type="submit">Login</button>
-</form>
-
+      <button type="submit">Login</button>
+    </form>
 
     <div id="status" class="status-message"></div>
 
@@ -42,9 +43,9 @@
     </p>
   </div>
 
-  <!-- Firebase & App Scripts -->
-  <script src="/js/firebaseConfig.js" type="module"></script>
-  <script src="/js/auth.js" type="module"></script>
-  <script src="/js/router.js" type="module"></script>
+  <!-- Your app logic -->
+  <script type="module" src="/js/firebaseConfig.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/router.js"></script>
 </body>
 </html>
