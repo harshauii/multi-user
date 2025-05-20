@@ -15,13 +15,16 @@ import {
 
 // ✅ Replace with your actual Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAKz4LhJcThTJ1ZowKYMV7rVlKwDhuXz3g",
+  authDomain: "rolebased-test-1.firebaseapp.com",
+  databaseURL: "https://rolebased-test-1-default-rtdb.firebaseio.com",
+  projectId: "rolebased-test-1",
+  storageBucket: "rolebased-test-1.firebasestorage.app",
+  messagingSenderId: "951301430114",
+  appId: "1:951301430114:web:17cae16a755c2cbc086a3b",
+  measurementId: "G-CFC2EF9MQF"
 };
+
 
 // ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
