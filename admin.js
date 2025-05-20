@@ -1,45 +1,31 @@
 import { db } from './firebase-config.js';
-import {
-  collection,
-  addDoc,
-  getDocs,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-// Create course
-window.createCourse = async function () {
-  const title = document.getElementById("courseTitle").value.trim();
-  const description = document.getElementById("courseDescription").value.trim();
+window.createCourse = async function() {
+    const title = document.getElementById('courseTitle').value;
+    const description = document.getElementById('courseDesc').value;
 
-  if (!title || !description) {
-    alert("Please fill in both title and description.");
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "courses"), {
-      title,
-      description,
-      createdAt: new Date()
-    });
-    alert("Course created successfully!");
-    document.getElementById("courseTitle").value = "";
-    document.getElementById("courseDescription").value = "";
-  } catch (error) {
-    console.error("Error adding course: ", error);
-    alert("Failed to create course.");
-  }
+    try {
+        await addDoc(collection(db, "courses"), {
+            title: title,
+            description: description,
+            createdAt: new Date()
+        });
+        alert('Course created successfully!');
+    } catch (error) {
+        alert(error.message);
+    }
 };
 
-// Show courses live
-const courseList = document.getElementById("courseList");
-
+// Real-time course list update
 onSnapshot(collection(db, "courses"), (snapshot) => {
-  courseList.innerHTML = ""; // clear existing
-  snapshot.forEach((doc) => {
-    const course = doc.data();
-    const li = document.createElement("li");
-    li.textContent = `${course.title} - ${course.description}`;
-    courseList.appendChild(li);
-  });
+    const coursesList = document.getElementById('coursesList');
+    coursesList.innerHTML = '';
+    
+    snapshot.forEach(doc => {
+        const course = doc.data();
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${course.title}</strong><p>${course.description}</p>`;
+        coursesList.appendChild(li);
+    });
 });
