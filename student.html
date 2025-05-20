@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Student Dashboard</title>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome, Student 🎓</h1>
-
-  <h2>Available Courses</h2>
-<div id="courses"></div>
-
-<h2>Your Enrolled Courses</h2>
-<div id="enrolled-courses"></div>
-
-<script type="module" src="student.js"></script>
+    <div class="container">
+        <h1>Student Dashboard</h1>
+        <div class="available-courses">
+            <h2>Available Courses</h2>
+            <ul id="courseList"></ul>
+        </div>
+        <div class="enrolled-courses">
+            <h2>My Enrollments</h2>
+            <ul id="enrollments"></ul>
+        </div>
+    </div>
+    <script type="module" src="student.js"></script>
 </body>
 </html>
