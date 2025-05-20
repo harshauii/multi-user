@@ -1,3 +1,21 @@
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+const auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is logged in, proceed with page functionality
+    console.log("User logged in:", user.email);
+    // Here you can call your functions to load courses etc.
+    loadCourses();
+    loadEnrolledCourses();
+  } else {
+    // User NOT logged in
+    alert("Please login first!");
+    window.location.href = "index.html"; // Redirect to login page
+  }
+});
+
 // student.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import {
