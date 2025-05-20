@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome, Admin 👨‍🏫</h1>
-
-  <h2>Create a Course</h2>
-  <input type="text" id="courseTitle" placeholder="Course Title"><br>
-  <textarea id="courseDescription" placeholder="Course Description"></textarea><br>
-  <button onclick="createCourse()">Create Course</button>
-
-  <h2>All Courses</h2>
-  <ul id="courseList"></ul>
-
-  <script type="module" src="./admin.js"></script>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="course-creation">
+            <h2>Create New Course</h2>
+            <input type="text" id="courseTitle" placeholder="Course Title">
+            <textarea id="courseDesc" placeholder="Course Description"></textarea>
+            <button onclick="createCourse()">Create Course</button>
+        </div>
+        <div class="course-list">
+            <h2>Existing Courses</h2>
+            <ul id="coursesList"></ul>
+        </div>
+    </div>
+    <script type="module" src="admin.js"></script>
 </body>
 </html>
