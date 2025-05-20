@@ -4,45 +4,14 @@
   <title>Student Dashboard</title>
 </head>
 <body>
-  <h2>Welcome Student</h2>
+  <h1>Welcome, Student 🎓</h1>
 
-  <div>
-    <h3>Available Courses</h3>
-    <ul id="courseList"></ul>
-  </div>
+  <h2>Available Courses</h2>
+  <ul id="availableCourses"></ul>
 
-  <script type="module">
-    import { auth, db } from './firebase-config.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-    import { collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+  <h2>My Enrolled Courses</h2>
+  <ul id="enrolledCourses"></ul>
 
-    let currentUserId = null;
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
-      currentUserId = user.uid;
-
-      const courses = await getDocs(collection(db, "courses"));
-      const list = document.getElementById("courseList");
-
-      courses.forEach((courseDoc) => {
-        const li = document.createElement("li");
-        li.textContent = courseDoc.data().name;
-        const btn = document.createElement("button");
-        btn.textContent = "Enroll";
-        btn.onclick = () => enrollInCourse(courseDoc.id);
-        li.appendChild(btn);
-        list.appendChild(li);
-      });
-    });
-
-    async function enrollInCourse(courseId) {
-      await setDoc(doc(db, `users/${currentUserId}/enrollments`, courseId), {
-        courseId: courseId,
-        enrolledAt: new Date()
-      });
-      alert("Enrolled successfully!");
-    }
-  </script>
+  <script type="module" src="./student.js"></script>
 </body>
 </html>
