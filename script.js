@@ -1,57 +1,43 @@
 import { auth, db } from './firebase-config.js';
+
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
 import {
   doc,
-  setDoc,
-  getDoc
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 window.signUp = async function () {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
   try {
+    // Create the user
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    const role = email === 'harshavardhanjw@gmail.com' ? 'admin' : 'student';
+    // Set role: if email is yours, role is 'admin'; otherwise, 'student'
+    const role = (email === "harshavardhanjw@gmail.com") ? "admin" : "student";
 
+    // Save role and email in Firestore
     await setDoc(doc(db, "users", user.uid), {
-      email,
-      role
+      email: email,
+      role: role
     });
 
-    alert("Signed up as " + role);
-  } catch (error) {
-    alert(error.message);
-  }
-};
+    alert("Signed up successfully as " + role);
 
-window.logIn = async function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      const role = userDoc.data().role;
-      alert("Logged in as " + role);
-
-      if (role === "admin") {
-        window.location.href = "/admin.html";
-      } else {
-        window.location.href = "/student.html";
-      }
+    // Redirect after signup
+    if (role === "admin") {
+      window.location.href = "/admin.html";
     } else {
-      alert("No user role found in Firestore.");
+      window.location.href = "/student.html";
     }
+
   } catch (error) {
-    alert(error.message);
+    console.error("Signup error:", error);
+    alert("Signup failed: " + error.message);
   }
 };
