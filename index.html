@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>eLearning Platform</title>
-  </head>
-  <body>
-  <!-- index.html -->
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Password" />
-
-<button onclick="signUp()">Sign Up</button>
-<button onclick="logIn()">Log In</button>
-
-<script type="module" src="script.js"></script>
-
-  </body>
+<head>
+    <title>E-Learning Platform - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to E-Learning</h1>
+        <div class="auth-box">
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <div class="button-group">
+                <button onclick="signUp()">Sign Up</button>
+                <button onclick="logIn()">Login</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="login.js"></script>
+</body>
 </html>
