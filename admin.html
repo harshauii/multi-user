@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <h2>Welcome Admin</h2>
+
+  <h3>Create Course</h3>
+  <input id="courseName" placeholder="Course Name" />
+  <button onclick="createCourse()">Create Course</button>
+
+  <h3>Change User Role</h3>
+  <input id="targetEmail" placeholder="User Email" />
+  <select id="newRole">
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button onclick="assignRole()">Assign Role</button>
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { collection, addDoc, getDocs, doc, updateDoc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) window.location.href = "index.html";
+    });
+
+    async function createCourse() {
+      const name = document.getElementById('courseName').value;
+      await addDoc(collection(db, "courses"), { name });
+      alert("Course created");
+    }
+
+    async function assignRole() {
+      const email = document.getElementById('targetEmail').value;
+      const newRole = document.getElementById('newRole').value;
+
+      const q = query(collection(db, "users"), where("email", "==", email));
+      const snap = await getDocs(q);
+      if (snap.empty) return alert("User not found");
+
+      const userDoc = snap.docs[0];
+      await updateDoc(doc(db, "users", userDoc.id), { role: newRole });
+      alert("Role updated");
+    }
+  </script>
+</body>
+</html>

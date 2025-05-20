@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>eLearning - Login</title>
+</head>
+<body>
+  <h2>Login / Signup</h2>
+  <input id="email" type="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+  <button onclick="signUp()">Sign Up</button>
+  <button onclick="logIn()">Log In</button>
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+    import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+
+    async function signUp() {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      const role = email === 'harshavardhanjw@gmail.com' ? 'admin' : 'student';
+
+      await setDoc(doc(db, 'users', user.uid), { email, role });
+      alert(`Signed up as ${role}`);
+    }
+
+    async function logIn() {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      const docSnap = await getDoc(doc(db, "users", user.uid));
+      const role = docSnap.data().role;
+      if (role === "admin") window.location.href = "admin.html";
+      else window.location.href = "student.html";
+    });
+  </script>
+</body>
+</html>
