@@ -6,13 +6,27 @@
   <button id="buyBtn">Buy Now (Demo)</button>
 
   <script type="module">
-    import { auth } from "./firebase.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { auth, db } from './firebase.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const uid = user.uid;
+        const course = "course1";
+        const ref = doc(db, "userPurchases", uid);
+        const snap = await getDoc(ref);
+        const purchasedCourses = snap.exists() ? snap.data().purchasedCourses || [] : [];
+
+        // ✅ Redirect if purchased
+        if (purchasedCourses.includes(course)) {
+          window.location.href = `${course}-premium.html`;
+          return;
+        }
+
+        // ❌ If not purchased, show Buy button
         document.getElementById("buyBtn").onclick = () => {
-          window.location.href = `fake-payment.html?course=course1&uid=${user.uid}`;
+          window.location.href = `fake-payment.html?course=${course}&uid=${uid}`;
         };
       } else {
         alert("Please login first.");
