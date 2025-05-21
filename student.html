@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Student Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Student Dashboard</h1>
-        <div class="available-courses">
-            <h2>Available Courses</h2>
-            <ul id="courseList"></ul>
-        </div>
-        <div class="enrolled-courses">
-            <h2>My Enrollments</h2>
-            <ul id="enrollments"></ul>
-        </div>
-    </div>
-    <script type="module" src="student.js"></script>
+  <h1>Welcome, Student!</h1>
+  <button onclick="logout()">Logout</button>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
