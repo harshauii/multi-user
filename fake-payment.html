@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><title>Fake Payment</title></head>
+<body>
+  <h1>Demo Payment Page</h1>
+  <p>This is a fake checkout screen. Click below to simulate a purchase.</p>
+  <button id="confirm">Confirm Payment</button>
+
+  <script type="module">
+    import { db } from "./firebase.js";
+    import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const course = params.get("course");
+    const uid = params.get("uid");
+
+    document.getElementById("confirm").onclick = async () => {
+      const ref = doc(db, "userPurchases", uid);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        await updateDoc(ref, {
+          purchasedCourses: arrayUnion(course)
+        });
+      } else {
+        await setDoc(ref, {
+          purchasedCourses: [course]
+        });
+      }
+
+      window.location.href = `${course}-premium.html`;
+    };
+  </script>
+</body>
+</html>
