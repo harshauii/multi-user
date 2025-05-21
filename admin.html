@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Admin Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Dashboard</h1>
-        <div class="course-creation">
-            <h2>Create New Course</h2>
-            <input type="text" id="courseTitle" placeholder="Course Title">
-            <textarea id="courseDesc" placeholder="Course Description"></textarea>
-            <button onclick="createCourse()">Create Course</button>
-        </div>
-        <div class="course-list">
-            <h2>Existing Courses</h2>
-            <ul id="coursesList"></ul>
-        </div>
-    </div>
-    <script type="module" src="admin.js"></script>
+  <h1>Welcome, Admin!</h1>
+  <button onclick="logout()">Logout</button>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
