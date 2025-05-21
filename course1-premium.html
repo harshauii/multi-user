@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Premium Course 1</title></head>
+<body>
+  <h1>Welcome to Premium Course 1 🎉</h1>
+
+  <script type="module">
+    import { auth, db } from "./firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const ref = doc(db, "userPurchases", user.uid);
+        const snap = await getDoc(ref);
+        const purchased = snap.exists() ? snap.data().purchasedCourses || [] : [];
+
+        if (!purchased.includes("course1")) {
+          window.location.href = "course1-basic.html";
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>
