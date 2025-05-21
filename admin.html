@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+  <title>Admin Panel</title>
 </head>
 <body>
-  <h1>Welcome, Admin!</h1>
+  <h1>Admin Dashboard</h1>
   <button onclick="logout()">Logout</button>
 
-  <script type="module" src="app.js"></script>
+  <h2>All Users</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Current Role</th>
+        <th>Change Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="user-table"></tbody>
+  </table>
+
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
