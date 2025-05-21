@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Course 1 Basic</title></head>
+<body>
+  <h1>Preview of Course 1</h1>
+  <button id="buyBtn">Buy Now (Demo)</button>
+
+  <script type="module">
+    import { auth } from "./firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("buyBtn").onclick = () => {
+          window.location.href = `fake-payment.html?course=course1&uid=${user.uid}`;
+        };
+      } else {
+        alert("Please login first.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>
