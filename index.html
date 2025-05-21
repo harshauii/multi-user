@@ -1,21 +1,18 @@
+<!-- signup.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>E-Learning Platform - Login</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Signup</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to E-Learning</h1>
-        <div class="auth-box">
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-            <div class="button-group">
-                <button onclick="signUp()">Sign Up</button>
-                <button onclick="logIn()">Login</button>
-            </div>
-        </div>
-    </div>
-    <script type="module" src="login.js"></script>
+  <h2>Signup</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="signup()">Sign Up</button>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
