@@ -3,24 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <title>Base Course 1 - Free</title>
+</head>
+<body>
+  <h1>Base Course 1 (Free Content)</h1>
+  <p>This is the free version of Course 1.</p>
+
+  <div id="action-btn">
+    <p>Checking your access...</p>
+  </div>
+
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
     import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
       authDomain: "syncskilll.firebaseapp.com",
       projectId: "syncskilll",
       storageBucket: "syncskilll.appspot.com",
       messagingSenderId: "203322315096",
-      appId: "1:203322315096:web:958fc7d94806ef9a98552d",
-      measurementId: "G-JWWWM2ZQSK"
+      appId: "1:203322315096:web:958fc7d94806ef9a98552d"
     };
 
+    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+
+    // Elements
+    const btnContainer = document.getElementById('action-btn');
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -28,28 +41,23 @@
         return;
       }
 
-      const paymentRef = doc(db, 'payments', user.uid);
-      const paymentSnap = await getDoc(paymentRef);
-      const paymentData = paymentSnap.exists() ? paymentSnap.data() : {};
-      const paid = paymentData?.courses?.course1 === true;
+      try {
+        const paymentRef = doc(db, 'payments', user.uid);
+        const paymentSnap = await getDoc(paymentRef);
 
-      const btnContainer = document.getElementById('action-btn');
+        const courses = paymentSnap.exists() && paymentSnap.data().courses;
+        const isPaid = courses && courses.course1 === true;
 
-      if (paid) {
-        btnContainer.innerHTML = `<button onclick="window.location.href='./premium-course-1.html'">✅ View Premium Course</button>`;
-      } else {
-        btnContainer.innerHTML = `<button onclick="window.location.href='./payment.html'">💰 Pay to Unlock Premium Course</button>`;
+        if (isPaid) {
+          btnContainer.innerHTML = `<button onclick="window.location.href='premium-course-1.html'">✅ View Premium Course</button>`;
+        } else {
+          btnContainer.innerHTML = `<button onclick="window.location.href='payment.html'">💰 Pay to Unlock Premium Course</button>`;
+        }
+      } catch (error) {
+        btnContainer.innerHTML = `<p style="color:red;">Error checking payment status.</p>`;
+        console.error("Error fetching payment data:", error);
       }
     });
   </script>
-</head>
-<body>
-  <h1>Base Course 1 (Free Content)</h1>
-  <p>This is the free version of Course 1.</p>
-
-  <div id="action-btn">
-    <!-- Button will be inserted here dynamically -->
-    <p>Checking your access...</p>
-  </div>
 </body>
 </html>
