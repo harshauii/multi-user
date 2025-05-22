@@ -10,7 +10,297 @@
     <div id="success-animation" style="display: none; margin: 0 auto 1.5rem;">
       <svg style="width: 5.5rem; height: 5.5rem; transition: transform 0.3s ease-in-out;" viewBox="0 0 50 50">
         <circle style="fill: none; stroke: #059669; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 150; stroke-dashoffset: 150; animation: drawCircle 0.6s ease-out forwards;" cx="25" cy="25" r="22"></circle>
-        <path style="fill: none; stroke: #059669; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease-out 0.6s forwards;" d="M15 25l7 7l15-15"></path>
+        <path style="fill: none; stroke: #059669; stroke-width: 4; s<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secure Payment</title>
+  <style>
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes drawCircle {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+    button:hover:not(:disabled) {
+      background: linear-gradient(90deg, #15803d 0%, #1e293b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    button:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+    @media (max-width: 768px) {
+      body {
+        background: #ffffff;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+      }
+      div.payment-container {
+        background: transparent;
+        padding: 1rem 1.5rem;
+        max-width: 95vw;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      h1 {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+        max-width: 90%;
+      }
+      h1 span {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1.125rem;
+        max-width: 95%;
+      }
+      svg {
+        width: 5rem;
+        height: 5rem;
+        transition: transform 0.3s ease-in-out;
+      }
+      svg:hover {
+        transform: scale(1.06) rotate(2deg);
+      }
+      button {
+        padding: 0.875rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body
+  style="margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; font-family: 'IBM Plex Sans', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+>
+  <div
+    class="payment-container"
+    style="background: transparent; padding: 2rem; max-width: 450px; width: 95vw; text-align: center; animation: slideUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);"
+  >
+    <div id="success-animation" style="display: none; margin: 0 auto 1.5rem;">
+      <svg
+        style="width: 5.5rem; height: 5.5rem; transition: transform 0.3s ease-in-out;"
+        viewBox="0 0 50 50"
+        aria-hidden="true"
+      >
+        <circle
+          style="fill: none; stroke: #059669; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 150; stroke-dashoffset: 150; animation: drawCircle 0.6s ease-out forwards;"
+          cx="25"
+          cy="25"
+          r="22"
+        ></circle>
+        <path
+          style="fill: none; stroke: #059669; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease-out 0.6s forwards;"
+          d="M15 25l7 7l15-15"
+        ></path>
+      </svg>
+    </div>
+    <h1
+      id="title"
+      style="
+        color: #1e293b;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0 auto 1rem;
+        line-height: 1.2;
+      "
+    >
+      <span
+        style="
+          font-size: 2.25rem;
+          background: linear-gradient(90deg, #1e293b 0%, #15803d 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        "
+        >Complete</span
+      >
+      Your Purchase
+    </h1>
+    <p
+      id="message"
+      style="
+        color: #475569;
+        font-size: 1.125rem;
+        font-weight: 500;
+        line-height: 1.6;
+        margin: 0 auto 1.5rem;
+        max-width: 85%;
+      "
+    >
+      Confirm your payment to instantly unlock premium course access.
+    </p>
+    <button
+      id="confirm"
+      style="
+        background: #15803d;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      "
+    >
+      <span id="button-text" style="position: relative; z-index: 1;">Confirm Payment</span>
+      <span
+        id="loader"
+        style="
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 2rem;
+          height: 2rem;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-top: 3px solid #ffffff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        "
+      ></span>
+    </button>
+  </div>
+
+  <!-- Firebase Initialization Script (Put this before using Firestore) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      updateDoc,
+      arrayUnion,
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+      authDomain: "syncskilll.firebaseapp.com",
+      projectId: "syncskilll",
+      storageBucket: "syncskilll.firebasestorage.app",
+      messagingSenderId: "203322315096",
+      appId: "1:203322315096:web:958fc7d94806ef9a98552d",
+      measurementId: "G-JWWWM2ZQSK",
+    };
+
+    // Initialize Firebase app, auth, and firestore
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // DOM elements for payment
+    const confirmButton = document.getElementById("confirm");
+    const loader = document.getElementById("loader");
+    const buttonText = document.getElementById("button-text");
+    const successAnimation = document.getElementById("success-animation");
+    const title = document.getElementById("title");
+    const message = document.getElementById("message");
+
+    // Get URL params
+    const params = new URLSearchParams(window.location.search);
+    const course = params.get("course");
+    const uid = params.get("uid");
+
+    // Confirm payment click handler
+    confirmButton.onclick = async () => {
+      confirmButton.disabled = true;
+      buttonText.style.display = "none";
+      loader.style.display = "block";
+
+      try {
+        if (!course || !uid) {
+          throw new Error("Missing course or user ID in URL parameters.");
+        }
+
+        const ref = doc(db, "userPurchases", uid);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          await updateDoc(ref, {
+            purchasedCourses: arrayUnion(course),
+          });
+        } else {
+          await setDoc(ref, {
+            purchasedCourses: [course],
+          });
+        }
+
+        loader.style.display = "none";
+        successAnimation.style.display = "block";
+        title.innerHTML = '<span>Success!</span> Purchase Confirmed';
+        message.textContent = "You're now enrolled in the premium course. Redirecting...";
+
+        setTimeout(() => {
+          // Sanitize course parameter in URL to avoid XSS risk if possible
+          window.location.href = `${course}-premium.html`;
+        }, 1500);
+      } catch (error) {
+        console.error("Error processing purchase:", error);
+        loader.style.display = "none";
+        buttonText.style.display = "block";
+        title.innerHTML = '<span>Error!</span> Purchase Failed';
+        message.textContent = "An error occurred. Please try again.";
+        confirmButton.disabled = false;
+      }
+    };
+
+    // Firebase Auth user profile management
+    // DOM elements for profile update
+    const elements = {
+      userAvatar: document.getElementById("userAvatar"),
+      mobileUserAvatar: document.getElementById("mobileUserAvatar"),
+      userName: document.getElementById("userName"),
+      dropdownAvatar: document.getElementById("dropdownAvatar"),
+      dropdownName: document.getElementById("dropdownName"),
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Update user profile info in DOM
+        if (elements.userAvatar) elements.userAvatar.src = user.photoURL || "/assets/profile.png";
+        if (elements.mobileUserAvatar) elements.mobileUserAvatar.src = user.photoURL || "/assets/profile.png";
+        if (elements.userName) elements.userName.textContent = user.displayName || "User";
+        if (elements.dropdownAvatar) elements.dropdownAvatar.src = user.photoURL || "/assets/profile.png";
+        if (elements.dropdownName) elements.dropdownName.textContent = user.displayName || "User";
+      } else {
+        // No user signed in
+        // You can redirect to login page or show login UI
+      }
+    });
+  </script>
+</body>
+</html>
+troke-linecap: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease-out 0.6s forwards;" d="M15 25l7 7l15-15"></path>
       </svg>
     </div>
     <h1 id="title" style="color: #1e293b; font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 auto 1rem; line-height: 1.2;">
