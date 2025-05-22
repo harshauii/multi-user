@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head><title>Course 1 Basic</title></head>
+<head>
+  <title>Course 1 Basic</title>
+</head>
 <body>
   <h1>Preview of Course 1</h1>
   <button id="buyBtn">Buy Now (Demo)</button>
 
+  <!-- Firebase Setup and Utilities -->
   <script type="module">
-    import { auth, db } from './firebase.js';
-    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
-    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+    // Firebase imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+      authDomain: "syncskilll.firebaseapp.com",
+      projectId: "syncskilll",
+      storageBucket: "syncskilll.appspot.com",
+      messagingSenderId: "203322315096",
+      appId: "1:203322315096:web:958fc7d94806ef9a98552d",
+      measurementId: "G-JWWWM2ZQSK"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Handle user auth and course access
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const uid = user.uid;
@@ -18,13 +39,13 @@
         const snap = await getDoc(ref);
         const purchasedCourses = snap.exists() ? snap.data().purchasedCourses || [] : [];
 
-        // ✅ Redirect if purchased
+        // ✅ Redirect if already purchased
         if (purchasedCourses.includes(course)) {
           window.location.href = `${course}-premium.html`;
           return;
         }
 
-        // ❌ If not purchased, show Buy button
+        // ❌ If not purchased, handle buy button
         document.getElementById("buyBtn").onclick = () => {
           window.location.href = `fake-payment.html?course=${course}&uid=${uid}`;
         };
@@ -33,159 +54,36 @@
         window.location.href = "login.html";
       }
     });
+
+    // OPTIONAL: Auto logout after inactivity (1 hour)
+    const logout = async () => {
+      try {
+        await signOut(auth);
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.href = "/index.html";
+      } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error during logout. Please try again.");
+      }
+    };
+
+    let inactivityTimer;
+    const resetSessionTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
+    };
+    ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+      window.addEventListener(event, resetSessionTimer);
+    });
+    resetSessionTimer();
+
+    // Prevent cached page on back button
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || window.performance?.navigation?.type === 2) {
+        if (!auth.currentUser) window.location.href = "login.html";
+      }
+    });
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-
-  // Your Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
-    authDomain: "syncskilll.firebaseapp.com",
-    projectId: "syncskilll",
-    storageBucket: "syncskilll.firebasestorage.app",
-    messagingSenderId: "203322315096",
-    appId: "1:203322315096:web:958fc7d94806ef9a98552d",
-    measurementId: "G-JWWWM2ZQSK"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // DOM elements
-  const elements = {
-    userAvatar: document.getElementById('userAvatar'),
-    mobileUserAvatar: document.getElementById('mobileUserAvatar'),
-    userName: document.getElementById('userName'),
-    dropdownAvatar: document.getElementById('dropdownAvatar'),
-    dropdownName: document.getElementById('dropdownName'),
-    dropdownEmail: document.getElementById('dropdownEmail'),
-    mobileUserName: document.getElementById('mobileUserName'),
-    mobileUserEmail: document.getElementById('mobileUserEmail'),
-    welcomeUserSpan: document.getElementById('user')
-  };
-
-  // Clear sensitive data from DOM
-  const clearUserProfile = () => {
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    try {
-      if (elements.userName) elements.userName.textContent = '';
-      if (elements.dropdownName) elements.dropdownName.textContent = '';
-      if (elements.mobileUserName) elements.mobileUserName.textContent = '';
-      if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
-      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
-      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
-
-      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-        if (img) {
-          img.src = fallbackAvatar;
-          img.removeAttribute('srcset'); // Clear any cached image sources
-        }
-      });
-    } catch (error) {
-      console.error('Error clearing profile:', error);
-    }
-  };
-
-  // Update user profile on the page
-  const updateUserProfile = (user) => {
-    if (!user) {
-      clearUserProfile();
-      return;
-    }
-
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-    const email = user.email || 'No email provided';
-    const photoURL = user.photoURL || fallbackAvatar;
-
-    try {
-      if (elements.userName) elements.userName.textContent = displayName;
-      if (elements.dropdownName) elements.dropdownName.textContent = displayName;
-      if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
-      if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
-      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
-      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
-
-      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-        if (img) {
-          img.src = photoURL;
-          img.onerror = () => img.src = fallbackAvatar;
-        }
-      });
-    } catch (error) {
-      console.error('Profile update error:', error);
-    }
-  };
-
-  // Auth state handling
-  const handleAuthState = (user) => {
-    if (!user) {
-      clearUserProfile(); // Clear DOM data immediately
-      window.location.href = '/login.html'; // Redirect to login
-      return;
-    }
-    updateUserProfile(user); // Update user profile if logged in
-  };
-
-  // Watch for auth state changes
-  onAuthStateChanged(auth, handleAuthState);
-
-  // Prevent back/forward cache (bfcache) from restoring sensitive data
-  window.addEventListener('unload', () => {
-    clearUserProfile(); // Clear DOM data on page unload
-  });
-
-  // Logout function
-  window.logout = async () => {
-    try {
-      await signOut(auth);
-      clearUserProfile(); // Clear DOM data before redirect
-      sessionStorage.clear(); // Clear session storage
-      localStorage.removeItem('userData'); // Clear specific localStorage keys if used
-      window.location.href = '/index.html'; // Redirect to login
-    } catch (error) {
-      console.error('Logout error:', error);
-      alert('Error during logout. Please try again.');
-    }
-  };
-
-  // Optional: Auto logout after inactivity (1 hour)
-  let inactivityTimer;
-  const resetSessionTimer = () => {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
-  };
-  ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
-    window.addEventListener(event, resetSessionTimer);
-  });
-  resetSessionTimer();
-
-  // Prevent browser back button from showing cached page
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || window.performance?.navigation?.type === 2) {
-      // Page was restored from bfcache or back navigation
-      auth.currentUser ? updateUserProfile(auth.currentUser) : handleAuthState(null);
-    }
-  });
-</script>
-  
 </body>
 </html>
