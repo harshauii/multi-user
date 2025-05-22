@@ -12,7 +12,7 @@
       apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
       authDomain: "syncskilll.firebaseapp.com",
       projectId: "syncskilll",
-      storageBucket: "syncskilll.appspot.com", // ✅ Fixed typo from .firebasestorage.app
+      storageBucket: "syncskilll.appspot.com",
       messagingSenderId: "203322315096",
       appId: "1:203322315096:web:958fc7d94806ef9a98552d",
       measurementId: "G-JWWWM2ZQSK"
@@ -28,17 +28,21 @@
         return;
       }
 
-      const paymentRef = doc(db, 'payments', user.uid);
-      const paymentSnap = await getDoc(paymentRef);
+      try {
+        const paymentRef = doc(db, 'payments', user.uid);
+        const paymentSnap = await getDoc(paymentRef);
 
-      if (paymentSnap.exists()) {
-        const data = paymentSnap.data();
-        const paid = data?.courses?.course1 === true;
+        if (paymentSnap.exists()) {
+          const data = paymentSnap.data();
+          const isPaid = data?.courses?.course1 === true;
 
-        if (paid) {
-          // Redirect to premium course if already paid
-          window.location.href = './premium-course-1.html';
+          if (isPaid) {
+            // Redirect to premium if already paid
+            window.location.href = './premium-course-1.html';
+          }
         }
+      } catch (error) {
+        console.error('Error checking payment status:', error);
       }
     });
   </script>
