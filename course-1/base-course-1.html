@@ -22,6 +22,8 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    const buttonContainer = document.getElementById("actionButton");
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = '/login.html';
@@ -29,27 +31,27 @@
       }
 
       try {
-        const paymentRef = doc(db, 'payments', user.uid);
-        const paymentSnap = await getDoc(paymentRef);
+        const paymentDoc = await getDoc(doc(db, 'payments', user.uid));
+        const paid = paymentDoc.exists() && paymentDoc.data().courses?.course1 === true;
 
-        if (paymentSnap.exists()) {
-          const data = paymentSnap.data();
-          const isPaid = data?.courses?.course1 === true;
-
-          if (isPaid) {
-            // Redirect to premium if already paid
-            window.location.href = './premium-course-1.html';
-          }
+        if (paid) {
+          buttonContainer.innerHTML = `<button onclick="window.location.href = './premium-course-1.html'">View Premium Course</button>`;
+        } else {
+          buttonContainer.innerHTML = `<button onclick="window.location.href = './payment.html'">Pay to Unlock Premium Course</button>`;
         }
       } catch (error) {
         console.error('Error checking payment status:', error);
+        buttonContainer.innerHTML = `<p>Error loading course access. Please try again.</p>`;
       }
     });
   </script>
 </head>
 <body>
-  <h1>Base Course 1 (Free Content)</h1>
+  <h1>📚 Base Course 1 (Free Content)</h1>
   <p>This is the free version of Course 1.</p>
-  <button onclick="window.location.href = './payment.html'">Pay to unlock premium course</button>
+
+  <div id="actionButton">
+    <p>Loading access...</p>
+  </div>
 </body>
 </html>
