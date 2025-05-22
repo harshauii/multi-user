@@ -22,36 +22,34 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const buttonContainer = document.getElementById("actionButton");
-
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = '/login.html';
         return;
       }
 
-      try {
-        const paymentDoc = await getDoc(doc(db, 'payments', user.uid));
-        const paid = paymentDoc.exists() && paymentDoc.data().courses?.course1 === true;
+      const paymentRef = doc(db, 'payments', user.uid);
+      const paymentSnap = await getDoc(paymentRef);
+      const paymentData = paymentSnap.exists() ? paymentSnap.data() : {};
+      const paid = paymentData?.courses?.course1 === true;
 
-        if (paid) {
-          buttonContainer.innerHTML = `<button onclick="window.location.href = './premium-course-1.html'">View Premium Course</button>`;
-        } else {
-          buttonContainer.innerHTML = `<button onclick="window.location.href = './payment.html'">Pay to Unlock Premium Course</button>`;
-        }
-      } catch (error) {
-        console.error('Error checking payment status:', error);
-        buttonContainer.innerHTML = `<p>Error loading course access. Please try again.</p>`;
+      const btnContainer = document.getElementById('action-btn');
+
+      if (paid) {
+        btnContainer.innerHTML = `<button onclick="window.location.href='./premium-course-1.html'">✅ View Premium Course</button>`;
+      } else {
+        btnContainer.innerHTML = `<button onclick="window.location.href='./payment.html'">💰 Pay to Unlock Premium Course</button>`;
       }
     });
   </script>
 </head>
 <body>
-  <h1>📚 Base Course 1 (Free Content)</h1>
+  <h1>Base Course 1 (Free Content)</h1>
   <p>This is the free version of Course 1.</p>
 
-  <div id="actionButton">
-    <p>Loading access...</p>
+  <div id="action-btn">
+    <!-- Button will be inserted here dynamically -->
+    <p>Checking your access...</p>
   </div>
 </body>
 </html>
