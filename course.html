@@ -61,8 +61,8 @@
         const courseId = "course1";
 
         const redirectPage = purchasedCourses.includes(courseId)
-          ? `${courseId}-course1-premium.html`
-          : `${courseId}-course1-basic.html`;
+          ? `${courseId}-premium.html`
+          : `${courseId}-basic.html`;
 
         window.location.href = redirectPage;
       } catch (error) {
