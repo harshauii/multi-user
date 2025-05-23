@@ -659,6 +659,8 @@ label {
       </p>
     </div>
 
+    <script type="module">
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
@@ -851,5 +853,6 @@ document.getElementById('login-form').addEventListener('submit', window.emailSig
 
 // Export auth for use in other scripts if needed
 export { auth };
+    </script>
   </body>
 </html>
