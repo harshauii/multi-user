@@ -749,6 +749,38 @@ label {
 
       // Attach emailSignIn to form submission
       document.getElementById('login-form').addEventListener('submit', window.emailSignIn);
+
+
+        // Update user profile on the page
+  const updateUserProfile = (user) => {
+    if (!user) {
+      clearUserProfile();
+      return;
+    }
+
+    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+    const email = user.email || 'No email provided';
+    const photoURL = user.photoURL || fallbackAvatar;
+
+    try {
+      if (elements.userName) elements.userName.textContent = displayName;
+      if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+      if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
+
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = photoURL;
+          img.onerror = () => img.src = fallbackAvatar;
+        }
+      });
+    } catch (error) {
+      console.error('Profile update error:', error);
+    }
+  };
     </script>
   </body>
 </html>
