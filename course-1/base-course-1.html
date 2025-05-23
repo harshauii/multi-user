@@ -220,6 +220,10 @@ html, body {
       height: 20px;
       stroke-width: 2;
     }
+     .btn-icon,
+.btn-icon path {
+  pointer-events: none;
+}
     .section-image-left__content {
       padding: 0;
     }
@@ -835,11 +839,9 @@ html, body {
             </div>
           </div>
         </div>
-        <div class="section-image-left__buttons-mobile">
-          <div class="seo-image-box__buttons">
-            <button class="seo-btn seo-btn--apply" onclick="location.href='payment.html'">
-  <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+        <button class="seo-btn seo-btn--apply" onclick="window.location.href = './payment.html'" type="button">
+  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" style="pointer-events: none;">
+    <path d="M5 12h14M12 5l7 7-7 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;" />
   </svg>
   <span>Apply Now</span>
 </button>
