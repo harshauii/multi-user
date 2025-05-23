@@ -67,86 +67,92 @@ html, body {
 
 
     <!-- NAVBAR STYLES -->
-    header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensures it stays above other content */
-}
+       #featured-program * {
+            all: unset;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        #featured-program {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            width: 100%;
+            max-width: 100%; /* Prevent overflow */
+            box-sizing: border-box;
+        }
+
+        #featured-program .label {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            display: block;
+        }
+
+        #featured-program .title {
+            font-size: 16px; /* Adjusted for better fit */
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            display: block;
+        }
+
+        #featured-program .description {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            display: block;
+            overflow-wrap: break-word;
+        }
+
+        #featured-program .cta-button {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            display: block;
+        }
+
+        #featured-program .cta-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
         .page-container {
             margin-left: 130px;
             margin-right: 130px;
         }
-        #featured-program * {
-      all: unset;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
 
-    #featured-program {
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      border-radius: 12px;
-      padding: 24px;
-      color: white;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    #featured-program .label {
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      opacity: 0.9;
-      display: block;
-    }
-
-    #featured-program .title {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 0 0 12px 0;
-      display: block;
-    }
-
-    #featured-program .description {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-bottom: 24px;
-      line-height: 1.5;
-      display: block;
-    }
-
-    #featured-program .cta-button {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-align: center;
-      display: block;
-    }
-
-    #featured-program .cta-button:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
+        button:focus, a:focus {
+            outline: 2px solid #1e40af;
+            outline-offset: 2px;
+        }
 
         @media (max-width: 768px) {
             .page-container {
                 margin-left: 3px;
                 margin-right: 3px;
             }
-            .desktop-only { display: none !important; }
-            .mobile-menu-button { display: block !important; }
+            .desktop-only {
+                display: none !important;
+            }
+            .mobile-menu-button {
+                display: block !important;
+            }
         }
 
         @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
+            .mobile-only {
+                display: none !important;
+            }
         }
-
 
     
 <!-- carousel-slide -->
@@ -1039,391 +1045,363 @@ margin-left: 0px;
  </style>
 </head>
 <body>
-  <header style="background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.12); height: 72px; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000;">
-    <nav style="max-width: 1440px; margin: 0 auto; padding: 0 20px; height: 100%; display: flex; justify-content: space-between; align-items: center;">
-      <a href="/" style="display: flex; align-items: center;">
-        <img src="assets/logo.jpg" alt="Logo" style="height: 28px;">
-      </a>
-      <div class="desktop-only" style="display: flex; align-items: center; gap: 40px;">
-        <div style="position: relative;"
-            onmouseenter="
-                clearTimeout(window.menuTimeout);
-                const btn = this.querySelector('button');
-                const m = this.querySelector('.mega-menu');
-                const rect = btn.getBoundingClientRect();
-                m.style.top = rect.top + window.scrollY + btn.offsetHeight + 5 + 'px';
-                m.style.opacity = '1';
-                m.style.transform = 'translate(-50%, 0)';
-                m.style.pointerEvents = 'auto';
-            "
-            onmouseleave="
-                const m = this.querySelector('.mega-menu');
-                window.menuTimeout = setTimeout(() => {
-                    m.style.opacity = '0';
-                    m.style.transform = 'translate(-50%, 8px)';
-                    m.style.pointerEvents = 'none';
-                }, 300);
-            ">
-            <button 
-                onmouseover="this.style.background='#f8f9fa'" 
-                onmouseout="this.style.background='transparent'"
-                style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: transparent; border: none; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);">
-                <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #333333; letter-spacing: 0.2px;">
-                    Learning Paths
-                </span>
-                <svg style="width: 18px; height: 18px; color: #4d4d4d; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);" 
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M6 9l6 6 6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <header style="background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.12); height: 72px; position: fixed; top: 0; left: 0; width: 100%; z-index: 100;">
+        <nav style="max-width: 1440px; margin: 0 auto; padding: 0 20px; height: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="display: flex; align-items: center;">
+                <img src="assets/logo.jpg" alt="Logo" style="height: 28px;">
+            </a>
+            <div class="desktop-only" style="display: flex; align-items: center; gap: 40px;">
+                <div style="position: relative;">
+                    <button id="learningPathsBtn" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: transparent; border: none; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);">
+                        <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #333333; letter-spacing: 0.2px;">Learning Paths</span>
+                        <svg style="width: 18px; height: 18px; color: #4d4d4d; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M6 9l6 6 6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div id="megaMenu" class="mega-menu" style="position: fixed; top: 0; left: 50%; width: min(800px, 90vw); background: #fff; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.12); padding: 32px; opacity: 0; transform: translate(-50%, 8px); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); pointer-events: none;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+                            <div>
+                                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
+                                    <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Career Accelerators</h3>
+                                </div>
+                                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                                    <li>
+                                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+                                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                                            <div style="width: 32px; height: 32px; background: #6366f1; border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
+                                                <img src="your-icon.png" alt="Icon" style="width: 16px; height: 16px;" />
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Data Science Pro</div>
+                                                <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">12 Courses · 98 Hours</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
+                                    <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Certifications</h3>
+                                </div>
+                                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                                    <li>
+                                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: #ffffff; border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+                                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                                            <div style="width: 32px; height: 32px; background: #10b981; border-radius: 6px; margin-right: 12px;"></div>
+                                            <div>
+                                                <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Cloud Architect</div>
+                                                <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">AWS · Azure · GCP</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="featured-program">
+                                <span class="label">FEATURED PROGRAM</span>
+                                <h3 class="title">GenAI Mastery</h3>
+                                <p class="description">Master LLMs, Diffusion Models, and Production Deployment</p>
+                                <button class="cta-button">Explore Program</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-menu" style="position: relative;">
+                    <div class="profile-trigger" id="profileTrigger" style="display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: transparent;"
+                         onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                        <img id="userAvatar" src="https://via.placeholder.com/36" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
+                        <span id="userName" style="font-weight: 500; color: #1e293b; font-size: 14px; position: relative; padding-right: 20px;">
+                            Loading...
+                            <span style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); transition: transform 0.2s ease; font-size: 18px;">▾</span>
+                        </span>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown" style="position: absolute; right: 0; top: calc(100% + 8px); width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 24px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img id="dropdownAvatar" src="https://via.placeholder.com/60" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0; margin-bottom: 16px; transition: transform 0.2s ease;"
+                                 onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <div id="dropdownName" style="font-weight: 600; font-size: 18px; color: #1e293b; margin-bottom: 4px; line-height: 1.4;">Loading...</div>
+                            <div id="dropdownEmail" style="font-size: 14px; color: #64748b; margin-bottom: 16px; word-break: break-all;">Loading...</div>
+                        </div>
+                        <div style="height: 1px; background: #f1f5f9; margin: 16px 0;"></div>
+                        <div class="logout-btn" onclick="logout()" style="padding: 12px; text-align: center; border-radius: 8px; background: #fff; border: 1px solid #f1f5f9; color: #dc2626; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;"
+                             onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#fecaca'"
+                             onmouseout="this.style.background='#fff'; this.style.borderColor='#f1f5f9'">
+                            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span style="color: black;">Sign Out</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuButton" style="padding: 8px; border-radius: 8px; border: none; background: transparent; transition: transform 0.2s ease, background 0.2s ease; display: none;"
+                    onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
+                <svg style="width: 24px; height: 24px; color: #4b5563;" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
-            <div class="mega-menu"
-                onmouseenter="clearTimeout(window.menuTimeout)"
-                onmouseleave="
-                    window.menuTimeout = setTimeout(() => {
-                        const m = this;
-                        m.style.opacity = '0';
-                        m.style.transform = 'translate(-50%, 8px)';
-                        m.style.pointerEvents = 'none';
-                    }, 300);
-                "
-                style="position: fixed; top: 0; left: 50%; width: 800px; background: #fff; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.12); padding: 32px; opacity: 0; transform: translate(-50%,8px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); pointer-events: none;">
-                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px;">
-                  <div>
-                    <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
-                      <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Career Accelerators</h3>
-                    </div>
-                    <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
-                      <li>
-                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
-                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+        </nav>
+    </header>
+
+    <div id="mobileMenu" class="mobile-only" style="position: fixed; top: 0; right: 0; bottom: 0; width: 90vw; max-width: 320px; background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%); padding: 24px 20px; transform: translateX(100%); transition: transform 0.3s ease-in-out; box-shadow: -6px 0 20px rgba(0,0,0,0.08); z-index: 1000; display: flex; flex-direction: column; overscroll-behavior: contain;">
+        <div style="flex-shrink: 0; display: flex; justify-content: flex-end; margin-bottom: 24px;">
+            <button id="mobileMenuClose" aria-label="Close menu" style="padding: 12px; border-radius: 12px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;"
+                    onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
+                <svg style="width: 24px; height: 24px; color: #374151;" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div style="flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
+                    <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="certifications-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Certifications</span>
+                        <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
+                    </h3>
+                    <div id="certifications-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
+                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
+                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
                            onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                          <div style="width: 32px; height: 32px; background: #6366f1; border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-                            <img src="your-icon.png" alt="Icon" style="width: 16px; height: 16px;" />
-                          </div>
-                          <div>
-                            <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Data Science Pro</div>
-                            <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">12 Courses · 98 Hours</div>
-                          </div>
+                            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Data Science Pro</div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">12 Courses · 98 Hours</div>
+                            </div>
                         </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
-                      <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Certifications</h3>
+                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
+                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
+                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">AI & ML Foundation</div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">8 Courses · 64 Hours</div>
+                            </div>
+                        </a>
                     </div>
-                    <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
-                      <li>
-                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: #ffffff; border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
-                           onmouseover="this.style.background='#f8f9fa'; this.style.borderColor='#e9ecef'"
-                           onmouseout="this.style.background='#ffffff'; this.style.borderColor='#f1f3f5'">
-                          <div style="width: 32px; height: 32px; background: #10b981; border-radius: 6px; margin-right: 12px;"></div>
-                          <div>
-                            <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Cloud Architect</div>
-                            <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">AWS · Azure · GCP</div>
-                          </div>
+                </div>
+                <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
+                    <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="cloud-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Cloud</span>
+                        <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
+                    </h3>
+                    <div id="cloud-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
+                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
+                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
+                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                            <div style="width: 28px; height: 28px; background: #059669; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
+                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Cloud Architect</div>
+                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">AWS · Azure · GCP</div>
+                            </div>
                         </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div id="featured-program">
-                    <span class="label">FEATURED PROGRAM</span>
-                    <h3 class="title">GenAI Mastery</h3>
-                    <p class="description">Master LLMs, Diffusion Models, and Production Deployment</p>
-                    <button class="cta-button">Explore Program</button>
-                  </div>
+                    </div>
+                </div>
+                <div style="padding: 16px; border-radius: 12px; background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 100%);">
+                    <span style="display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">Featured Program</span>
+                    <h3 style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 700; color: #1f2937; margin: 0 0 8px 0;">GenAI Mastery</h3>
+                    <p style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #4b5563; margin: 0 0 12px 0; line-height: 1.5;">Master LLMs, Diffusion Models, and Production Deployment</p>
+                    <button style="padding: 10px 16px; border-radius: 8px; border: none; background: #1e40af; color: #ffffff; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease;"
+                            onmouseover="this.style.background='#1e3a8a'; this.style.transform='scale(1.02)'"
+                            onmouseout="this.style.background='#1e40af'; this.style.transform='scale(1)'">
+                        Explore Program
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="profile-menu" style="position: relative;">
-          <div class="profile-trigger" onclick="toggleDropdown()" style="display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: transparent;"
-               onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
-            <img id="userAvatar" src="https://via.placeholder.com/36" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
-            <span id="userName" style="font-weight: 500; color: #1e293b; font-size: 14px; position: relative; padding-right: 20px;">Loading...
-              <span style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); transition: transform 0.2s ease; font-size: 18px;">▾</span>
-            </span>
-          </div>
-          <div class="profile-dropdown" style="position: absolute; right: 0; top: calc(100% + 8px); width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 24px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000;">
-            <div style="text-align: center; margin-bottom: 20px;">
-              <img id="dropdownAvatar" src="https://via.placeholder.com/60" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0; margin-bottom: 16px; transition: transform 0.2s ease;"
-                   onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-              <div id="dropdownName" style="font-weight: 600; font-size: 18px; color: #1e293b; margin-bottom: 4px; line-height: 1.4;">Loading...</div>
-              <div id="dropdownEmail" style="font-size: 14px; color: #64748b; margin-bottom: 16px; word-break: break-all;">Loading...</div>
+        <div style="flex-shrink: 0; border-top: 1px solid #e5e7eb; padding: 20px; background: #ffffff; box-shadow: 0 -6px 16px rgba(0,0,0,0.06); position: sticky; bottom: 0;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <img id="mobileUserAvatar" src="https://via.placeholder.com/56" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e5e7eb; transition: transform 0.2s ease;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="flex-grow: 1; min-width: 0;">
+                    <div id="mobileUserName" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
+                    <div id="mobileUserEmail" style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
+                </div>
             </div>
-            <div style="height: 1px; background: #f1f5f9; margin: 16px 0;"></div>
-            <div class="logout-btn" onclick="logout()" style="padding: 12px; text-align: center; border-radius: 8px; background: #fff; border: 1px solid #f1f5f9; color: #dc2626; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;"
-                 onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#fecaca'"
-                 onmouseout="this.style.background='#fff'; this.style.borderColor='#f1f5f9'">
-              <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-              </svg>
-              <span style="color: black;">Sign Out</span>
-
-            </div>
-          </div>
+            <button onclick="logout()" aria-label="Sign out" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; width: 100%; background: #fef2f2; border-radius: 8px; border: none; color: #dc2626; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.2s ease;"
+                    onmouseover="this.style.background='#fee2e2'; this.style.transform='scale(1.02)'"
+                    onmouseout="this.style.background='#fef2f2'; this.style.transform='scale(1)'">
+                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Sign Out
+            </button>
         </div>
-      </div>
-      <button class="mobile-menu-button" id="mobileMenuButton" style="display: none; padding: 8px; border-radius: 8px; border: none; background: transparent; transition: transform 0.2s ease, background 0.2s ease;"
-              onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
-              onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
-        <svg style="width: 24px; height: 24px; color: #4b5563;" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-      
-
-
-
-
-      <div id="mobileMenu" style="position: fixed; top: 0; right: 0; bottom: 0; width: 90vw; max-width: 320px; background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%); display: flex; flex-direction: column; z-index: 1000; transform: translateX(100%); box-shadow: -6px 0 20px rgba(0,0,0,0.08); transition: transform 0.3s ease-in-out;">
-  <div style="flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 24px 20px;">
-    <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
-      <button id="mobileMenuClose" aria-label="Close menu" style="padding: 12px; border-radius: 12px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;"
-              onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
-              onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
-        <svg style="width: 24px; height: 24px; color: #374151;" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
-        <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="certifications-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-          <span>Certifications</span>
-          <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
-        </h3>
-        <div id="certifications-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
-          <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-             onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-             onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-              <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-              </svg>
-            </div>
-            <div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Data Science Pro</div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">12 Courses · 98 Hours</div>
-            </div>
-          </a>
-          <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-             onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-             onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-              <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-              </svg>
-            </div>
-            <div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">AI & ML Foundation</div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">8 Courses · 64 Hours</div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
-        <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="cloud-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-          <span>Cloud</span>
-          <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
-        </h3>
-        <div id="cloud-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
-          <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-             onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-             onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-            <div style="width: 28px; height: 28px; background: #059669; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-              <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-              </svg>
-            </div>
-            <div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Cloud Architect</div>
-              <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">AWS · Azure · GCP</div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div style="padding: 16px; border-radius: 12px; background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 100%);">
-        <span style="display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">Featured Program</span>
-        <h3 style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 700; color: #1f2937; margin: 0 0 8px 0;">GenAI Mastery</h3>
-        <p style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #4b5563; margin: 0 0 12px 0; line-height: 1.5;">Master LLMs, Diffusion Models, and Production Deployment</p>
-        <button style="padding: 10px 16px; border-radius: 8px; border: none; background: #1e40af; color: #ffffff; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease;"
-                onmouseover="this.style.background='#1e3a8a'; this.style.transform='scale(1.02)'"
-                onmouseout="this.style.background='#1e40af'; this.style.transform='scale(1)'">
-          Explore Program
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Pinned user profile section -->
-  <div style="flex-shrink: 0; border-top: 1px solid #e5e7eb; padding: 20px; background: #ffffff; box-shadow: 0 -6px 16px rgba(0,0,0,0.06); z-index: 1002; position: sticky; bottom: 0;">
-    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-      <img id="mobileUserAvatar" src="https://via.placeholder.com/56" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e5e7eb; transition: transform 0.2s ease;"
-           onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="flex-grow: 1; min-width: 0;">
-        <div id="mobileUserName" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
-        <div id="mobileUserEmail" style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
-      </div>
-    </div>
-    <button onclick="logout()" aria-label="Sign out" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; width: 100%; background: #fef2f2; border-radius: 8px; border: none; color: #dc2626; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.2s ease;"
-            onmouseover="this.style.background='#fee2e2'; this.style.transform='scale(1.02)'"
-            onmouseout="this.style.background='#fef2f2'; this.style.transform='scale(1)'">
-      <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-      </svg>
-      Sign Out
-    </button>
-  </div>
-</div>
+
+    <div id="menuOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none;"></div>
 
 <script>
-function toggleAccordion(element) {
-  const content = element.nextElementSibling;
-  const icon = element.querySelector('.accordion-icon');
-  const isExpanded = content.style.display === 'flex';
-  content.style.display = isExpanded ? 'none' : 'flex';
-  icon.textContent = isExpanded ? '+' : '−';
-  element.setAttribute('aria-expanded', !isExpanded);
-}
+        // Desktop Mega Menu
+        const learningPathsBtn = document.getElementById('learningPathsBtn');
+        const megaMenu = document.getElementById('megaMenu');
+        const chevron = learningPathsBtn.querySelector('svg');
+        let isMenuOpen = false;
 
-function toggleMobileMenu() {
-  const mobileMenu = document.getElementById('mobileMenu');
-  const isOpen = mobileMenu.style.transform === 'translateX(0)';
-  mobileMenu.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0)';
-}
-
-document.getElementById('mobileMenuButton').addEventListener('click', toggleMobileMenu);
-document.getElementById('mobileMenuClose').addEventListener('click', toggleMobileMenu);
-
-function logout() {
-  // Placeholder for logout functionality
-  console.log('User logged out');
-}
-</script>
-<script>
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuClose = document.getElementById('mobileMenuClose');
-
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.style.transform = 'translateX(0)';
-    });
-
-    mobileMenuClose.addEventListener('click', () => {
-      mobileMenu.style.transform = 'translateX(100%)';
-    });
-
-    // Profile Dropdown Toggle
-    function toggleDropdown() {
-      const dropdown = document.querySelector('.profile-dropdown');
-      const isVisible = dropdown.style.opacity === '1';
-      dropdown.style.opacity = isVisible ? '0' : '1';
-      dropdown.style.transform = isVisible ? 'translateY(-10px)' : 'translateY(0)';
-      dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
-    }
-
-    // Logout Function (Placeholder)
-    function logout() {
-      console.log('Logout clicked');
-      // Implement logout logic here
-    }
-
-    // New Section: Read More Toggle
-    const readMoreLink = document.querySelector('.read-more-link');
-    const outcomesList = document.querySelector('.outcomes-list');
-    readMoreLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isOpen = outcomesList.classList.contains('visible');
-      outcomesList.classList.toggle('visible');
-      readMoreLink.classList.toggle('read-more-link-open');
-      readMoreLink.querySelector('span').textContent = isOpen ? 'Show More' : 'Show Less';
-    });
-
-    // New Section: Accordion Functionality
-    const accordionItems = document.querySelectorAll('.accordion-item');
-    accordionItems.forEach(item => {
-      const header = item.querySelector('.accordion-header');
-      header.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        accordionItems.forEach(i => {
-          i.classList.remove('active');
-          i.querySelector('.accordion-content').style.maxHeight = '0';
-          i.querySelector('.accordion-content').style.opacity = '0';
-          i.querySelector('.accordion-content').style.padding = '0 calc(var(--spacing-unit) * 3)';
-        });
-        if (!isActive) {
-          item.classList.add('active');
-          const content = item.querySelector('.accordion-content');
-          content.style.maxHeight = '600px';
-          content.style.opacity = '1';
-          content.style.padding = 'calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3)';
+        function showMegaMenu() {
+            const rect = learningPathsBtn.getBoundingClientRect();
+            megaMenu.style.top = rect.bottom + 5 + 'px';
+            megaMenu.style.opacity = '1';
+            megaMenu.style.transform = 'translate(-50%, 0)';
+            megaMenu.style.pointerEvents = 'auto';
+            chevron.style.transform = 'rotate(180deg)';
+            learningPathsBtn.style.background = '#f8f9fa';
         }
-      });
-    });
 
-    // Placeholder for loadFileData (requires XLSX library)
-    function loadFileData(file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheet = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheet];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        console.log('Parsed Excel Data:', jsonData);
-        // Process jsonData as needed
-      };
-      reader.readAsArrayBuffer(file);
-    }
+        function hideMegaMenu() {
+            megaMenu.style.opacity = '0';
+            megaMenu.style.transform = 'translate(-50%, 8px)';
+            megaMenu.style.pointerEvents = 'none';
+            chevron.style.transform = 'rotate(0deg)';
+            learningPathsBtn.style.background = 'transparent';
+        }
 
-    // Example: Handle file input for loadFileData
-    // Uncomment and add an input element in HTML if needed
-    /*
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.xlsx,.xls';
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        loadFileData(file);
-      }
-    });
-    document.body.appendChild(fileInput);
-    */
-  </script>
-<style>
-/* Media Queries */
-@media (max-width: 768px) {
-  .desktop-only { display: none !important; }
-  .mobile-menu-button { display: block !important; }
-}
-@media (min-width: 769px) {
-  #mobileMenu { display: none !important; }
-}
+        learningPathsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isMenuOpen) {
+                hideMegaMenu();
+            } else {
+                showMegaMenu();
+            }
+            isMenuOpen = !isMenuOpen;
+        });
 
-/* Ensure no horizontal overflow */
-html, body {
-  overflow-x: hidden;
-}
+        document.addEventListener('click', (e) => {
+            if (isMenuOpen && !megaMenu.contains(e.target) && !learningPathsBtn.contains(e.target)) {
+                hideMegaMenu();
+                isMenuOpen = false;
+            }
+        });
 
-/* Focus styles for accessibility */
-button:focus, a:focus {
-  outline: 2px solid #1e40af;
-  outline-offset: 2px;
-}
+        window.addEventListener('scroll', () => {
+            if (isMenuOpen) {
+                hideMegaMenu();
+                isMenuOpen = false;
+            }
+        });
 
-/* High contrast for accessibility */
-#mobileMenu a, #mobileMenu button {
-  color: #1f2937;
-}
+        // Profile Dropdown
+        const profileTrigger = document.getElementById('profileTrigger');
+        const profileDropdown = document.getElementById('profileDropdown');
+        let isProfileOpen = false;
 
-/* Smooth scrolling behavior */
-#mobileMenu {
-  overscroll-behavior: contain;
-}
-</style>
-    </nav>
-  </header>
+        function toggleDropdown() {
+            if (isProfileOpen) {
+                profileDropdown.style.opacity = '0';
+                profileDropdown.style.transform = 'translateY(-10px)';
+                profileDropdown.style.visibility = 'hidden';
+            } else {
+                profileDropdown.style.opacity = '1';
+                profileDropdown.style.transform = 'translateY(0)';
+                profileDropdown.style.visibility = 'visible';
+            }
+            isProfileOpen = !isProfileOpen;
+        }
+
+        profileTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDropdown();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (isProfileOpen && !profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
+                toggleDropdown();
+                isProfileOpen = false;
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.style.transform === 'translateX(0px)';
+            if (isOpen) {
+                mobileMenu.style.transform = 'translateX(100%)';
+                menuOverlay.style.display = 'none';
+            } else {
+                mobileMenu.style.transform = 'translateX(0)';
+                menuOverlay.style.display = 'block';
+            }
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuClose.addEventListener('click', toggleMobileMenu);
+        menuOverlay.addEventListener('click', () => {
+            mobileMenu.style.transform = 'translateX(100%)';
+            menuOverlay.style.display = 'none';
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.accordion-icon');
+            const isExpanded = content.style.display === 'flex';
+            content.style.display = isExpanded ? 'none' : 'flex';
+            icon.textContent = isExpanded ? '+' : '−';
+            element.setAttribute('aria-expanded', !isExpanded);
+        }
+
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (window.innerWidth <= 768) {
+                    mobileMenu.style.transform = 'translateX(100%)';
+                    menuOverlay.style.display = 'none';
+                }
+                if (isMenuOpen) {
+                    hideMegaMenu();
+                    isMenuOpen = false;
+                }
+                if (isProfileOpen) {
+                    toggleDropdown();
+                    isProfileOpen = false;
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                mobileMenu.style.transform = 'translateX(100%)';
+                menuOverlay.style.display = 'none';
+                if (isMenuOpen) {
+                    hideMegaMenu();
+                    isMenuOpen = false;
+                }
+                if (isProfileOpen) {
+                    toggleDropdown();
+                    isProfileOpen = false;
+                }
+            }
+        });
+
+        // Placeholder logout function
+        function logout() {
+            console.log('Logout clicked');
+            // Implement actual logout logic here
+        }
+    </script>
+
+  
+
 
 
 
