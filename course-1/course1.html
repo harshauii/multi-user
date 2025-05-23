@@ -1,9 +1,56 @@
-<!-- course1.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Course 1 Redirect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Access</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      font-family: 'Arial', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #ffffff33;
+      border-top: 5px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0;
+      opacity: 0.9;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.2rem; }
+      .loader { width: 40px; height: 40px; }
+    }
+  </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
@@ -28,18 +75,26 @@
         return;
       }
 
-      const paymentDoc = await getDoc(doc(db, "payments", user.uid));
-      const paid = paymentDoc.exists() && paymentDoc.data().course1Paid;
+      try {
+        const paymentDoc = await getDoc(doc(db, "payments", user.uid));
+        const paid = paymentDoc.exists() && paymentDoc.data().course1Paid;
 
-      if (paid) {
-        window.location.href = "premium-course-1.html";
-      } else {
-        window.location.href = "base-course-1.html";
+        if (paid) {
+          window.location.href = "premium-course-1.html";
+        } else {
+          window.location.href = "base-course-1.html";
+        }
+      } catch (error) {
+        console.error("Error checking payment status:", error);
+        window.location.href = "/error.html"; // Redirect to an error page if something goes wrong
       }
     });
   </script>
 </head>
 <body>
-  <p>Checking payment status...</p>
+  <div class="container">
+    <div class="loader"></div>
+    <h1>Verifying your course access...</h1>
+  </div>
 </body>
 </html>
