@@ -661,7 +661,7 @@ label {
 
     <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
@@ -675,184 +675,85 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 
-document.addEventListener('DOMContentLoaded', () => {
-  // DOM elements for user profile
-  const elements = {
-    userAvatar: document.getElementById('userAvatar'),
-    mobileUserAvatar: document.getElementById('mobileUserAvatar'),
-    userName: document.getElementById('userName'),
-    dropdownAvatar: document.getElementById('dropdownAvatar'),
-    dropdownName: document.getElementById('dropdownName'),
-    dropdownEmail: document.getElementById('dropdownEmail'),
-    mobileUserName: document.getElementById('mobileUserName'),
-    mobileUserEmail: document.getElementById('mobileUserEmail'),
-    welcomeUserSpan: document.getElementById('user')
-  };
+// DOM elements for user profile
+const elements = {
+  userAvatar: document.getElementById('userAvatar'),
+  mobileUserAvatar: document.getElementById('mobileUserAvatar'),
+  userName: document.getElementById('userName'),
+  dropdownAvatar: document.getElementById('dropdownAvatar'),
+  dropdownName: document.getElementById('dropdownName'),
+  dropdownEmail: document.getElementById('dropdownEmail'),
+  mobileUserName: document.getElementById('mobileUserName'),
+  mobileUserEmail: document.getElementById('mobileUserEmail'),
+  welcomeUserSpan: document.getElementById('user')
+};
 
-  // Clear sensitive data from DOM
-  const clearUserProfile = () => {
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    try {
-      if (elements.userName) elements.userName.textContent = '';
-      if (elements.dropdownName) elements.dropdownName.textContent = '';
-      if (elements.mobileUserName) elements.mobileUserName.textContent = '';
-      if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
-      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
-      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
+// Clear sensitive data from DOM
+const clearUserProfile = () => {
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+  try {
+    if (elements.userName) elements.userName.textContent = '';
+    if (elements.dropdownName) elements.dropdownName.textContent = '';
+    if (elements.mobileUserName) elements.mobileUserName.textContent = '';
+    if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
+    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
+    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
 
-      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-        if (img) {
-          img.src = fallbackAvatar;
-          img.removeAttribute('srcset');
-        }
-      });
-    } catch (error) {
-      console.error('Error clearing profile:', error);
-    }
-  };
-
-  // Update user profile on the page
-  const updateUserProfile = (user) => {
-    console.log('Updating user profile with:', user); // Debug log
-    if (!user) {
-      clearUserProfile();
-      return;
-    }
-
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-    const email = user.email || 'No email provided';
-    const photoURL = user.photoURL || fallbackAvatar;
-
-    try {
-      if (elements.userName) elements.userName.textContent = displayName;
-      if (elements.dropdownName) elements.dropdownName.textContent = displayName;
-      if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
-      if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
-      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
-      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
-
-      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-        if (img) {
-          img.src = photoURL;
-          img.onerror = () => img.src = fallbackAvatar;
-        }
-      });
-      console.log('Profile updated successfully:', { displayName, email, photoURL }); // Debug log
-    } catch (error) {
-      console.error('Profile update error:', error);
-      if (elements.dropdownEmail) {
-        elements.dropdownEmail.textContent = 'Error loading profile';
-        elements.dropdownEmail.style.color = '#dc2626';
+    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+      if (img) {
+        img.src = fallbackAvatar;
+        img.removeAttribute('srcset');
       }
-    }
-  };
+    });
+  } catch (error) {
+    console.error('Error clearing profile:', error);
+  }
+};
 
-  // Google Sign In
-  window.googleSignIn = async () => {
-    const googleButton = document.getElementById('google-signin');
-    const form = document.getElementById('login-form');
-    const overlay = document.getElementById('loading-overlay');
-    const errorMessage = document.getElementById('error-message');
+// Update user profile on the page
+const updateUserProfile = (user) => {
+  if (!user) {
+    clearUserProfile();
+    return;
+  }
 
-    googleButton.classList.add('loading-button');
-    googleButton.querySelector('.spinner').style.display = 'block';
-    form.classList.add('form-disabled');
-    overlay.style.display = 'flex';
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+  const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+  const email = user.email || 'No email provided';
+  const photoURL = user.photoURL || fallbackAvatar;
 
-    try {
-      await signInWithPopup(auth, provider);
-      // Success message and redirect handled by onAuthStateChanged
-    } catch (err) {
-      errorMessage.textContent = 'Google sign-in failed: ' + err.message;
-      errorMessage.style.display = 'block';
-      googleButton.classList.remove('loading-button');
-      googleButton.querySelector('.spinner').style.display = 'none';
-      form.classList.remove('form-disabled');
-      overlay.style.display = 'none';
-    }
-  };
+  try {
+    if (elements.userName) elements.userName.textContent = displayName;
+    if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+    if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+    if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
+    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
 
-  // Email/Password Sign In
-  window.emailSignIn = async (e) => {
-    e.preventDefault();
-    const loginButton = e.target.querySelector('button[type="submit"]');
-    const form = document.getElementById('login-form');
-    const overlay = document.getElementById('loading-overlay');
-    const errorMessage = document.getElementById('error-message');
-    const email = e.target.email.value.trim();
-    const password = e.target.password.value;
-
-    if (!email || !password) {
-      errorMessage.textContent = 'Please enter email and password.';
-      errorMessage.style.display = 'block';
-      return;
-    }
-
-    loginButton.classList.add('loading-button');
-    loginButton.querySelector('.spinner').style.display = 'block';
-    form.classList.add('form-disabled');
-    overlay.style.display = 'flex';
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Success message and redirect handled by onAuthStateChanged
-    } catch (err) {
-      errorMessage.textContent = 'Email sign-in failed: ' + err.message;
-      errorMessage.style.display = 'block';
-      loginButton.classList.remove('loading-button');
-      loginButton.querySelector('.spinner').style.display = 'none';
-      form.classList.remove('form-disabled');
-      overlay.style.display = 'none';
-    }
-  };
-
-  // Logout function
-  window.logout = async () => {
-    try {
-      await signOut(auth);
-      clearUserProfile();
-      window.location.href = 'login.html';
-    } catch (error) {
-      console.error('Logout error:', error);
-      if (elements.dropdownEmail) {
-        elements.dropdownEmail.textContent = 'Error logging out';
-        elements.dropdownEmail.style.color = '#dc2626';
+    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+      if (img) {
+        img.src = photoURL;
+        img.onerror = () => img.src = fallbackAvatar;
       }
-    }
-  };
+    });
+  } catch (error) {
+    console.error('Profile update error:', error);
+  }
+};
 
-  // Listen for auth state changes and update profile
-  onAuthStateChanged(auth, (user) => {
-    console.log('Auth state changed:', user); // Debug log
-    if (user) {
-      updateUserProfile(user);
-      const usernameElement = document.getElementById('username');
-      if (usernameElement) {
-        usernameElement.textContent = user.displayName || user.email;
-      }
-      const successMessage = document.getElementById('success-message');
-      if (successMessage) {
-        successMessage.style.display = 'block';
-        setTimeout(() => {
-          window.location.href = 'user.html';
-        }, 1000);
-      }
-    } else {
-      clearUserProfile();
-      if (window.location.pathname !== '/login.html') {
-        window.location.href = 'login.html';
-      }
-    }
-  });
-
-  // Attach emailSignIn to form submission
-  document.getElementById('login-form').addEventListener('submit', window.emailSignIn);
+// Listen for auth state changes and update profile
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+ updateUserProfile(user);
+  } else {
+    clearUserProfile();
+    // Optionally redirect to login page if user is not authenticated
+    // window.location.href = 'login.html';
+  }
 });
 
-// Export auth for use in other scripts if needed
+// Export auth for logout functionality
 export { auth };
     </script>
   </body>
