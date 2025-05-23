@@ -660,8 +660,9 @@ label {
     </div>
 
     <script type="module">
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
@@ -675,6 +676,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 // DOM elements for user profile
 const elements = {
@@ -739,21 +741,117 @@ const updateUserProfile = (user) => {
     });
   } catch (error) {
     console.error('Profile update error:', error);
+    if (elements.dropdownEmail) {
+      elements.dropdownEmail.textContent = 'Error loading profile';
+      elements.dropdownEmail.style.color = '#dc2626';
+    }
+  }
+};
+
+// Google Sign In
+window.googleSignIn = async () => {
+  const googleButton = document.getElementById('google-signin');
+  const form = document.getElementById('login-form');
+  const overlay = document.getElementById('loading-overlay');
+  const errorMessage = document.getElementById('error-message');
+
+  googleButton.classList.add('loading-button');
+  googleButton.querySelector('.spinner').style.display = 'block';
+  form.classList.add('form-disabled');
+  overlay.style.display = 'flex';
+
+  try {
+    await signInWithPopup(auth, provider);
+    // Success message and redirect handled by onAuthStateChanged
+  } catch (err) {
+    errorMessage.textContent = 'Google sign-in failed: ' + err.message;
+    errorMessage.style.display = 'block';
+    googleButton.classList.remove('loading-button');
+    googleButton.querySelector('.spinner').style.display = 'none';
+    form.classList.remove('form-disabled');
+    overlay.style.display = 'none';
+  }
+};
+
+// Email/Password Sign In
+window.emailSignIn = async (e) => {
+  e.preventDefault();
+  const loginButton = e.target.querySelector('button[type="submit"]');
+  const form = document.getElementById('login-form');
+  const overlay = document.getElementById('loading-overlay');
+  const errorMessage = document.getElementById('error-message');
+  const email = e.target.email.value.trim();
+  const password = e.target.password.value;
+
+  if (!email || !password) {
+    errorMessage.textContent = 'Please enter email and password.';
+    errorMessage.style.display = 'block';
+    return;
+  }
+
+  loginButton.classList.add('loading-button');
+  loginButton.querySelector('.spinner').style.display = 'block';
+  form.classList.add('form-disabled');
+  overlay.style.display = 'flex';
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    // Success message and redirect handled by onAuthStateChanged
+  } catch (err) {
+    errorMessage.textContent = 'Email sign-in failed: ' + err.message;
+    errorMessage.style.display = 'block';
+    loginButton.classList.remove('loading-button');
+    loginButton.querySelector('.spinner').style.display = 'none';
+    form.classList.remove('form-disabled');
+    overlay.style.display = 'none';
+  }
+};
+
+// Logout function
+window.logout = async () => {
+  try {
+    await signOut(auth);
+    window.location.href = 'login.html';
+  } catch (error) {
+    console.error('Logout error:', error);
+    if (elements.dropdownEmail) {
+      elements.dropdownEmail.textContent = 'Error logging out';
+      elements.dropdownEmail.style.color = '#dc2626';
+    }
   }
 };
 
 // Listen for auth state changes and update profile
 onAuthStateChanged(auth, (user) => {
   if (user) {
- updateUserProfile(user);
+    updateUserProfile(user);
+    const usernameElement = document.getElementById('username');
+    if (usernameElement) {
+      usernameElement.textContent = user.displayName || user.email;
+    }
+    const successMessage = document.getElementById('success-message');
+    if (successMessage) {
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        window.location.href = 'user.html';
+      }, 1000);
+    } else {
+      // If not on login page, just update profile
+      updateUserProfile(user);
+    }
   } else {
     clearUserProfile();
-    // Optionally redirect to login page if user is not authenticated
-    // window.location.href = 'login.html';
+    // Redirect to login page only if not already there
+    if (window.location.pathname !== '/login.html') {
+      window.location.href = 'login.html';
+    }
   }
 });
 
-// Export auth for logout functionality
+// Attach emailSignIn to form submission
+document.getElementById('login-form').addEventListener('submit', window.emailSignIn);
+
+// Export auth for use in other scripts if needed
 export { auth };
     </script>
   </body>
