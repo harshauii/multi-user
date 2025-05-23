@@ -751,6 +751,42 @@ label {
       document.getElementById('login-form').addEventListener('submit', window.emailSignIn);
 
 
+
+
+       // DOM elements
+  const elements = {
+    userAvatar: document.getElementById('userAvatar'),
+    mobileUserAvatar: document.getElementById('mobileUserAvatar'),
+    userName: document.getElementById('userName'),
+    dropdownAvatar: document.getElementById('dropdownAvatar'),
+    dropdownName: document.getElementById('dropdownName'),
+    dropdownEmail: document.getElementById('dropdownEmail'),
+    mobileUserName: document.getElementById('mobileUserName'),
+    mobileUserEmail: document.getElementById('mobileUserEmail'),
+    welcomeUserSpan: document.getElementById('user')
+  };
+
+  // Clear sensitive data from DOM
+  const clearUserProfile = () => {
+    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+    try {
+      if (elements.userName) elements.userName.textContent = '';
+      if (elements.dropdownName) elements.dropdownName.textContent = '';
+      if (elements.mobileUserName) elements.mobileUserName.textContent = '';
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
+
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = fallbackAvatar;
+          img.removeAttribute('srcset'); // Clear any cached image sources
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing profile:', error);
+    }
+  };
         // Update user profile on the page
   const updateUserProfile = (user) => {
     if (!user) {
