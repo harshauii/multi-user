@@ -668,210 +668,107 @@ label {
         Already have an account? <a href="/login" class="text-gs-green hover:underline">Log In</a>
       </p>
     </div>
-<script>
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  updateProfile,
-  onAuthStateChanged,
-  signOut
-} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
-  authDomain: "syncskilll.firebaseapp.com",
-  projectId: "syncskilll",
-  storageBucket: "syncskilll.appspot.com",
-  messagingSenderId: "203322315096",
-  appId: "1:203322315096:web:958fc7d94806ef9a98552d"
-};
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithPopup,
+        GoogleAuthProvider,
+        updateProfile,
+        onAuthStateChanged
+      } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+      const firebaseConfig = {
+        apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+        authDomain: "syncskilll.firebaseapp.com",
+        projectId: "syncskilll",
+        storageBucket: "syncskilll.appspot.com",
+        messagingSenderId: "203322315096",
+        appId: "1:203322315096:web:958fc7d94806ef9a98552d"
+      };
 
-// DOM elements for user profile
-const elements = {
-  userAvatar: document.getElementById('userAvatar'),
-  mobileUserAvatar: document.getElementById('mobileUserAvatar'),
-  userName: document.getElementById('userName'),
-  dropdownAvatar: document.getElementById('dropdownAvatar'),
-  dropdownName: document.getElementById('dropdownName'),
-  dropdownEmail: document.getElementById('dropdownEmail'),
-  mobileUserName: document.getElementById('mobileUserName'),
-  mobileUserEmail: document.getElementById('mobileUserEmail'),
-  welcomeUserSpan: document.getElementById('user')
-};
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
 
-// Clear sensitive data from DOM
-const clearUserProfile = () => {
-  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-  try {
-    if (elements.userName) elements.userName.textContent = '';
-    if (elements.dropdownName) elements.dropdownName.textContent = '';
-    if (elements.mobileUserName) elements.mobileUserName.textContent = '';
-    if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
-    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
-    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
+      // On page load, redirect if already signed in
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          document.getElementById('username').textContent = user.displayName || user.email;
+          document.getElementById('success-message').style.display = 'block';
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        }
+      });
 
-    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-      if (img) {
-        img.src = fallbackAvatar;
-        img.removeAttribute('srcset');
-      }
-    });
-  } catch (error) {
-    console.error('Error clearing profile:', error);
-  }
-};
+      // Email/Password Sign Up
+      document.getElementById('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const signupButton = e.target.querySelector('button[type="submit"]');
+        const form = document.getElementById('signup-form');
+        const overlay = document.getElementById('loading-overlay');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+        const name = e.target.name.value.trim();
+        const email = e.target.email.value.trim();
+        const password = e.target.password.value;
 
-// Update user profile on the page
-const updateUserProfile = (user) => {
-  if (!user) {
-    clearUserProfile();
-    return;
-  }
+        if (!name || !email || !password) {
+          errorMessage.textContent = 'Please fill in all fields.';
+          errorMessage.style.display = 'block';
+          return;
+        }
 
-  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-  const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-  const email = user.email || 'No email provided';
-  const photoURL = user.photoURL || fallbackAvatar;
+        signupButton.classList.add('loading-button');
+        signupButton.querySelector('.spinner').style.display = 'block';
+        form.classList.add('form-disabled');
+        overlay.style.display = 'flex';
 
-  try {
-    if (elements.userName) elements.userName.textContent = displayName;
-    if (elements.dropdownName) elements.dropdownName.textContent = displayName;
-    if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
-    if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
-    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
-    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(userCredential.user, { displayName: name });
+          document.getElementById('username').textContent = name;
+          successMessage.style.display = 'block';
+          // Redirect handled by onAuthStateChanged
+        } catch (error) {
+          errorMessage.textContent = 'Sign-up failed: ' + error.message;
+          errorMessage.style.display = 'block';
+          signupButton.classList.remove('loading-button');
+          signupButton.querySelector('.spinner').style.display = 'none';
+          form.classList.remove('form-disabled');
+          overlay.style.display = 'none';
+        }
+      });
 
-    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-      if (img) {
-        img.src = photoURL;
-        img.onerror = () => img.src = fallbackAvatar;
-      }
-    });
-  } catch (error) {
-    console.error('Profile update error:', error);
-    if (elements.dropdownEmail) {
-      elements.dropdownEmail.textContent = 'Error loading profile';
-      elements.dropdownEmail.style.color = '#dc2626';
-    }
-  }
-};
+      // Google Sign In
+      document.getElementById('google-signin').addEventListener('click', async () => {
+        const googleButton = document.getElementById('google-signin');
+        const form = document.getElementById('signup-form');
+        const overlay = document.getElementById('loading-overlay');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
 
-// On page load, redirect if already signed in
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    updateUserProfile(user);
-    const usernameElement = document.getElementById('username');
-    if (usernameElement) {
-      usernameElement.textContent = user.displayName || user.email;
-    }
-    const successMessage = document.getElementById('success-message');
-    if (successMessage) {
-      successMessage.style.display = 'block';
-      setTimeout(() => {
-        window.location.href = 'dashboard.html';
-      }, 1000);
-    } else {
-      // If not on signup page, just update profile
-      updateUserProfile(user);
-    }
-  } else {
-    clearUserProfile();
-    // Redirect to signup page only if not already there
-    if (window.location.pathname !== '/signup.html') {
-      window.location.href = 'signup.html';
-    }
-  }
-});
+        googleButton.classList.add('loading-button');
+        googleButton.querySelector('.spinner').style.display = 'block';
+        form.classList.add('form-disabled');
+        overlay.style.display = 'flex';
 
-// Email/Password Sign Up
-document.getElementById('signup-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const signupButton = e.target.querySelector('button[type="submit"]');
-  const form = document.getElementById('signup-form');
-  const overlay = document.getElementById('loading-overlay');
-  const successMessage = document.getElementById('success-message');
-  const errorMessage = document.getElementById('error-message');
-  const name = e.target.name.value­­.value.trim();
-  const email = e.target.email.value.trim();
-  const password = e.target.password.value;
-
-  if (!name || !email || !password) {
-    errorMessage.textContent = 'Please fill in all fields.';
-    errorMessage.style.display = 'block';
-    return;
-  }
-
-  signupButton.classList.add('loading-button');
-  signupButton.querySelector('.spinner').style.display = 'block';
-  form.classList.add('form-disabled');
-  overlay.style.display = 'flex';
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(userCredential.user, { displayName: name });
-    document.getElementById('username').textContent = name;
-    successMessage.style.display = 'block';
-    // Redirect handled by onAuthStateChanged
-  } catch (error) {
-    errorMessage.textContent = 'Sign-up failed: ' + error.message;
-    errorMessage.style.display = 'block';
-    signupButton.classList.remove('loading-button');
-    signupButton.querySelector('.spinner').style.display = 'none';
-    form.classList.remove('form-disabled');
-    overlay.style.display = 'none';
-  }
-});
-
-// Google Sign In
-document.getElementById('google-signin').addEventListener('click', async () => {
-  const googleButton = document.getElementById('google-signin');
-  const form = document.getElementById('signup-form');
-  const overlay = document.getElementById('loading-overlay');
-  const successMessage = document.getElementById('success-message');
-  const errorMessage = document.getElementById('error-message');
-
-  googleButton.classList.add('loading-button');
-  googleButton.querySelector('.spinner').style.display = 'block';
-  form.classList.add('form-disabled');
-  overlay.style.display = 'flex';
-
-  try {
-    await signInWithPopup(auth, provider);
-    successMessage.style.display = 'block';
-    // Redirect handled by onAuthStateChanged
-  } catch (error) {
-    errorMessage.textContent = 'Google sign-up failed: ' + error.message;
-    errorMessage.style.display = 'block';
-    googleButton.classList.remove('loading-button');
-    googleButton.querySelector('.spinner').style.display = 'none';
-    form.classList.remove('form-disabled');
-    overlay.style.display = 'none';
-  }
-});
-
-// Logout function
-window.logout = async () => {
-  try {
-    await signOut(auth);
-    window.location.href = 'signup.html';
-  } catch (error) {
-    console.error('Logout error:', error);
-    if (elements.dropdownEmail) {
-      elements.dropdownEmail.textContent = 'Error logging out';
-      elements.dropdownEmail.style.color = '#dc2626';
-    }
-  }
-};
-
-// Export auth for use in other scripts if needed
-export { auth };
-  </script>
+        try {
+          await signInWithPopup(auth, provider);
+          successMessage.style.display = 'block';
+          // Redirect handled by onAuthStateChanged
+        } catch (error) {
+          errorMessage.textContent = 'Google sign-up failed: ' + error.message;
+          errorMessage.style.display = 'block';
+          googleButton.classList.remove('loading-button');
+          googleButton.querySelector('.spinner').style.display = 'none';
+          form.classList.remove('form-disabled');
+          overlay.style.display = 'none';
+        }
+      });
+    </script>
   </body>
 </html>
