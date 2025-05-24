@@ -2278,6 +2278,98 @@ html, body {
             </div>
         </div>
     </div>
+ <script>
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.style.transform = 'translateX(0)';
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.style.transform = 'translateX(100%)';
+    });
+
+    // Profile Dropdown Toggle
+    function toggleDropdown() {
+      const dropdown = document.querySelector('.profile-dropdown');
+      const isVisible = dropdown.style.opacity === '1';
+      dropdown.style.opacity = isVisible ? '0' : '1';
+      dropdown.style.transform = isVisible ? 'translateY(-10px)' : 'translateY(0)';
+      dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
+    }
+
+    // Logout Function (Placeholder)
+    function logout() {
+      console.log('Logout clicked');
+      // Implement logout logic here
+    }
+
+    // New Section: Read More Toggle
+    const readMoreLink = document.querySelector('.read-more-link');
+    const outcomesList = document.querySelector('.outcomes-list');
+    readMoreLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = outcomesList.classList.contains('visible');
+      outcomesList.classList.toggle('visible');
+      readMoreLink.classList.toggle('read-more-link-open');
+      readMoreLink.querySelector('span').textContent = isOpen ? 'Show More' : 'Show Less';
+    });
+
+    // New Section: Accordion Functionality
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        accordionItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.accordion-content').style.maxHeight = '0';
+          i.querySelector('.accordion-content').style.opacity = '0';
+          i.querySelector('.accordion-content').style.padding = '0 calc(var(--spacing-unit) * 3)';
+        });
+        if (!isActive) {
+          item.classList.add('active');
+          const content = item.querySelector('.accordion-content');
+          content.style.maxHeight = '600px';
+          content.style.opacity = '1';
+          content.style.padding = 'calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3)';
+        }
+      });
+    });
+
+    // Placeholder for loadFileData (requires XLSX library)
+    function loadFileData(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheet = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheet];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        console.log('Parsed Excel Data:', jsonData);
+        // Process jsonData as needed
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    // Example: Handle file input for loadFileData
+    // Uncomment and add an input element in HTML if needed
+    /*
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.xlsx,.xls';
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        loadFileData(file);
+      }
+    });
+    document.body.appendChild(fileInput);
+    */
+  </script>
 
 
 
