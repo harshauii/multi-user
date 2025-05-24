@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Base Course 1 - Free</title>
-
-
-
-
-
-
-   <style>
-
-
-     * {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- XLSX library for new section's JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -24,7 +21,7 @@
       font-family: 'IBM Plex Sans', sans-serif;
       color: #1A1A1A;
       line-height: 1.6;
-      background: #Ffffff;
+      background: #F9FAFB;
     }
     
     @media (max-width: 768px) {
@@ -35,119 +32,6 @@
       .mobile-only { display: none !important; }
     }
 
-html, body {
-    overflow-x: hidden;
-}
-:root {
-            --primary-900: #37be72;
-            --secondary-900: #1A1A1A;
-            --surface-100: #F8F9FA;
-            --text-primary: #1A1A1A;
-            --text-inverse: #FFFFFF;
-            --transition: cubic-bezier(0.33, 1, 0.68, 1);
-            --shadow-lg: 0 24px 48px -12px rgba(0,0,0,0.18);
-            --radius-2xl: 24px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-
-     <!-- NAVBAR STYLES -->
-       #featured-program * {
-            all: unset;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-
-        #featured-program {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            border-radius: 12px;
-            padding: 16px;
-            color: white;
-            width: 100%;
-            max-width: 100%; /* Prevent overflow */
-            box-sizing: border-box;
-        }
-
-        #featured-program .label {
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            opacity: 0.9;
-            display: block;
-        }
-
-        #featured-program .title {
-            font-size: 16px; /* Adjusted for better fit */
-            font-weight: 700;
-            margin: 0 0 12px 0;
-            display: block;
-        }
-
-        #featured-program .description {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 24px;
-            line-height: 1.5;
-            display: block;
-            overflow-wrap: break-word;
-        }
-
-        #featured-program .cta-button {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-            display: block;
-        }
-
-        #featured-program .cta-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .page-container {
-            margin-left: 130px;
-            margin-right: 130px;
-        }
-
-        button:focus, a:focus {
-            outline: 2px solid #1e40af;
-            outline-offset: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .page-container {
-                margin-left: 3px;
-                margin-right: 3px;
-            }
-            .desktop-only {
-                display: none !important;
-            }
-            .mobile-menu-button {
-                display: block !important;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .mobile-only {
-                display: none !important;
-            }
-        }
-
-
-
-     
     /* Existing Section-image-left Styles */
     .section-image-left {
       width: 100%;
@@ -389,171 +273,6 @@ html, body {
     }
 
     /* Existing Container Styles */
-    .container {
-      display: flex;
-      gap: 30px;
-      align-items: stretch;
-      width: 100%;
-      max-width: 1200px;
-      padding-top: 40px;
-      margin: 0 auto;
-    }
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 380px;
-    }
-    .statsCard {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 24px;
-      border-radius: 16px;
-      height: 130px;
-      background-color: #FFFAF1;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
-    .statsCard:hover {
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-      transform: translateY(-2px);
-    }
-    .stats-card--text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 6px;
-    }
-    .stats-card--title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1a202c;
-      line-height: 1.2;
-    }
-    .stats-card--subtitle {
-      font-size: 15px;
-      color: #4a5568;
-      opacity: 0.9;
-    }
-    .stats-card--image-container {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      align-self: flex-end;
-    }
-    .stats-card--image,
-    .stats-card--hover-image {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      transition: opacity 0.3s ease;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .stats-card--hover-image {
-      opacity: 0;
-    }
-    .statsCard:hover .stats-card--hover-image {
-      opacity: 1;
-    }
-    .statsCard:hover .stats-card--image {
-      opacity: 0;
-    }
-    .bigBox {
-      width: 380px;
-      background-color: #d3e0ff;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      padding: 30px;
-      box-sizing: border-box;
-      color: #1a202c;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 28px;
-      line-height: 1.3;
-      user-select: none;
-      transition: all 0.3s ease;
-    }
-    .bigBox:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        gap: 16px;
-      }
-      .stack {
-        width: 100%;
-        gap: 16px;
-      }
-      .statsCard,
-      .bigBox {
-        width: 100%;
-        height: auto;
-        min-height: 120px;
-        padding: 20px;
-        flex-direction: row;
-        align-items: center;
-      }
-      .statsCard {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .stats-card--text {
-        flex: 1;
-        gap: 4px;
-      }
-      .stats-card--title {
-        font-size: 20px;
-      }
-      .stats-card--subtitle {
-        font-size: 14px;
-      }
-      .stats-card--image-container {
-        width: 80px;
-        height: 80px;
-        margin-left: 16px;
-        align-self: center;
-      }
-      .bigBox {
-        font-size: 22px;
-        text-align: center;
-        padding: 24px 20px;
-        order: -1;
-        margin-bottom: 8px;
-      }
-      .stats-card--hover-image.mobile-visible {
-        opacity: 1;
-      }
-      .stats-card--image.mobile-hidden {
-        opacity: 0;
-      }
-    }
-    @media (max-width: 400px) {
-      .stats-card--title {
-        font-size: 18px;
-      }
-      .stats-card--subtitle {
-        font-size: 13px;
-      }
-      .stats-card--image-container {
-        width: 70px;
-        height: 70px;
-      }
-      .bigBox {
-        font-size: 20px;
-      }
-    }
- /* Existing Container Styles */
     .container {
       display: flex;
       gap: 30px;
@@ -1296,412 +1015,370 @@ html, body {
                 justify-content: center;
             }
         }
-   </style>
+  </style>
 </head>
 <body>
- <header style="background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.12); height: 72px; position: fixed; top: 0; left: 0; width: 100%; z-index: 100;">
-        <nav style="max-width: 1440px; margin: 0 auto; padding: 0 20px; height: 100%; display: flex; justify-content: space-between; align-items: center;">
-            <a href="/" style="display: flex; align-items: center;">
-                <img src="assets/logo.jpg" alt="Logo" style="height: 28px;">
-            </a>
-            <div class="desktop-only" style="display: flex; align-items: center; gap: 40px;">
-                <div style="position: relative;">
-                    <button id="learningPathsBtn" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: transparent; border: none; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);">
-                        <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #333333; letter-spacing: 0.2px;">Learning Paths</span>
-                        <svg style="width: 18px; height: 18px; color: #4d4d4d; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M6 9l6 6 6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div id="megaMenu" class="mega-menu" style="position: fixed; top: 0; left: 50%; width: min(800px, 90vw); background: #fff; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.12); padding: 32px; opacity: 0; transform: translate(-50%, 8px); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); pointer-events: none;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
-                            <div>
-                                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
-                                    <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Career Accelerators</h3>
-                                </div>
-                                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
-                                    <li>
-                                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
-                                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
-                                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                                            <div style="width: 32px; height: 32px; background: #6366f1; border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-                                                <img src="your-icon.png" alt="Icon" style="width: 16px; height: 16px;" />
-                                            </div>
-                                            <div>
-                                                <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Data Science Pro</div>
-                                                <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">12 Courses · 98 Hours</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
-                                    <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Certifications</h3>
-                                </div>
-                                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
-                                    <li>
-                                        <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: #ffffff; border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
-                                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
-                                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                                            <div style="width: 32px; height: 32px; background: #10b981; border-radius: 6px; margin-right: 12px;"></div>
-                                            <div>
-                                                <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Cloud Architect</div>
-                                                <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">AWS · Azure · GCP</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="featured-program">
-                                <span class="label">FEATURED PROGRAM</span>
-                                <h3 class="title">GenAI Mastery</h3>
-                                <p class="description">Master LLMs, Diffusion Models, and Production Deployment</p>
-                                <button class="cta-button">Explore Program</button>
-                            </div>
-                        </div>
-                    </div>
+  <header style="background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.12); height: 72px; position: fixed; top: 0; left: 0; width: 100%; z-index: 100;">
+    <nav style="max-width: 1440px; margin: 0 auto; padding: 0 20px; height: 100%; display: flex; justify-content: space-between; align-items: center;">
+      <a href="/" style="display: flex; align-items: center;">
+        <img src="logo.jpg" alt="Logo" style="height: 28px;">
+      </a>
+      <div class="desktop-only" style="display: flex; align-items: center; gap: 40px;">
+        <div style="position: relative;"
+             onmouseenter="
+               const btn = this.querySelector('button');
+               const m = this.querySelector('.mega-menu');
+               const rect = btn.getBoundingClientRect();
+               m.style.top = rect.bottom + 5 + 'px';
+               m.style.opacity = '1';
+               m.style.transform = 'translate(-50%, 0)';
+               m.style.pointerEvents = 'auto';
+             "
+             onmouseleave="
+               const m = this.querySelector('.mega-menu');
+               m.style.opacity = '0';
+               m.style.transform = 'translate(-50%, 8px)';
+               m.style.pointerEvents = 'none';
+             ">
+          <button style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: transparent; border: none; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                  onmouseover="this.style.background='#f8f9fa'" 
+                  onmouseout="this.style.background='transparent'">
+            <span style="font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 500; color: #333333; letter-spacing: 0.2px;">Learning Paths</span>
+            <svg style="width: 18px; height: 18px; color: #4d4d4d; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);" 
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M6 9l6 6 6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="mega-menu"
+               style="position: fixed; top: 0; left: 50%; width: 800px; background: #fff; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.12); padding: 32px; opacity: 0; transform: translate(-50%,8px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); pointer-events: none;">
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px;">
+              <div>
+                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
+                  <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Career Accelerators</h3>
                 </div>
-                <div class="profile-menu" style="position: relative;">
-                    <div class="profile-trigger" id="profileTrigger" style="display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: transparent;"
-                         onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
-                        <img id="userAvatar" src="https://via.placeholder.com/36" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
-                        <span id="userName" style="font-weight: 500; color: #1e293b; font-size: 14px; position: relative; padding-right: 20px;">
-                            Loading...
-                            <span style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); transition: transform 0.2s ease; font-size: 18px;">▾</span>
-                        </span>
-                    </div>
-                    <div class="profile-dropdown" id="profileDropdown" style="position: absolute; right: 0; top: calc(100% + 8px); width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 24px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <img id="dropdownAvatar" src="https://via.placeholder.com/60" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0; margin-bottom: 16px; transition: transform 0.2s ease;"
-                                 onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <div id="dropdownName" style="font-weight: 600; font-size: 18px; color: #1e293b; margin-bottom: 4px; line-height: 1.4;">Loading...</div>
-                            <div id="dropdownEmail" style="font-size: 14px; color: #64748b; margin-bottom: 16px; word-break: break-all;">Loading...</div>
-                        </div>
-                        <div style="height: 1px; background: #f1f5f9; margin: 16px 0;"></div>
-                        <div class="logout-btn" onclick="logout()" style="padding: 12px; text-align: center; border-radius: 8px; background: #fff; border: 1px solid #f1f5f9; color: #dc2626; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;"
-                             onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#fecaca'"
-                             onmouseout="this.style.background='#fff'; this.style.borderColor='#f1f5f9'">
-                            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            <span style="color: black;">Sign Out</span>
-                        </div>
-                    </div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                  <li>
+                    <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                       onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+                       onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                      <div style="width: 32px; height: 32px; background: #6366f1; border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
+                        <img src="your-icon.png" alt="Icon" style="width: 16px; height: 16px;" />
+                      </div>
+                      <div>
+                        <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Data Science Pro</div>
+                        <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">12 Courses · 98 Hours</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e9ecef;">
+                  <h3 style="font-size: 14px; font-weight: 700; color: #2d3436; letter-spacing: 0.25px; margin: 0; text-transform: uppercase;">Certifications</h3>
                 </div>
+                <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 12px;">
+                  <li>
+                    <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: #ffffff; border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                       onmouseover="this.style.background='#f8f9fa'; this.style.borderColor='#e9ecef'"
+                       onmouseout="this.style.background='#ffffff'; this.style.borderColor='#f1f3f5'">
+                      <div style="width: 32px; height: 32px; background: #10b981; border-radius: 6px; margin-right: 12px;"></div>
+                      <div>
+                        <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Cloud Architect</div>
+                        <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">AWS · Azure · GCP</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 12px; padding: 24px; color: white;">
+                  <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px; opacity: 0.9;">FEATURED PROGRAM</div>
+                  <h3 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0;">GenAI Mastery</h3>
+                  <p style="font-size: 14px; opacity: 0.9; margin-bottom: 24px; line-height: 1.5;">Master LLMs, Diffusion Models, and Production Deployment</p>
+                  <button style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; transition: all 0.25s ease;"
+                          onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+                          onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                    Explore Program
+                  </button>
+                </div>
+              </div>
             </div>
-            <button class="mobile-menu-button" id="mobileMenuButton" style="padding: 8px; border-radius: 8px; border: none; background: transparent; transition: transform 0.2s ease, background 0.2s ease; display: none;"
+          </div>
+        </div>
+        <div class="profile-menu" style="position: relative;">
+          <div class="profile-trigger" onclick="toggleDropdown()" style="display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: transparent;"
+               onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+            <img id="userAvatar" src="https://via.placeholder.com/36" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
+            <span id="userName" style="font-weight: 500; color: #1e293b; font-size: 14px; position: relative; padding-right: 20px;">Loading...
+              <span style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); transition: transform 0.2s ease; font-size: 18px;">▾</span>
+            </span>
+          </div>
+          <div class="profile-dropdown" style="position: absolute; right: 0; top: calc(100% + 8px); width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 24px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img id="dropdownAvatar" src="https://via.placeholder.com/60" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #e2e8f0; margin-bottom: 16px; transition: transform 0.2s ease;"
+                   onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              <div id="dropdownName" style="font-weight: 600; font-size: 18px; color: #1e293b; margin-bottom: 4px; line-height: 1.4;">Loading...</div>
+              <div id="dropdownEmail" style="font-size: 14px; color: #64748b; margin-bottom: 16px; word-break: break-all;">Loading...</div>
+            </div>
+            <div style="height: 1px; background: #f1f5f9; margin: 16px 0;"></div>
+            <div class="logout-btn" onclick="logout()" style="padding: 12px; text-align: center; border-radius: 8px; background: #fff; border: 1px solid #f1f5f9; color: #dc2626; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;"
+                 onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#fecaca'"
+                 onmouseout="this.style.background='#fff'; this.style.borderColor='#f1f5f9'">
+              <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+              <span>Sign Out</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="mobile-menu-button" id="mobileMenuButton" style="display: none; padding: 8px; border-radius: 8px; border: none; background: transparent; transition: transform 0.2s ease, background 0.2s ease;"
+              onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
+              onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
+        <svg style="width: 24px; height: 24px; color: #4b5563;" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <div id="mobileMenu" style="position: fixed; top: 0; right: 0; bottom: 0; width: 85vw; max-width: 300px; background: #ffffff; display: flex; flex-direction: column; z-index: 1000; transform: translateX(100%); box-shadow: -4px 0 16px rgba(0,0,0,0.1);">
+        <div style="flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 24px 16px;">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
+            <button id="mobileMenuClose" style="padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;"
                     onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
                     onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
-                <svg style="width: 24px; height: 24px; color: #4b5563;" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
+              <svg style="width: 24px; height: 24px; color: #4b5563;" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
             </button>
-        </nav>
-    </header>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <h3 onclick="(function(c){c.style.display=c.style.display==='flex'?'none':'flex'})(this.nextElementSibling)"
+                  style="font-size: 16px; font-weight: 700; color: #2d3436; margin: 0; padding: 12px 0; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                <span>Popular Courses</span>
+                <span style="font-size: 18px; line-height: 1;">+</span>
+              </h3>
+              <div style="display: none; flex-direction: column; gap: 12px; padding: 8px 0;">
+                <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);"
+                   onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+                   onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                  <div style="width: 24px; height: 24px; background: #6366f1; border-radius: 6px; margin-right: 12px;"></div>
+                  <div>
+                    <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Data Science Pro</div>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">12 Courses · 98 Hours</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
+              <h3 onclick="(function(c){c.style.display=c.style.display==='flex'?'none':'flex'})(this.nextElementSibling)"
+                  style="font-size: 16px; font-weight: 7
+```html
+00; color: #2d3436; margin: 0; padding: 12px 0; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                <span>Certifications</span>
+                <span style="font-size: 18px; line-height: 1;">+</span>
+              </h3>
+              <div style="display: none; flex-direction: column; gap: 12px; padding: 8px 0;">
+                <a href="/courses.html" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; background: linear-gradient(95deg, #f8f9fa 0%, #ffffff 100%); border: 1px solid #f1f3f5; text-decoration: none; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);"
+                   onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.05)'"
+                   onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                  <div style="width: 24px; height: 24px; background: #6366f1; border-radius: 6px; margin-right: 12px;"></div>
+                  <div>
+                    <div style="font-size: 14px; font-weight: 600; color: #2d3436;">Cloud Architect</div>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">AWS · Azure · GCP</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+              <div style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 12px; padding: 16px; color: white;">
+                <div style="font-size: 12px; font-weight: 700; opacity: 0.9; margin-bottom: 8px;">FEATURED PROGRAM</div>
+                <h3 style="font-size: 18px; font-weight: 700; margin: 0 0 8px 0;">GenAI Mastery</h3>
+                <p style="font-size: 14px; opacity: 0.9; margin: 0 0 16px 0; line-height: 1.4;">Master LLMs, Diffusion Models, and Production Deployment</p>
+                <button style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; transition: all 0.25s ease;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+                        onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                  Explore Program
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="flex-shrink: 0; border-top: 1px solid #f1f5f9; padding: 16px; background: #ffffff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); z-index: 1002;">
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+            <img id="mobileUserAvatar" src="https://via.placeholder.com/56" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
+            <div style="flex-grow: 1; min-width: 0;">
+              <div id="mobileUserName" style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
+              <div id="mobileUserEmail" style="font-size: 14px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
+            </div>
+          </div>
+          <div onclick="logout()" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: linear-gradient(to right, #fff1f2, #ffe4e6); border-radius: 8px; color: #dc2626; font-weight: 500; cursor: pointer; border: 1px solid #fecaca;">
+            <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            <span>Sign Out</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-    <div id="mobileMenu" class="mobile-only" style="position: fixed; top: 0; right: 0; bottom: 0; width: 90vw; max-width: 320px; background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%); padding: 24px 20px; transform: translateX(100%); transition: transform 0.3s ease-in-out; box-shadow: -6px 0 20px rgba(0,0,0,0.08); z-index: 1000; display: flex; flex-direction: column; overscroll-behavior: contain;">
-        <div style="flex-shrink: 0; display: flex; justify-content: flex-end; margin-bottom: 24px;">
-            <button id="mobileMenuClose" aria-label="Close menu" style="padding: 12px; border-radius: 12px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;"
-                    onmouseover="this.style.background='rgba(0,0,0,0.05)'; this.style.transform='scale(1.1)'"
-                    onmouseout="this.style.background='transparent'; this.style.transform='scale(1)'">
-                <svg style="width: 24px; height: 24px; color: #374151;" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+
+
+
+
+
+
+  <section class="section-image-left">
+    <div class="section-image-left__container">
+      <div class="section-image-left__image-wrapper">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/SEO_4be34a6ed1_07b92bff39.webp" alt="SEO Course" class="seo-image-box__image">
+        <div class="section-image-left__buttons-desktop">
+          <div class="seo-image-box__buttons">
+            <button class="seo-btn seo-btn--apply">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <span>Apply Now</span>
             </button>
-        </div>
-        <div style="flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;">
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
-                    <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="certifications-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                        <span>Certifications</span>
-                        <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
-                    </h3>
-                    <div id="certifications-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
-                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Data Science Pro</div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">12 Courses · 98 Hours</div>
-                            </div>
-                        </a>
-                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                            <div style="width: 28px; height: 28px; background: #4f46e5; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">AI & ML Foundation</div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">8 Courses · 64 Hours</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 12px;">
-                    <h3 onclick="toggleAccordion(this)" aria-expanded="false" aria-controls="cloud-menu" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; padding: 12px 0; letter-spacing: 0.3px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                        <span>Cloud</span>
-                        <span style="font-size: 18px; color: #1f2937; line-height: 1; transition: transform 0.2s ease;" class="accordion-icon">+</span>
-                    </h3>
-                    <div id="cloud-menu" style="display: none; flex-direction: column; gap: 12px; padding: 12px 0; transition: all 0.3s ease;">
-                        <a href="#" style="display: flex; align-items: center; padding: 12px 16px; border-radius: 10px; background: #ffffff; border: 1px solid #e5e7eb; text-decoration: none; transition: all 0.2s ease;"
-                           onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)'"
-                           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
-                            <div style="width: 28px; height: 28px; background: #059669; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center;">
-                                <svg style="width: 16px; height: 16px; color: #ffffff;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1f2937;">Cloud Architect</div>
-                                <div style="font-family: 'Inter', system-ui, sans-serif; font-size: 12px; color: #6b7280; margin-top: 4px;">AWS · Azure · GCP</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div style="padding: 16px; border-radius: 12px; background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 100%);">
-                    <span style="display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">Featured Program</span>
-                    <h3 style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 700; color: #1f2937; margin: 0 0 8px 0;">GenAI Mastery</h3>
-                    <p style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #4b5563; margin: 0 0 12px 0; line-height: 1.5;">Master LLMs, Diffusion Models, and Production Deployment</p>
-                    <button style="padding: 10px 16px; border-radius: 8px; border: none; background: #1e40af; color: #ffffff; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease;"
-                            onmouseover="this.style.background='#1e3a8a'; this.style.transform='scale(1.02)'"
-                            onmouseout="this.style.background='#1e40af'; this.style.transform='scale(1)'">
-                        Explore Program
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div style="flex-shrink: 0; border-top: 1px solid #e5e7eb; padding: 20px; background: #ffffff; box-shadow: 0 -6px 16px rgba(0,0,0,0.06); position: sticky; bottom: 0;">
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                <img id="mobileUserAvatar" src="https://via.placeholder.com/56" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e5e7eb; transition: transform 0.2s ease;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div style="flex-grow: 1; min-width: 0;">
-                    <div id="mobileUserName" style="font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
-                    <div id="mobileUserEmail" style="font-family: 'Inter', system-ui, sans-serif; font-size: 13px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
-                </div>
-            </div>
-            <button onclick="logout()" aria-label="Sign out" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; width: 100%; background: #fef2f2; border-radius: 8px; border: none; color: #dc2626; font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.2s ease;"
-                    onmouseover="this.style.background='#fee2e2'; this.style.transform='scale(1.02)'"
-                    onmouseout="this.style.background='#fef2f2'; this.style.transform='scale(1)'">
-                <svg style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                </svg>
-                Sign Out
+            <button class="seo-btn seo-btn--download">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-3-3m3 3l3-3M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+              </svg>
+              <span>Download Brochure</span>
             </button>
+          </div>
         </div>
+      </div>
+      <div class="section-image-left__content">
+        <div class="seo-course-right">
+          <div class="seo-course-top-bar">
+            <div class="seo-course-title">
+              <label>SEO</label>
+            </div>
+            <div class="seo-course-description">
+              <p>Master the art & science of SEO to boost your website’s ranking on search engines like Google. Learn keyword research, on-page & off-page optimization, technical SEO, and analytics to drive organic traffic.</p>
+            </div>
+            <div class="seo-course-date-time">
+              <div class="seo-course-date-label">Next Batch Starts</div>
+              <div class="seo-course-date-value">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span>15th Nov, 2025</span>
+              </div>
+            </div>
+            <div class="seo-course-mentor">
+              <div class="seo-course-mentor-heading">Mentors</div>
+              <div class="seo-course-mentor-card">
+                <div class="mentor-image-wrapper">
+                  <img class="seo-course-mentor-image" src="https://d3kl8zsmmx4oop.cloudfront.net/mentor_1_b79d7d7c5b.webp" alt="Mentor">
+                </div>
+                <div class="seo-course-mentor-details">
+                  <div class="seo-course-mentor-name">John Doe</div>
+                  <div class="seo-course-mentor-role">SEO Specialist at Google</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-image-left__buttons-mobile">
+          <div class="seo-image-box__buttons">
+            <button class="seo-btn seo-btn--apply">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <span>Apply Now</span>
+            </button>
+            <button class="seo-btn seo-btn--download">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-3-3m3 3l3-3M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+              </svg>
+              <span>Download Brochure</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div id="menuOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none;"></div>
-
-<script>
-        // Desktop Mega Menu
-        const learningPathsBtn = document.getElementById('learningPathsBtn');
-        const megaMenu = document.getElementById('megaMenu');
-        const chevron = learningPathsBtn.querySelector('svg');
-        let isMenuOpen = false;
-
-        function showMegaMenu() {
-            const rect = learningPathsBtn.getBoundingClientRect();
-            megaMenu.style.top = rect.bottom + 5 + 'px';
-            megaMenu.style.opacity = '1';
-            megaMenu.style.transform = 'translate(-50%, 0)';
-            megaMenu.style.pointerEvents = 'auto';
-            chevron.style.transform = 'rotate(180deg)';
-            learningPathsBtn.style.background = '#f8f9fa';
-        }
-
-        function hideMegaMenu() {
-            megaMenu.style.opacity = '0';
-            megaMenu.style.transform = 'translate(-50%, 8px)';
-            megaMenu.style.pointerEvents = 'none';
-            chevron.style.transform = 'rotate(0deg)';
-            learningPathsBtn.style.background = 'transparent';
-        }
-
-        learningPathsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (isMenuOpen) {
-                hideMegaMenu();
-            } else {
-                showMegaMenu();
-            }
-            isMenuOpen = !isMenuOpen;
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && !megaMenu.contains(e.target) && !learningPathsBtn.contains(e.target)) {
-                hideMegaMenu();
-                isMenuOpen = false;
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            if (isMenuOpen) {
-                hideMegaMenu();
-                isMenuOpen = false;
-            }
-        });
-
-        // Profile Dropdown
-        const profileTrigger = document.getElementById('profileTrigger');
-        const profileDropdown = document.getElementById('profileDropdown');
-        let isProfileOpen = false;
-
-        function toggleDropdown() {
-            if (isProfileOpen) {
-                profileDropdown.style.opacity = '0';
-                profileDropdown.style.transform = 'translateY(-10px)';
-                profileDropdown.style.visibility = 'hidden';
-            } else {
-                profileDropdown.style.opacity = '1';
-                profileDropdown.style.transform = 'translateY(0)';
-                profileDropdown.style.visibility = 'visible';
-            }
-            isProfileOpen = !isProfileOpen;
-        }
-
-        profileTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleDropdown();
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isProfileOpen && !profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
-                toggleDropdown();
-                isProfileOpen = false;
-            }
-        });
-
-        // Mobile Menu
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMobileMenu() {
-            const isOpen = mobileMenu.style.transform === 'translateX(0px)';
-            if (isOpen) {
-                mobileMenu.style.transform = 'translateX(100%)';
-                menuOverlay.style.display = 'none';
-            } else {
-                mobileMenu.style.transform = 'translateX(0)';
-                menuOverlay.style.display = 'block';
-            }
-        }
-
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
-        menuOverlay.addEventListener('click', () => {
-            mobileMenu.style.transform = 'translateX(100%)';
-            menuOverlay.style.display = 'none';
-        });
-
-        // Accordion Toggle
-        function toggleAccordion(element) {
-            const content = element.nextElementSibling;
-            const icon = element.querySelector('.accordion-icon');
-            const isExpanded = content.style.display === 'flex';
-            content.style.display = isExpanded ? 'none' : 'flex';
-            icon.textContent = isExpanded ? '+' : '−';
-            element.setAttribute('aria-expanded', !isExpanded);
-        }
-
-        // Close on ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (window.innerWidth <= 768) {
-                    mobileMenu.style.transform = 'translateX(100%)';
-                    menuOverlay.style.display = 'none';
-                }
-                if (isMenuOpen) {
-                    hideMegaMenu();
-                    isMenuOpen = false;
-                }
-                if (isProfileOpen) {
-                    toggleDropdown();
-                    isProfileOpen = false;
-                }
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                mobileMenu.style.transform = 'translateX(100%)';
-                menuOverlay.style.display = 'none';
-                if (isMenuOpen) {
-                    hideMegaMenu();
-                    isMenuOpen = false;
-                }
-                if (isProfileOpen) {
-                    toggleDropdown();
-                    isProfileOpen = false;
-                }
-            }
-        });
-
-        // Placeholder logout function
-        function logout() {
-            console.log('Logout clicked');
-            // Implement actual logout logic here
-        }
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-
-
-
-
-
-
-  
-<div class="wrap section__container--small">
+  </section>
+
+
+
+
+
+
+  <div class="container">
+    <div class="stack">
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">4.8/5</div>
+          <div class="stats-card--subtitle">Average Rating</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Rating">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/FFD700" alt="Rating Hover">
+        </div>
+      </div>
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">10K+</div>
+          <div class="stats-card--subtitle">Learners</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Learners">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/00FF00" alt="Learners Hover">
+        </div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">4.8/5</div>
+          <div class="stats-card--subtitle">Average Rating</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Rating">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/FFD700" alt="Rating Hover">
+        </div>
+      </div>
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">10K+</div>
+          <div class="stats-card--subtitle">Learners</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Learners">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/00FF00" alt="Learners Hover">
+        </div>
+      </div>
+    </div><div class="stack">
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">4.8/5</div>
+          <div class="stats-card--subtitle">Average Rating</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Rating">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/FFD700" alt="Rating Hover">
+        </div>
+      </div>
+      <div class="statsCard">
+        <div class="stats-card--text">
+          <div class="stats-card--title">10K+</div>
+          <div class="stats-card--subtitle">Learners</div>
+        </div>
+        <div class="stats-card--image-container">
+          <img class="stats-card--image" src="https://via.placeholder.com/100" alt="Learners">
+          <img class="stats-card--hover-image" src="https://via.placeholder.com/100/00FF00" alt="Learners Hover">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+ <div class="wrap section__container--small">
         <div class="left-section">
             <div class="key-outcomes key-outcomes-1">
                 <p class="pre-header">Program Highlights</p>
@@ -2233,105 +1910,177 @@ html, body {
 
 
 
+   <script type="module">
+   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signOut 
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+  authDomain: "syncskilll.firebaseapp.com",
+  projectId: "syncskilll",
+  storageBucket: "syncskilll.firebasestorage.app",
+  messagingSenderId: "203322315096",
+  appId: "1:203322315096:web:958fc7d94806ef9a98552d",
+  measurementId: "G-JWWWM2ZQSK"
+};
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
+// DOM Elements
+const elements = {
+  mobileMenu: document.getElementById('mobileMenu'),
+  mobileMenuButton: document.getElementById('mobileMenuButton'),
+  mobileMenuClose: document.getElementById('mobileMenuClose'),
+  userAvatar: document.getElementById('userAvatar'),
+  mobileUserAvatar: document.getElementById('mobileUserAvatar'),
+  userName: document.getElementById('userName'),
+  dropdownAvatar: document.getElementById('dropdownAvatar'),
+  dropdownName: document.getElementById('dropdownName'),
+  dropdownEmail: document.getElementById('dropdownEmail'),
+  mobileUserName: document.getElementById('mobileUserName'),
+  mobileUserEmail: document.getElementById('mobileUserEmail')
+};
 
+// Update user profile
+const updateUserProfile = (user) => {
+  if (!user) return;
+  
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+  const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+  const email = user.email || 'No email provided';
+  const photoURL = user.photoURL || fallbackAvatar;
 
+  try {
+    if (elements.userName) elements.userName.textContent = displayName;
+    if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+    if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+    if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-    import { getFirestore, doc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
-      authDomain: "syncskilll.firebaseapp.com",
-      projectId: "syncskilll",
-      storageBucket: "syncskilll.firebasestorage.app",
-      messagingSenderId: "203322315096",
-      appId: "1:203322315096:web:958fc7d94806ef9a98552d",
-      measurementId: "G-JWWWM2ZQSK"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let currentUser = null;
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = '/login.html';
-        return;
+    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+      if (img) {
+        img.src = photoURL;
+        img.onerror = () => img.src = fallbackAvatar;
       }
-      currentUser = user;
     });
+  } catch (error) {
+    console.error('Profile update error:', error);
+  }
+};
 
-    async function payNow() {
-      if (!currentUser) {
-        alert('User not authenticated!');
-        return;
-      }
+// Handle auth state
+const handleAuthState = (user) => {
+  if (!user || localStorage.getItem('isLoggedIn') !== 'true') {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/login.html';
+    return;
+  }
+  updateUserProfile(user);
+};
 
-      try {
-        // Simulate payment success - update Firestore payment document for this user
-        const paymentRef = doc(db, 'payments', currentUser.uid);
+// Initialize auth listener
+onAuthStateChanged(auth, handleAuthState);
 
-        // Update the course1 payment to true
-        await setDoc(paymentRef, { courses: { course1: true } }, { merge: true });
+// Mobile menu toggle
+const toggleMobileMenu = () => {
+  if (elements.mobileMenu) {
+    const isOpen = elements.mobileMenu.style.transform === 'translateX(0px)';
+    elements.mobileMenu.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0)';
+  }
+};
 
-        alert('Payment successful! Redirecting to premium course...');
-        window.location.href = './premium-course-1.html';
-      } catch (error) {
-        console.error('Payment failed:', error);
-        alert('Payment failed. Please try again.');
-      }
+// Dropdown toggle
+window.toggleDropdown = () => {
+  const dropdown = document.querySelector('.profile-dropdown');
+  if (dropdown) {
+    const isVisible = dropdown.style.opacity === '1';
+    dropdown.style.opacity = isVisible ? '0' : '1';
+    dropdown.style.transform = isVisible ? 'translateY(-10px)' : 'translateY(0)';
+    dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
+  }
+};
+
+// Close dropdown on outside click
+document.addEventListener('click', (e) => {
+  const profileMenu = document.querySelector('.profile-menu');
+  if (profileMenu && !e.target.closest('.profile-menu')) {
+    const dropdown = document.querySelector('.profile-dropdown');
+    if (dropdown) {
+      dropdown.style.opacity = '0';
+      dropdown.style.transform = 'translateY(-10px)';
+      dropdown.style.visibility = 'hidden';
     }
-    </script>
+  }
+});
+
+// Event listeners
+if (elements.mobileMenuButton) elements.mobileMenuButton.addEventListener('click', toggleMobileMenu);
+if (elements.mobileMenuClose) elements.mobileMenuClose.addEventListener('click', toggleMobileMenu);
+
+// Close mobile menu on outside click or ESC
+document.addEventListener('click', (e) => {
+  if (elements.mobileMenu && elements.mobileMenuButton && 
+      !elements.mobileMenu.contains(e.target) && 
+      !elements.mobileMenuButton.contains(e.target) && 
+      window.innerWidth <= 768) {
+    elements.mobileMenu.style.transform = 'translateX(100%)';
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && window.innerWidth <= 768 && elements.mobileMenu) {
+    elements.mobileMenu.style.transform = 'translateX(100%)';
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768 && elements.mobileMenu) {
+    elements.mobileMenu.style.transform = 'translateX(100%)';
+  }
+});
+
+// Logout function
+window.logout = async () => {
+  try {
+    await signOut(auth);
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/login.html';
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Error during logout. Please try again.');
+  }
+};
+
+// Session timeout
+let inactivityTimer;
+const resetSessionTimer = () => {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => window.logout(), 3600000); // 1 hour
+};
+
+['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+  window.addEventListener(event, resetSessionTimer);
+});
+
+resetSessionTimer();
+
+// Initial auth check
+document.addEventListener('DOMContentLoaded', () => {
+  const loadingOverlay = document.createElement('div');
+  loadingOverlay.style = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;';
+  loadingOverlay.innerHTML = '<p>Loading...</p>';
+  document.body.appendChild(loadingOverlay);
+
+  onAuthStateChanged(auth, (user) => {
+    loadingOverlay.remove();
+    handleAuthState(user);
+  });
+});
+  </script>
+</body>
 </html>
