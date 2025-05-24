@@ -3611,12 +3611,7 @@ body {
   });
   resetSessionTimer();
 
-  // Prevent browser back button from showing cached page
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || window.performance?.navigation?.type === 2) {
-      // Page was restored from bfcache or back navigation
-      auth.currentUser ? updateUserProfile(auth.currentUser) : handleAuthState(null);
-    }
+  
   });
 </script>
 </body>
