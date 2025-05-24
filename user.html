@@ -3487,7 +3487,7 @@ body {
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
   import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
-  // Your Firebase config
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
     authDomain: "syncskilll.firebaseapp.com",
@@ -3515,7 +3515,7 @@ body {
     welcomeUserSpan: document.getElementById('user')
   };
 
-  // Clear sensitive data from DOM
+  // Clear user profile
   const clearUserProfile = () => {
     const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
     try {
@@ -3529,7 +3529,7 @@ body {
       [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
         if (img) {
           img.src = fallbackAvatar;
-          img.removeAttribute('srcset'); // Clear any cached image sources
+          img.removeAttribute('srcset');
         }
       });
     } catch (error) {
@@ -3537,7 +3537,7 @@ body {
     }
   };
 
-  // Update user profile on the page
+  // Update user profile
   const updateUserProfile = (user) => {
     if (!user) {
       clearUserProfile();
@@ -3569,55 +3569,64 @@ body {
   };
 
   // Auth state handling
+  let authChecked = false;
   const handleAuthState = (user) => {
+    authChecked = true;
     if (!user) {
-      clearUserProfile(); // Clear DOM data immediately
-      window.location.href = '/login.html'; // Redirect to login
-      return;
+      clearUserProfile();
+      window.location.href = '/login.html';
+    } else {
+      updateUserProfile(user);
     }
-    updateUserProfile(user); // Update user profile if logged in
   };
 
-  // Watch for auth state changes
+  // Listen for auth changes
   onAuthStateChanged(auth, handleAuthState);
 
-  // Prevent back/forward cache (bfcache) from restoring sensitive data
+  // Fix back-button behavior with BFCache
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || window.performance?.navigation?.type === 2) {
+      if (!authChecked) {
+        const user = auth.currentUser;
+        if (user) {
+          updateUserProfile(user); // Already logged in
+        } else {
+          window.location.href = '/login.html'; // Not logged in
+        }
+      }
+    }
+  });
+
+  // Clear sensitive data on unload
   window.addEventListener('unload', () => {
-    clearUserProfile(); // Clear DOM data on page unload
+    clearUserProfile();
   });
 
   // Logout function
   window.logout = async () => {
     try {
       await signOut(auth);
-      clearUserProfile(); // Clear DOM data before redirect
-      sessionStorage.clear(); // Clear session storage
-      localStorage.removeItem('userData'); // Clear specific localStorage keys if used
-      window.location.href = '/index.html'; // Redirect to login
+      clearUserProfile();
+      sessionStorage.clear();
+      localStorage.removeItem('userData');
+      window.location.href = '/index.html';
     } catch (error) {
       console.error('Logout error:', error);
       alert('Error during logout. Please try again.');
     }
   };
 
-  // Optional: Auto logout after inactivity (1 hour)
+  // Auto logout after inactivity (1 hour)
   let inactivityTimer;
   const resetSessionTimer = () => {
     clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
+    inactivityTimer = setTimeout(() => logout(), 3600000);
   };
   ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
     window.addEventListener(event, resetSessionTimer);
   });
   resetSessionTimer();
-
-  // Prevent browser back button from showing cached page
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || window.performance?.navigation?.type === 2) {
-      // Page was restored from bfcache or back navigation
-      auth.currentUser ? updateUserProfile(auth.currentUser) : handleAuthState(null);
-    }
-  });
 </script>
+
 </body>
 </html>
