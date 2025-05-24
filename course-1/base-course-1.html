@@ -759,158 +759,121 @@ html, body {
     <div id="menuOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none;"></div>
 
 <script>
-        // Desktop Mega Menu
-        const learningPathsBtn = document.getElementById('learningPathsBtn');
-        const megaMenu = document.getElementById('megaMenu');
-        const chevron = learningPathsBtn.querySelector('svg');
-        let isMenuOpen = false;
+function toggleAccordion(element) {
+  const content = element.nextElementSibling;
+  const icon = element.querySelector('.accordion-icon');
+  const isExpanded = content.style.display === 'flex';
+  content.style.display = isExpanded ? 'none' : 'flex';
+  icon.textContent = isExpanded ? '+' : '−';
+  element.setAttribute('aria-expanded', !isExpanded);
+}
 
-        function showMegaMenu() {
-            const rect = learningPathsBtn.getBoundingClientRect();
-            megaMenu.style.top = rect.bottom + 5 + 'px';
-            megaMenu.style.opacity = '1';
-            megaMenu.style.transform = 'translate(-50%, 0)';
-            megaMenu.style.pointerEvents = 'auto';
-            chevron.style.transform = 'rotate(180deg)';
-            learningPathsBtn.style.background = '#f8f9fa';
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobileMenu');
+  const isOpen = mobileMenu.style.transform === 'translateX(0)';
+  mobileMenu.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0)';
+}
+
+document.getElementById('mobileMenuButton').addEventListener('click', toggleMobileMenu);
+document.getElementById('mobileMenuClose').addEventListener('click', toggleMobileMenu);
+
+function logout() {
+  // Placeholder for logout functionality
+  console.log('User logged out');
+}
+</script>
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.style.transform = 'translateX(0)';
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.style.transform = 'translateX(100%)';
+    });
+
+    // Profile Dropdown Toggle
+    function toggleDropdown() {
+      const dropdown = document.querySelector('.profile-dropdown');
+      const isVisible = dropdown.style.opacity === '1';
+      dropdown.style.opacity = isVisible ? '0' : '1';
+      dropdown.style.transform = isVisible ? 'translateY(-10px)' : 'translateY(0)';
+      dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
+    }
+
+    // Logout Function (Placeholder)
+    function logout() {
+      console.log('Logout clicked');
+      // Implement logout logic here
+    }
+
+    // New Section: Read More Toggle
+    const readMoreLink = document.querySelector('.read-more-link');
+    const outcomesList = document.querySelector('.outcomes-list');
+    readMoreLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = outcomesList.classList.contains('visible');
+      outcomesList.classList.toggle('visible');
+      readMoreLink.classList.toggle('read-more-link-open');
+      readMoreLink.querySelector('span').textContent = isOpen ? 'Show More' : 'Show Less';
+    });
+
+    // New Section: Accordion Functionality
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        accordionItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.accordion-content').style.maxHeight = '0';
+          i.querySelector('.accordion-content').style.opacity = '0';
+          i.querySelector('.accordion-content').style.padding = '0 calc(var(--spacing-unit) * 3)';
+        });
+        if (!isActive) {
+          item.classList.add('active');
+          const content = item.querySelector('.accordion-content');
+          content.style.maxHeight = '600px';
+          content.style.opacity = '1';
+          content.style.padding = 'calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3)';
         }
+      });
+    });
 
-        function hideMegaMenu() {
-            megaMenu.style.opacity = '0';
-            megaMenu.style.transform = 'translate(-50%, 8px)';
-            megaMenu.style.pointerEvents = 'none';
-            chevron.style.transform = 'rotate(0deg)';
-            learningPathsBtn.style.background = 'transparent';
-        }
+    // Placeholder for loadFileData (requires XLSX library)
+    function loadFileData(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheet = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheet];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        console.log('Parsed Excel Data:', jsonData);
+        // Process jsonData as needed
+      };
+      reader.readAsArrayBuffer(file);
+    }
 
-        learningPathsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (isMenuOpen) {
-                hideMegaMenu();
-            } else {
-                showMegaMenu();
-            }
-            isMenuOpen = !isMenuOpen;
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && !megaMenu.contains(e.target) && !learningPathsBtn.contains(e.target)) {
-                hideMegaMenu();
-                isMenuOpen = false;
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            if (isMenuOpen) {
-                hideMegaMenu();
-                isMenuOpen = false;
-            }
-        });
-
-        // Profile Dropdown
-        const profileTrigger = document.getElementById('profileTrigger');
-        const profileDropdown = document.getElementById('profileDropdown');
-        let isProfileOpen = false;
-
-        function toggleDropdown() {
-            if (isProfileOpen) {
-                profileDropdown.style.opacity = '0';
-                profileDropdown.style.transform = 'translateY(-10px)';
-                profileDropdown.style.visibility = 'hidden';
-            } else {
-                profileDropdown.style.opacity = '1';
-                profileDropdown.style.transform = 'translateY(0)';
-                profileDropdown.style.visibility = 'visible';
-            }
-            isProfileOpen = !isProfileOpen;
-        }
-
-        profileTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleDropdown();
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isProfileOpen && !profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
-                toggleDropdown();
-                isProfileOpen = false;
-            }
-        });
-
-        // Mobile Menu
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMobileMenu() {
-            const isOpen = mobileMenu.style.transform === 'translateX(0px)';
-            if (isOpen) {
-                mobileMenu.style.transform = 'translateX(100%)';
-                menuOverlay.style.display = 'none';
-            } else {
-                mobileMenu.style.transform = 'translateX(0)';
-                menuOverlay.style.display = 'block';
-            }
-        }
-
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
-        menuOverlay.addEventListener('click', () => {
-            mobileMenu.style.transform = 'translateX(100%)';
-            menuOverlay.style.display = 'none';
-        });
-
-        // Accordion Toggle
-        function toggleAccordion(element) {
-            const content = element.nextElementSibling;
-            const icon = element.querySelector('.accordion-icon');
-            const isExpanded = content.style.display === 'flex';
-            content.style.display = isExpanded ? 'none' : 'flex';
-            icon.textContent = isExpanded ? '+' : '−';
-            element.setAttribute('aria-expanded', !isExpanded);
-        }
-
-        // Close on ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (window.innerWidth <= 768) {
-                    mobileMenu.style.transform = 'translateX(100%)';
-                    menuOverlay.style.display = 'none';
-                }
-                if (isMenuOpen) {
-                    hideMegaMenu();
-                    isMenuOpen = false;
-                }
-                if (isProfileOpen) {
-                    toggleDropdown();
-                    isProfileOpen = false;
-                }
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                mobileMenu.style.transform = 'translateX(100%)';
-                menuOverlay.style.display = 'none';
-                if (isMenuOpen) {
-                    hideMegaMenu();
-                    isMenuOpen = false;
-                }
-                if (isProfileOpen) {
-                    toggleDropdown();
-                    isProfileOpen = false;
-                }
-            }
-        });
-
-        // Placeholder logout function
-        function logout() {
-            console.log('Logout clicked');
-            // Implement actual logout logic here
-        }
-    </script>
+    // Example: Handle file input for loadFileData
+    // Uncomment and add an input element in HTML if needed
+    /*
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.xlsx,.xls';
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        loadFileData(file);
+      }
+    });
+    document.body.appendChild(fileInput);
+    */
+  </script>
 
 
 
@@ -1055,10 +1018,7 @@ html, body {
 
 
   
-  <h1>Base Course 1 (Free Content)</h1>
-  <p>This is the free version of Course 1.</p>
-<button onclick="window.location.href = './payment.html'">Pay to unlock premium course</button>
-</body>
+ 
 
 
 
@@ -1094,5 +1054,140 @@ html, body {
 
 
 
-  
+   <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+    authDomain: "syncskilll.firebaseapp.com",
+    projectId: "syncskilll",
+    storageBucket: "syncskilll.firebasestorage.app",
+    messagingSenderId: "203322315096",
+    appId: "1:203322315096:web:958fc7d94806ef9a98552d",
+    measurementId: "G-JWWWM2ZQSK"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // DOM elements
+  const elements = {
+    userAvatar: document.getElementById('userAvatar'),
+    mobileUserAvatar: document.getElementById('mobileUserAvatar'),
+    userName: document.getElementById('userName'),
+    dropdownAvatar: document.getElementById('dropdownAvatar'),
+    dropdownName: document.getElementById('dropdownName'),
+    dropdownEmail: document.getElementById('dropdownEmail'),
+    mobileUserName: document.getElementById('mobileUserName'),
+    mobileUserEmail: document.getElementById('mobileUserEmail'),
+    welcomeUserSpan: document.getElementById('user')
+  };
+
+  // Clear sensitive data from DOM
+  const clearUserProfile = () => {
+    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+    try {
+      if (elements.userName) elements.userName.textContent = '';
+      if (elements.dropdownName) elements.dropdownName.textContent = '';
+      if (elements.mobileUserName) elements.mobileUserName.textContent = '';
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
+
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = fallbackAvatar;
+          img.removeAttribute('srcset'); // Clear any cached image sources
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing profile:', error);
+    }
+  };
+
+  // Update user profile on the page
+  const updateUserProfile = (user) => {
+    if (!user) {
+      clearUserProfile();
+      return;
+    }
+
+    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+    const email = user.email || 'No email provided';
+    const photoURL = user.photoURL || fallbackAvatar;
+
+    try {
+      if (elements.userName) elements.userName.textContent = displayName;
+      if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+      if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
+
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = photoURL;
+          img.onerror = () => img.src = fallbackAvatar;
+        }
+      });
+    } catch (error) {
+      console.error('Profile update error:', error);
+    }
+  };
+
+  // Auth state handling
+  const handleAuthState = (user) => {
+    if (!user) {
+      clearUserProfile(); // Clear DOM data immediately
+      window.location.href = '/login.html'; // Redirect to login
+      return;
+    }
+    updateUserProfile(user); // Update user profile if logged in
+  };
+
+  // Watch for auth state changes
+  onAuthStateChanged(auth, handleAuthState);
+
+  // Prevent back/forward cache (bfcache) from restoring sensitive data
+  window.addEventListener('unload', () => {
+    clearUserProfile(); // Clear DOM data on page unload
+  });
+
+  // Logout function
+  window.logout = async () => {
+    try {
+      await signOut(auth);
+      clearUserProfile(); // Clear DOM data before redirect
+      sessionStorage.clear(); // Clear session storage
+      localStorage.removeItem('userData'); // Clear specific localStorage keys if used
+      window.location.href = '/index.html'; // Redirect to login
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Error during logout. Please try again.');
+    }
+  };
+
+  // Optional: Auto logout after inactivity (1 hour)
+  let inactivityTimer;
+  const resetSessionTimer = () => {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
+  };
+  ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+    window.addEventListener(event, resetSessionTimer);
+  });
+  resetSessionTimer();
+
+  // Prevent browser back button from showing cached page
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || window.performance?.navigation?.type === 2) {
+      // Page was restored from bfcache or back navigation
+      auth.currentUser ? updateUserProfile(auth.currentUser) : handleAuthState(null);
+    }
+  });
+</script>
 </html>
