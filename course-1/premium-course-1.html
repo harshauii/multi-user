@@ -1221,6 +1221,36 @@
       </div>
     </nav>
   </header>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // Accordion functionality
+    document.querySelectorAll('.accordion-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const currentItem = title.closest('.accordion-item');
+            const isActive = currentItem.classList.contains('active');
+
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.accordion-title').setAttribute('aria-expanded', 'false');
+            });
+
+            // Open the clicked item if it wasn't already active
+            if (!isActive) {
+                currentItem.classList.add('active');
+                title.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    // "Read More" button functionality
+    document.querySelector('.read-more-link').addEventListener('click', () => {
+        const list = document.querySelector('#key-outcomes-list');
+        list.classList.toggle('visible');
+        document.querySelector('.read-more-link').classList.toggle('read-more-link-open');
+    });
+});
+  </script>
 <script>
 function toggleAccordion(element) {
   const content = element.nextElementSibling;
@@ -1956,12 +1986,16 @@ function logout() {
             </div>
         </div>
     </div>
- <script type="module">
+
+
+   
+
+<script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
   import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
   import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-  // Firebase Config
+  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
     authDomain: "syncskilll.firebaseapp.com",
@@ -1972,12 +2006,11 @@ function logout() {
     measurementId: "G-JWWWM2ZQSK"
   };
 
-  // Init Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // DOM elements (update if needed based on your HTML structure)
+  // Navbar UI elements
   const elements = {
     userAvatar: document.getElementById('userAvatar'),
     mobileUserAvatar: document.getElementById('mobileUserAvatar'),
@@ -1990,95 +2023,100 @@ function logout() {
     welcomeUserSpan: document.getElementById('user')
   };
 
-  // Clear UI data
-  function clearUserProfile() {
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    [elements.userName, elements.dropdownName, elements.mobileUserName].forEach(e => { if (e) e.textContent = '' });
-    [elements.dropdownEmail, elements.mobileUserEmail].forEach(e => { if (e) e.textContent = '' });
-    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
-    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-      if (img) img.src = fallbackAvatar;
-    });
-  }
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
 
-  // Fill Navbar
-  function updateUserProfile(user) {
-    if (!user) return clearUserProfile();
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    const displayName = user.displayName || user.email?.split('@')[0];
-    const email = user.email;
+  const clearUserProfile = () => {
+    try {
+      if (elements.userName) elements.userName.textContent = '';
+      if (elements.dropdownName) elements.dropdownName.textContent = '';
+      if (elements.mobileUserName) elements.mobileUserName.textContent = '';
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = '';
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = '';
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = '';
+
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = fallbackAvatar;
+          img.removeAttribute('srcset');
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing profile:', error);
+    }
+  };
+
+  const updateUserProfile = (user) => {
+    if (!user) {
+      clearUserProfile();
+      return;
+    }
+
+    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+    const email = user.email || 'No email';
     const photoURL = user.photoURL || fallbackAvatar;
 
-    if (elements.userName) elements.userName.textContent = displayName;
-    if (elements.dropdownName) elements.dropdownName.textContent = displayName;
-    if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
-    if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
-    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
-    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
+    try {
+      if (elements.userName) elements.userName.textContent = displayName;
+      if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+      if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+      if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+      if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
+      if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
 
-    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
-      if (img) {
-        img.src = photoURL;
-        img.onerror = () => img.src = fallbackAvatar;
-      }
-    });
-  }
+      [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+        if (img) {
+          img.src = photoURL;
+          img.onerror = () => img.src = fallbackAvatar;
+        }
+      });
+    } catch (error) {
+      console.error('Profile update error:', error);
+    }
+  };
 
-  // Main logic: Wait for Auth, then check payment
-  onAuthStateChanged(auth, async (user) => {
+  const checkPaymentAndAccess = async (user) => {
     if (!user) {
       clearUserProfile();
       window.location.href = "/login.html";
       return;
     }
 
+    updateUserProfile(user);
+
     try {
-      // Check payment
-      const paymentRef = doc(db, "payments", user.uid);
+      const paymentRef = doc(db, 'payments', user.uid);
       const paymentSnap = await getDoc(paymentRef);
-      const hasPaid = paymentSnap.exists() && paymentSnap.data().course1Paid;
 
-      if (!hasPaid) {
+      if (!paymentSnap.exists() || !paymentSnap.data().course1Paid) {
+        console.warn("User has not purchased the premium course.");
         window.location.href = "/base-course-1.html"; // Redirect to base course
-        return;
+      } else {
+        console.log("User has access to premium course.");
       }
-
-      // User is paid – show profile
-      updateUserProfile(user);
-
     } catch (error) {
-      console.error("Payment check failed:", error);
-      alert("An error occurred. Redirecting to base course.");
-      window.location.href = "/base-course-1.html";
+      console.error("Error checking payment status:", error);
+      window.location.href = "/base-course-1.html"; // Fallback redirect
     }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    checkPaymentAndAccess(user);
   });
 
-  // Logout function
+  // Logout
   window.logout = async () => {
     try {
       await signOut(auth);
       clearUserProfile();
       sessionStorage.clear();
       localStorage.clear();
-      window.location.href = "/index.html";
-    } catch (error) {
-      alert("Logout failed. Try again.");
+      window.location.href = '/index.html';
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert("Logout failed.");
     }
   };
 
-  // Optional: Auto logout on inactivity
-  let inactivityTimer;
-  const resetTimer = () => {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
-  };
-  ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt =>
-    window.addEventListener(evt, resetTimer)
-  );
-  resetTimer();
-
 </script>
-
-
 </body>
 </html>
