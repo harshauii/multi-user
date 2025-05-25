@@ -2071,13 +2071,14 @@ html, body {
     }
 
     /* Tablet and Mobile */
-    @media (max-width: 768px) {
-      .section-wrapper {
-        max-width: calc(100% - 80px); /* Reduced margins for tablet */
-        margin-left: 20px;
-        margin-right: 20px;
-        padding: 30px 0px 30px 0px;
-      }
+   @media (max-width: 768px) {
+  .section-wrapper {
+    max-width: calc(100% - 80px); /* Keep reduced width */
+    margin: 0 auto;               /* Center horizontally */
+    padding: 30px 0;              /* Simplified padding */
+  }
+
+
 
       .card-container {
         height: 160px;
