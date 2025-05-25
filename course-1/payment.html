@@ -4,12 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Payment - Course 1</title>
+</head>
+<body>
+  <h1>Payment Page for Course 1</h1>
+  <p>Logged in as: <span id="userEmail">Loading...</span></p>
+
+  <p>Price: ₹10</p>
+
+  <button onclick="startRazorpayPayment()">Pay ₹10 with Razorpay</button>
+
+  <!-- Razorpay script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Firebase + Razorpay Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
     import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-    // Your Firebase config - replace with your actual config
+    // ✅ Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
       authDomain: "syncskilll.firebaseapp.com",
@@ -20,57 +33,64 @@
       measurementId: "G-JWWWM2ZQSK",
     };
 
-    // Initialize Firebase
+    // ✅ Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
     let currentUser = null;
 
+    // ✅ Check login
     onAuthStateChanged(auth, (user) => {
       if (user) {
         currentUser = user;
         document.getElementById("userEmail").textContent = user.email;
       } else {
-        // Not logged in, redirect to login
         window.location.href = "/login.html";
       }
     });
 
-    // Simulate payment function
-    window.simulatePayment = async function () {
+    // ✅ Razorpay payment function
+    window.startRazorpayPayment = async function () {
       if (!currentUser) {
-        alert("User not authenticated. Please login first.");
-        window.location.href = "/login.html";
+        alert("Please login to proceed.");
         return;
       }
 
-      try {
-        const paymentDocRef = doc(db, "payments", currentUser.uid);
-        const paymentDoc = await getDoc(paymentDocRef);
-        let paymentData = paymentDoc.exists() ? paymentDoc.data() : {};
+      const options = {
+        key: "rzp_test_YourTestKeyHere", // 🔁 Replace with your Razorpay test key
+        amount: 1000, // ₹10 in paise
+        currency: "INR",
+        name: "SyncSkill Courses",
+        description: "Course 1 Premium Access",
+        image: "https://via.placeholder.com/100", // Optional: replace with your logo
+        handler: async function (response) {
+          try {
+            // ✅ After successful payment, update Firestore
+            const paymentDocRef = doc(db, "payments", currentUser.uid);
+            const paymentDoc = await getDoc(paymentDocRef);
+            let paymentData = paymentDoc.exists() ? paymentDoc.data() : {};
+            paymentData.course1Paid = true;
+            await setDoc(paymentDocRef, paymentData, { merge: true });
 
-        // Mark course1 as paid
-        paymentData.course1Paid = true;
+            alert("Payment successful! Redirecting...");
+            window.location.href = "premium-course-1.html";
+          } catch (error) {
+            console.error("Error saving payment:", error);
+            alert("Payment failed to record. Contact support.");
+          }
+        },
+        prefill: {
+          email: currentUser.email,
+        },
+        theme: {
+          color: "#3399cc",
+        }
+      };
 
-        // Save payment status
-        await setDoc(paymentDocRef, paymentData, { merge: true });
-
-        alert("Payment successful! Redirecting to premium course...");
-        window.location.href = "premium-course-1.html";
-      } catch (error) {
-        console.error("Error saving payment:", error);
-        alert("Payment failed. Please try again.");
-      }
+      const rzp = new Razorpay(options);
+      rzp.open();
     };
   </script>
-</head>
-<body>
-  <h1>Payment Page for Course 1</h1>
-  <p>Logged in as: <span id="userEmail">Loading...</span></p>
-
-  <p>Price: $10</p>
-
-  <button onclick="simulatePayment()">Pay Now</button>
 </body>
 </html>
