@@ -1894,7 +1894,7 @@ html, body {
 
 
 
-<div class="section-wrapper">
+ <div class="section-wrapper">
     <a href="YOUR_LINK_HERE" role="button" aria-label="Career recommendation" tabindex="0" class="card-link">
       <div class="card-container">
         <div class="grid-overlay"></div>
@@ -1912,16 +1912,15 @@ html, body {
     </a>
   </div>
 <style>
-   .section-wrapper {
+ .section-wrapper {
       width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px;
+      max-width: calc(100% - 260px); /* Account for 130px left + 130px right margins */
+      margin-left: 130px;
+      margin-right: 130px;
+      padding: 0px 20px 0px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-       margin-left: 130px;
-  margin-right: 130px;
     }
 
     .card-link {
@@ -2006,7 +2005,7 @@ html, body {
       transition: color 0.3s ease;
     }
 
-    .card-dermal svg {
+    .card-cta svg {
       width: 18px;
       height: 18px;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2059,9 +2058,12 @@ html, body {
       }
     }
 
-    /* Mobile and Tablet */
+    /* Tablet and Mobile */
     @media (max-width: 768px) {
       .section-wrapper {
+        max-width: calc(100% - 80px); /* Reduced margins for tablet */
+        margin-left: 40px;
+        margin-right: 40px;
         padding: 12px;
       }
 
@@ -2086,6 +2088,13 @@ html, body {
     }
 
     @media (max-width: 480px) {
+      .section-wrapper {
+        max-width: calc(100% - 40px); /* Further reduced margins for mobile */
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 12px;
+      }
+
       .card-container {
         height: 140px;
         padding: 16px 20px;
