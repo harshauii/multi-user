@@ -1959,8 +1959,9 @@ function logout() {
  <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
   import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+  import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-  // Your Firebase config
+  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
     authDomain: "syncskilll.firebaseapp.com",
@@ -1971,11 +1972,11 @@ function logout() {
     measurementId: "G-JWWWM2ZQSK"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  // DOM elements
+  // Navbar UI elements
   const elements = {
     userAvatar: document.getElementById('userAvatar'),
     mobileUserAvatar: document.getElementById('mobileUserAvatar'),
@@ -1988,9 +1989,9 @@ function logout() {
     welcomeUserSpan: document.getElementById('user')
   };
 
-  // Clear sensitive data from DOM
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+
   const clearUserProfile = () => {
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
     try {
       if (elements.userName) elements.userName.textContent = '';
       if (elements.dropdownName) elements.dropdownName.textContent = '';
@@ -2002,7 +2003,7 @@ function logout() {
       [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
         if (img) {
           img.src = fallbackAvatar;
-          img.removeAttribute('srcset'); // Clear any cached image sources
+          img.removeAttribute('srcset');
         }
       });
     } catch (error) {
@@ -2010,16 +2011,14 @@ function logout() {
     }
   };
 
-  // Update user profile on the page
   const updateUserProfile = (user) => {
     if (!user) {
       clearUserProfile();
       return;
     }
 
-    const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
     const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-    const email = user.email || 'No email provided';
+    const email = user.email || 'No email';
     const photoURL = user.photoURL || fallbackAvatar;
 
     try {
@@ -2041,57 +2040,51 @@ function logout() {
     }
   };
 
-  // Auth state handling
-  const handleAuthState = (user) => {
+  const checkPaymentAndAccess = async (user) => {
     if (!user) {
-      clearUserProfile(); // Clear DOM data immediately
-      window.location.href = '/login.html'; // Redirect to login
+      clearUserProfile();
+      window.location.href = "/login.html";
       return;
     }
-    updateUserProfile(user); // Update user profile if logged in
+
+    updateUserProfile(user);
+
+    try {
+      const paymentRef = doc(db, 'payments', user.uid);
+      const paymentSnap = await getDoc(paymentRef);
+
+      if (!paymentSnap.exists() || !paymentSnap.data().course1Paid) {
+        console.warn("User has not purchased the premium course.");
+        window.location.href = "/base-course.html"; // Redirect to base course
+      } else {
+        console.log("User has access to premium course.");
+      }
+    } catch (error) {
+      console.error("Error checking payment status:", error);
+      window.location.href = "/base-course.html"; // Fallback redirect
+    }
   };
 
-  // Watch for auth state changes
-  onAuthStateChanged(auth, handleAuthState);
-
-  // Prevent back/forward cache (bfcache) from restoring sensitive data
-  window.addEventListener('unload', () => {
-    clearUserProfile(); // Clear DOM data on page unload
+  onAuthStateChanged(auth, (user) => {
+    checkPaymentAndAccess(user);
   });
 
-  // Logout function
+  // Logout
   window.logout = async () => {
     try {
       await signOut(auth);
-      clearUserProfile(); // Clear DOM data before redirect
-      sessionStorage.clear(); // Clear session storage
-      localStorage.removeItem('userData'); // Clear specific localStorage keys if used
-      window.location.href = '/index.html'; // Redirect to login
-    } catch (error) {
-      console.error('Logout error:', error);
-      alert('Error during logout. Please try again.');
+      clearUserProfile();
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = '/index.html';
+    } catch (err) {
+      console.error('Logout error:', err);
+      alert("Logout failed.");
     }
   };
 
-  // Optional: Auto logout after inactivity (1 hour)
-  let inactivityTimer;
-  const resetSessionTimer = () => {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => logout(), 3600000); // 1 hour
-  };
-  ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
-    window.addEventListener(event, resetSessionTimer);
-  });
-  resetSessionTimer();
-
-  // Prevent browser back button from showing cached page
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || window.performance?.navigation?.type === 2) {
-      // Page was restored from bfcache or back navigation
-      auth.currentUser ? updateUserProfile(auth.currentUser) : handleAuthState(null);
-    }
-  });
 </script>
+
 
 
 
