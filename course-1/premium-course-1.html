@@ -2089,13 +2089,13 @@ function logout() {
 
       if (!paymentSnap.exists() || !paymentSnap.data().course1Paid) {
         console.warn("User has not purchased the premium course.");
-        window.location.href = "/base-course-1.html"; // Redirect to base course
+        window.location.href = "/course-1/base-course-1.html"; // Redirect to base course
       } else {
         console.log("User has access to premium course.");
       }
     } catch (error) {
       console.error("Error checking payment status:", error);
-      window.location.href = "/base-course-1.html"; // Fallback redirect
+      window.location.href = "/course-1/base-course-1.html"; // Fallback redirect
     }
   };
 
