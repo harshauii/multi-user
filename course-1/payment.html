@@ -2,27 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Payment - Course 1</title>
-</head>
-<body>
-  <h1>Payment Page for Course 1</h1>
-  <p>Logged in as: <span id="userEmail">Loading...</span></p>
-
-  <p>Price: ₹10</p>
-
-  <button onclick="startRazorpayPayment()">Pay ₹10 with Razorpay</button>
-
-  <!-- Razorpay script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <!-- Firebase + Razorpay Integration -->
+  <title>Base Course 1 - Free</title>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+    import { getFirestore, doc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-    // ✅ Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
       authDomain: "syncskilll.firebaseapp.com",
@@ -30,67 +15,49 @@
       storageBucket: "syncskilll.firebasestorage.app",
       messagingSenderId: "203322315096",
       appId: "1:203322315096:web:958fc7d94806ef9a98552d",
-      measurementId: "G-JWWWM2ZQSK",
+      measurementId: "G-JWWWM2ZQSK"
     };
 
-    // ✅ Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
     let currentUser = null;
 
-    // ✅ Check login
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        currentUser = user;
-        document.getElementById("userEmail").textContent = user.email;
-      } else {
-        window.location.href = "/login.html";
+      if (!user) {
+        window.location.href = '/login.html';
+        return;
       }
+      currentUser = user;
     });
 
-    // ✅ Razorpay payment function
-    window.startRazorpayPayment = async function () {
+    async function payNow() {
       if (!currentUser) {
-        alert("Please login to proceed.");
+        alert('User not authenticated!');
         return;
       }
 
-      const options = {
-        key: "rzp_test_YourTestKeyHere", // 🔁 Replace with your Razorpay test key
-        amount: 1000, // ₹10 in paise
-        currency: "INR",
-        name: "SyncSkill Courses",
-        description: "Course 1 Premium Access",
-        image: "https://via.placeholder.com/100", // Optional: replace with your logo
-        handler: async function (response) {
-          try {
-            // ✅ After successful payment, update Firestore
-            const paymentDocRef = doc(db, "payments", currentUser.uid);
-            const paymentDoc = await getDoc(paymentDocRef);
-            let paymentData = paymentDoc.exists() ? paymentDoc.data() : {};
-            paymentData.course1Paid = true;
-            await setDoc(paymentDocRef, paymentData, { merge: true });
+      try {
+        // Simulate payment success - update Firestore payment document for this user
+        const paymentRef = doc(db, 'payments', currentUser.uid);
 
-            alert("Payment successful! Redirecting...");
-            window.location.href = "premium-course-1.html";
-          } catch (error) {
-            console.error("Error saving payment:", error);
-            alert("Payment failed to record. Contact support.");
-          }
-        },
-        prefill: {
-          email: currentUser.email,
-        },
-        theme: {
-          color: "#3399cc",
-        }
-      };
+        // Update the course1 payment to true
+        await setDoc(paymentRef, { courses: { course1: true } }, { merge: true });
 
-      const rzp = new Razorpay(options);
-      rzp.open();
-    };
+        alert('Payment successful! Redirecting to premium course...');
+        window.location.href = './premium-course-1.html';
+      } catch (error) {
+        console.error('Payment failed:', error);
+        alert('Payment failed. Please try again.');
+      }
+    }
   </script>
+</head>
+<body>
+  <h1>Base Course 1 (Free Content)</h1>
+  <p>This is the free version of Course 1.</p>
+  <button onclick="window.location.href = './payment.html'">Pay to unlock premium course</button>
+
 </body>
 </html>
