@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms and Conditions for SyncSkill - Understand the rules governing your use of our platform and services.">
+    <title>Terms and Conditions | SyncSkill</title>
+    <style>
+        :root {
+            --primary: #1D4ED8;
+            --primary-dark: #1E3A8A;
+            --accent: #7C3AED;
+            --gradient: linear-gradient(135deg, #1D4ED8, #7C3AED);
+            --background: #F9FAFB;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg-dark: rgba(31, 41, 55, 0.9);
+            --text: #111827;
+            --text-secondary: #6B7280;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border: rgba(229, 231, 235, 0.5);
+            --easing: cubic-bezier(0.4, 0, 0.2, 1);
+            --font-size-base: 1rem;
+            --spacing-unit: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #111827;
+                --card-bg: var(--card-bg-dark);
+                --text: #F3F4F6;
+                --text-secondary: #9CA3AF;
+                --border: rgba(75, 85, 99, 0.5);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: var(--font-size-base);
+            overflow-x: hidden;
+        }
+
+        .mobile-header {
+            display: none;
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeInDown 0.5s var(--easing);
+        }
+
+        .mobile-logo {
+            width: 200px;
+            height: 30px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s var(--easing);
+        }
+
+        .mobile-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 2);
+            display: flex;
+            gap: calc(var(--spacing-unit) * 4);
+            align-items: flex-start;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .sidebar {
+            width: 220px;
+            position: sticky;
+            top: calc(var(--spacing-unit) * 12);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: calc(var(--spacing-unit) * 2);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s var(--easing);
+        }
+
+        .sidebar:hover {
+            transform: translateY(-2px);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit));
+        }
+
+        .sidebar-nav li a {
+            display: block;
+            padding: calc(var(--spacing-unit) * 1.2) calc(var(--spacing-unit) * 1.5);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s var(--easing);
+        }
+
+        .sidebar-nav li a:hover,
+        .sidebar-nav li a.active {
+            background: var(--gradient);
+            color: #FFFFFF;
+            transform: translateX(4px);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s var(--easing);
+        }
+
+        .pre-header {
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            opacity: 0;
+            animation: slideUp 0.6s var(--easing) forwards;
+        }
+
+        .section-header {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            font-size: clamp(2rem, 4.5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            opacity: 0;
+            animation: slideUp 0.6s var(--easing) forwards;
+        }
+
+        .section-subheading, .para {
+            font-size: clamp(0.875rem, 2vw, 0.95rem);
+            color: var(--text-secondary);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            opacity: 0;
+            animation: slideUp 0.6s var(--easing) forwards;
+        }
+
+        .section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: calc(var(--spacing-unit) * 2.5);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s var(--easing), box-shadow 0.3s var(--easing);
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--easing) forwards;
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .section ul {
+            list-style: none;
+            padding-left: calc(var(--spacing-unit) * 1.5);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .section li {
+            position: relative;
+            padding-left: calc(var(--spacing-unit) * 2);
+            margin-bottom: calc(var(--spacing-unit) * 0.75);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: color 0.3s var(--easing);
+        }
+
+        .section li:hover {
+            color: var(--text);
+        }
+
+        .section li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
+
+        .section a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s var(--easing);
+        }
+
+        .section a:hover {
+            color: var(--primary-dark);
+        }
+
+        .section a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: var(--primary);
+            transition: width 0.3s var(--easing);
+        }
+
+        .section a:hover::after {
+            width: 100%;
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted var(--primary);
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: #FFFFFF;
+            padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit));
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s var(--easing), visibility 0.3s var(--easing);
+            z-index: 10;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gradient);
+            color: #FFFFFF;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s var(--easing);
+            cursor: pointer;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 0.75);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s var(--easing);
+        }
+
+        .mobile-nav-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: calc(var(--spacing-unit) * 10) calc(var(--spacing-unit) * 2);
+            z-index: 999;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.4s var(--easing);
+        }
+
+        .mobile-nav.visible {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 1.5);
+            align-items: center;
+        }
+
+        .mobile-nav li a {
+            display: block;
+            padding: calc(var(--spacing-unit) * 1.5);
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s var(--easing);
+            width: 100%;
+            text-align: center;
+        }
+
+        .mobile-nav li a:hover,
+        .mobile-nav li a.active {
+            background: var(--gradient);
+            color: #FFFFFF;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .container,
+            .pre-header,
+            .section-header,
+            .section-subheading,
+            .section,
+            .sidebar,
+            .scroll-to-top,
+            .mobile-nav,
+            .mobile-header,
+            .mobile-logo,
+            .progress-bar {
+                animation: none;
+                transition: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+                padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 2);
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .mobile-header {
+                display: block;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .section-header {
+                font-size: clamp(1.6rem, 4vw, 1.8rem);
+            }
+
+            .section-subheading, .para {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section-header {
+                font-size: clamp(1.4rem, 3.5vw, 1.6rem);
+            }
+
+            .section {
+                padding: calc(var(--spacing-unit) * 2);
+            }
+
+            .mobile-header {
+                padding: calc(var(--spacing-unit) * 1.5);
+            }
+
+            .mobile-logo {
+                width: 160px;
+                height: 24px;
+            }
+
+            .mobile-nav {
+                padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+
+    <header class="mobile-header">
+        <img src="assets/logo.jpg" alt="SyncSkill Logo" class="mobile-logo">
+    </header>
+
+    <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="#acceptance">Acceptance of Terms</a></li>
+            <li><a href="#account">Account Registration</a></li>
+            <li><a href="#use">Use of the Platform</a></li>
+            <li><a href="#ip">Intellectual Property</a></li>
+            <li><a href="#payments">Payments and Refunds</a></li>
+            <li><a href="#termination">Termination and Suspension</a></li>
+            <li><a href="#disclaimers">Disclaimers</a></li>
+            <li><a href="#liability">Limitation of Liability</a></li>
+            <li><a href="#modifications">Modifications to Terms</a></li>
+            <li><a href="#governing">Governing Law</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div>
+                <div class="pre-header">Last Updated: May 25, 2025</div>
+                <h1 class="section-header">Terms and Conditions</h1>
+                <p class="section-subheading">
+                    Welcome to SyncSkill. These Terms govern your use of our website, mobile apps, and learning services. By accessing our platform, you agree to these terms.
+                </p>
+            </div>
+
+            <div class="section" id="acceptance">
+                <h3>1. Acceptance of Terms</h3>
+                <p>By using SyncSkill, you agree to these Terms, our <a href="/privacy" class="tooltip" data-tooltip="View our Privacy Policy">Privacy Policy</a>, and <a href="/refund" class="tooltip" data-tooltip="View our Refund Policy">Refund Policy</a>. If you disagree, please do not use our services.</p>
+                <p>Users under 18 must have parental or guardian consent, who will be bound by these Terms on their behalf.</p>
+            </div>
+
+            <div class="section" id="account">
+                <h3>2. Account Registration</h3>
+                <p>To access features like course purchases or progress tracking, you must register an account. You agree to:</p>
+                <ul>
+                    <li>Provide accurate and complete information</li>
+                    <li>Keep your login credentials confidential</li>
+                    <li>Be responsible for all account activities</li>
+                    <li>Notify us immediately of any unauthorized access</li>
+                </ul>
+                <p>We may suspend or terminate your account for violations.</p>
+            </div>
+
+            <div class="section" id="use">
+                <h3>3. Use of the Platform</h3>
+                <p>Use SyncSkill only for lawful purposes. You shall not:</p>
+                <ul>
+                    <li>Copy or distribute course content without permission</li>
+                    <li>Reverse engineer or extract source code</li>
+                    <li>Engage in fraudulent or harmful activities</li>
+                    <li>Share login credentials</li>
+                    <li>Harass or violate laws</li>
+                </ul>
+                <p>Violations may lead to termination and legal action.</p>
+            </div>
+
+            <div class="section" id="ip">
+                <h3>4. Intellectual Property</h3>
+                <p>All content, including courses, videos, text, and logos, is owned by SyncSkill or its partners and protected by <span class="tooltip" data-tooltip="Legal protections for creative works">copyright and trademark laws</span>.</p>
+                <p>You are granted a limited, non-exclusive license for personal, educational use only. Reproduction or commercialization without consent is prohibited.</p>
+            </div>
+
+            <div class="section" id="payments">
+                <h3>5. Payments and Refunds</h3>
+                <p>Purchases are final, as per our <a href="/refund" class="tooltip" data-tooltip="View our Refund Policy">Refund Policy</a>. Refunds are only considered for technical errors or duplicate payments.</p>
+                <p>Payments use third-party gateways, and you agree to their terms.</p>
+            </div>
+
+            <div class="section" id="termination">
+                <h3>6. Termination and Suspension</h3>
+                <p>We may suspend or terminate access without notice for:</p>
+                <ul>
+                    <li>Violating these Terms or laws</li>
+                    <li>Fraudulent or harmful behavior</li>
+                    <li>Disrupting the platform or users</li>
+                </ul>
+                <p>No refunds will be issued for terminated accounts.</p>
+            </div>
+
+            <div class="section" id="disclaimers">
+                <h3>7. Disclaimers</h3>
+                <p>Our content is for educational purposes only. We do not guarantee:</p>
+                <ul>
+                    <li>Accuracy or completeness</li>
+                    <li>Specific outcomes from use</li>
+                    <li>Liability for damages from platform use</li>
+                </ul>
+                <p>Third-party instructor views are not necessarily ours.</p>
+            </div>
+
+            <div class="section" id="liability">
+                <h3>8. Limitation of Liability</h3>
+                <p>To the extent permitted by law, SyncSkill is not liable for:</p>
+                <ul>
+                    <li>Loss of data, profits, or revenue</li>
+                    <li>Indirect or consequential damages</li>
+                    <li>Issues from third-party tools or instructors</li>
+                </ul>
+            </div>
+
+            <div class="section" id="modifications">
+                <h3>9. Modifications to Terms</h3>
+                <p>We may update these Terms at any time. Changes are effective upon posting. Continued use implies acceptance.</p>
+            </div>
+
+            <div class="section" id="governing">
+                <h3>10. Governing Law</h3>
+                <p>These Terms are governed by the laws of India. Disputes are subject to the exclusive jurisdiction of courts in Bangalore, India.</p>
+            </div>
+
+            <div class="section" id="contact">
+                <h3>11. Contact Us</h3>
+                <p>For questions, contact us at:</p>
+                <ul>
+                    <li><a href="mailto:harshavardhanjw@gmail.com">harshavardhanjw@gmail.com</a></li>
+                    <li>+91-7799181716</li>
+                </ul>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="#acceptance">Acceptance of Terms</a></li>
+                    <li><a href="#account">Account Registration</a></li>
+                    <li><a href="#use">Use of the Platform</a></li>
+                    <li><a href="#ip">Intellectual Property</a></li>
+                    <li><a href="#payments">Payments and Refunds</a></li>
+                    <li><a href="#termination">Termination and Suspension</a></li>
+                    <li><a href="#disclaimers">Disclaimers</a></li>
+                    <li><a href="#liability">Limitation of Liability</a></li>
+                    <li><a href="#modifications">Modifications to Terms</a></li>
+                    <li><a href="#governing">Governing Law</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <button class="scroll-to-top" aria-label="Scroll to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5m-7 7l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            const navLinks = document.querySelectorAll('.sidebar-nav a, .mobile-nav a');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const progressBar = document.querySelector('.progress-bar');
+            const sections = document.querySelectorAll('.section');
+
+            // Smooth scroll for navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        mobileNav.classList.remove('visible');
+                    }
+                });
+            });
+
+            // Mobile nav toggle
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNav.classList.toggle('visible');
+                mobileNavToggle.querySelector('svg').innerHTML = mobileNav.classList.contains('visible')
+                    ? '<path d="M6 18L18 6M6 6l12 12"/>'
+                    : '<path d="M4 6h16M4 12h16M4 18h16"/>';
+            });
+
+            // Close mobile nav when clicking a link
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('visible');
+                    mobileNavToggle.querySelector('svg').innerHTML = '<path d="M4 6h16M4 12h16M4 18h16"/>';
+                });
+            });
+
+            // Scroll-to-top button visibility
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+
+            // Scroll-to-top functionality
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = `${scrollPercent}%`;
+            });
+
+            // Highlight active section on scroll
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Keyboard accessibility for tooltips
+            document.querySelectorAll('.tooltip').forEach(tooltip => {
+                tooltip.addEventListener('focus', () => {
+                    tooltip.setAttribute('aria-describedby', 'tooltip-content');
+                });
+                tooltip.addEventListener('blur', () => {
+                    tooltip.removeAttribute('aria-describedby');
+                });
+            });
+
+            // Error handling
+            try {
+                if (!navLinks.length) console.warn('No navigation links found.');
+                if (!scrollToTopBtn) console.warn('Scroll-to-top button not found.');
+                if (!mobileNavToggle) console.warn('Mobile nav toggle not found.');
+                if (!mobileNav) console.warn('Mobile nav not found.');
+                if (!progressBar) console.warn('Progress bar not found.');
+            } catch (error) {
+                console.error('Error initializing scripts:', error);
+            }
+        });
+    </script>
+</body>
+</html>
