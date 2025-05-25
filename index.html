@@ -970,18 +970,17 @@ html, body {
     </div>
   </div>
 <style>
-.center-wrapper {
+ .center-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 1rem 2rem; /* Reduced top/bottom padding */
+      padding: 0 2rem; /* Removed top/bottom padding */
     }
 
     .responsive-element {
       max-width: 1000px;
       width: 100%;
-      padding: 1rem 3rem; /* Reduced top/bottom padding */
+      padding: 0 3rem; /* Removed top/bottom padding */
       display: flex;
       flex-direction: row;
       gap: 2.5rem;
@@ -992,7 +991,7 @@ html, body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 1rem; /* Reduced gap */
+      gap: 0.5rem; /* Reduced gap */
     }
 
     .text-content h1 {
@@ -1046,17 +1045,17 @@ html, body {
     /* Mobile View */
     @media (max-width: 768px) {
       .center-wrapper {
-        padding: 0.5rem 1rem; /* Reduced top/bottom padding */
+        padding: 0 1rem; /* Removed top/bottom padding */
       }
 
       .responsive-element {
         flex-direction: column;
-        padding: 0.5rem 1rem; /* Reduced top/bottom padding */
+        padding: 0 1rem; /* Removed top/bottom padding */
         max-width: 100%;
       }
 
       .text-content {
-        gap: 0.75rem; /* Reduced gap */
+        gap: 1rem; /* Further reduced gap */
       }
 
       .text-content h1 {
