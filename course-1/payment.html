@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Payment - Course 1</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .loading {
+      color: #666;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">Processing...</div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-    // Your Firebase config - replace with your actual config
     const firebaseConfig = {
       apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
       authDomain: "syncskilll.firebaseapp.com",
@@ -20,57 +38,92 @@
       measurementId: "G-JWWWM2ZQSK",
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
-
     let currentUser = null;
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         currentUser = user;
-        document.getElementById("userEmail").textContent = user.email;
+        await initiatePayment(); // Trigger payment immediately
       } else {
-        // Not logged in, redirect to login
         window.location.href = "/login.html";
       }
     });
 
-    // Simulate payment function
-    window.simulatePayment = async function () {
+    async function initiatePayment() {
       if (!currentUser) {
-        alert("User not authenticated. Please login first.");
         window.location.href = "/login.html";
         return;
       }
 
       try {
-        const paymentDocRef = doc(db, "payments", currentUser.uid);
-        const paymentDoc = await getDoc(paymentDocRef);
-        let paymentData = paymentDoc.exists() ? paymentDoc.data() : {};
+        // Fetch order ID from backend
+        const response = await fetch('http://your-backend-url:3000/create-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            amount: 50000, // Amount in paise (e.g., 500 INR = 50000 paise)
+            currency: 'INR',
+            userId: currentUser.uid,
+          }),
+        });
 
-        // Mark course1 as paid
-        paymentData.course1Paid = true;
+        const order = await response.json();
+        if (!order.orderId) {
+          throw new Error('Failed to create order');
+        }
 
-        // Save payment status
-        await setDoc(paymentDocRef, paymentData, { merge: true });
+        // Razorpay checkout options
+        const options = {
+          key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your Razorpay key_id
+          amount: 50000, // Amount in paise
+          currency: 'INR',
+          name: 'SyncSkill',
+          description: 'Course Payment',
+          order_id: order.orderId,
+          handler: async function (response) {
+            // Verify payment on backend
+            const verifyResponse = await fetch('http://your-backend-url:3000/verify-payment', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                userId: currentUser.uid,
+              }),
+            });
 
-        alert("Payment successful! Redirecting to premium course...");
-        window.location.href = "premium-course-1.html";
+            const result = await verifyResponse.json();
+            if (result.success) {
+              window.location.href = "premium-course-1.html";
+            } else {
+              alert("Payment verification failed. Please try again.");
+              window.location.href = "/course.html"; // Redirect back to course page on failure
+            }
+          },
+          prefill: {
+            email: currentUser.email,
+            contact: '9999999999', // Replace with actual user phone if available
+          },
+          theme: {
+            color: '#28a745',
+          },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
       } catch (error) {
-        console.error("Error saving payment:", error);
-        alert("Payment failed. Please try again.");
+        console.error("Payment initiation error:", error);
+        alert("Error initiating payment. Please try again.");
+        window.location.href = "/course.html"; // Redirect back on error
       }
-    };
+    }
   </script>
-</head>
-<body>
-  <h1>Payment Page for Course 1</h1>
-  <p>Logged in as: <span id="userEmail">Loading...</span></p>
-
-  <p>Price: $10</p>
-
-  <button onclick="simulatePayment()">Pay Now</button>
 </body>
 </html>
