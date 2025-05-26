@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
+  <title>Payment Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,14 +14,33 @@
       margin: 0;
       background-color: #f4f4f4;
     }
-    .loading {
-      color: #666;
+    .payment-container {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .payment-button {
+      padding: 10px 20px;
       font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .payment-button:hover {
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
-  <div class="loading">Processing...</div>
+  <div class="payment-container">
+    <h2>Complete Your Payment</h2>
+    <p>User: <span id="userEmail">Loading...</span></p>
+    <button class="payment-button" onclick="initiatePayment()">Pay Now</button>
+  </div>
 
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script type="module">
@@ -42,17 +61,18 @@
     const auth = getAuth(app);
     let currentUser = null;
 
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         currentUser = user;
-        await initiatePayment(); // Trigger payment immediately
+        document.getElementById("userEmail").textContent = user.email;
       } else {
         window.location.href = "/login.html";
       }
     });
 
-    async function initiatePayment() {
+    window.initiatePayment = async function () {
       if (!currentUser) {
+        alert("User not authenticated. Please login first.");
         window.location.href = "/login.html";
         return;
       }
@@ -101,10 +121,10 @@
 
             const result = await verifyResponse.json();
             if (result.success) {
+              alert("Payment successful! Redirecting to premium course...");
               window.location.href = "premium-course-1.html";
             } else {
               alert("Payment verification failed. Please try again.");
-              window.location.href = "/course.html"; // Redirect back to course page on failure
             }
           },
           prefill: {
@@ -121,9 +141,8 @@
       } catch (error) {
         console.error("Payment initiation error:", error);
         alert("Error initiating payment. Please try again.");
-        window.location.href = "/course.html"; // Redirect back on error
       }
-    }
+    };
   </script>
 </body>
 </html>
