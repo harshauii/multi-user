@@ -1080,6 +1080,27 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
+// 🔁 Redirect to premium if already paid
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "/login.html";
+    return;
+  }
+
+  try {
+    const paymentDoc = await getDoc(doc(db, "payments", user.uid));
+    const paid = paymentDoc.exists() && paymentDoc.data().course1Paid;
+
+    if (paid && window.location.pathname.includes("base-course-1.html")) {
+      window.location.href = "premium-course-1.html";
+      return;
+    }
+  } catch (error) {
+    console.error("Error checking payment status:", error);
+    // Optional fallback: stay on base course silently
+  }
+});
+
 // DOM elements for user profile display
 const elements = {
   userAvatar: document.getElementById('userAvatar'),
@@ -1121,16 +1142,17 @@ const updateUserProfile = (user) => {
   }
 };
 
+// 👤 Main user state listener for navbar/profile
 onAuthStateChanged(auth, user => {
   if (user) {
     currentUser = user;
-    updateUserProfile(user);  // <-- Update navbar user info here
+    updateUserProfile(user);
   } else {
     window.location.href = '/login.html';
   }
 });
 
-// Razorpay payment integration
+// 💳 Razorpay payment integration
 window.startRazorpayPayment = async () => {
   if (!currentUser) {
     alert("Please login to continue.");
@@ -1138,8 +1160,8 @@ window.startRazorpayPayment = async () => {
   }
 
   const options = {
-    key: 'rzp_test_lesdDWX9Rfaoi4', // 🔁 Replace with your Razorpay Test Key
-    amount: 50000, // Amount in paise (₹500 = 50000 paise)
+    key: 'rzp_test_lesdDWX9Rfaoi4', // Replace with your Razorpay Test Key
+    amount: 50000, // ₹500 = 50000 paise
     currency: 'INR',
     name: 'SyncSkill Academy',
     description: 'Premium Course Access',
@@ -1173,6 +1195,7 @@ window.startRazorpayPayment = async () => {
   rzp.open();
 };
 </script>
+
 
 
 </html>
