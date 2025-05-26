@@ -1058,7 +1058,7 @@ function logout() {
 
 
 
-   <script type="module">
+<script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
@@ -1080,9 +1080,51 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
+// DOM elements for user profile display
+const elements = {
+  userAvatar: document.getElementById('userAvatar'),
+  mobileUserAvatar: document.getElementById('mobileUserAvatar'),
+  userName: document.getElementById('userName'),
+  dropdownAvatar: document.getElementById('dropdownAvatar'),
+  dropdownName: document.getElementById('dropdownName'),
+  dropdownEmail: document.getElementById('dropdownEmail'),
+  mobileUserName: document.getElementById('mobileUserName'),
+  mobileUserEmail: document.getElementById('mobileUserEmail'),
+  welcomeUserSpan: document.getElementById('user')
+};
+
+// Function to update navbar user info dynamically
+const updateUserProfile = (user) => {
+  if (!user) return;
+
+  const fallbackAvatar = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+  const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+  const email = user.email || 'No email provided';
+  const photoURL = user.photoURL || fallbackAvatar;
+
+  try {
+    if (elements.userName) elements.userName.textContent = displayName;
+    if (elements.dropdownName) elements.dropdownName.textContent = displayName;
+    if (elements.mobileUserName) elements.mobileUserName.textContent = displayName;
+    if (elements.dropdownEmail) elements.dropdownEmail.textContent = email;
+    if (elements.mobileUserEmail) elements.mobileUserEmail.textContent = email;
+    if (elements.welcomeUserSpan) elements.welcomeUserSpan.textContent = displayName;
+
+    [elements.userAvatar, elements.dropdownAvatar, elements.mobileUserAvatar].forEach(img => {
+      if (img) {
+        img.src = photoURL;
+        img.onerror = () => img.src = fallbackAvatar;
+      }
+    });
+  } catch (error) {
+    console.error('Profile update error:', error);
+  }
+};
+
 onAuthStateChanged(auth, user => {
   if (user) {
     currentUser = user;
+    updateUserProfile(user);  // <-- Update navbar user info here
   } else {
     window.location.href = '/login.html';
   }
@@ -1103,7 +1145,6 @@ window.startRazorpayPayment = async () => {
     description: 'Premium Course Access',
     image: 'https://yourdomain.com/logo.png', // Optional: Your logo URL
     handler: async function (response) {
-      // Razorpay payment success handler
       try {
         const paymentDocRef = doc(db, 'payments', currentUser.uid);
         const paymentDoc = await getDoc(paymentDocRef);
@@ -1132,5 +1173,6 @@ window.startRazorpayPayment = async () => {
   rzp.open();
 };
 </script>
+
 
 </html>
