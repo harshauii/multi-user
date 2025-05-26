@@ -3483,6 +3483,47 @@ margin-left: 0px;
     window.location.href = "/login.html"; // Change this to your actual login page
   });
 </script>
- 
+
+
+
+
+
+
+
+
+
+
+
+<!-- CHECK USER SIGNIN -->
+    <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvqzYTaepJn-WvWMPSZJe26Ydkw-7MXLE",
+    authDomain: "syncskilll.firebaseapp.com",
+    projectId: "syncskilll",
+    storageBucket: "syncskilll.firebasestorage.app",
+    messagingSenderId: "203322315096",
+    appId: "1:203322315096:web:958fc7d94806ef9a98552d",
+    measurementId: "G-JWWWM2ZQSK"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Auto-redirect if user is signed in
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, redirect to user.html
+      window.location.href = 'user.html';
+    } else {
+      // Optional: if you only want to redirect signed-in users
+      console.log("No user is signed in.");
+    }
+  });
+</script>
+
 </body>
 </html>
