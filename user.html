@@ -1631,166 +1631,157 @@ margin-left: 0px;
 
 
 
-<!-- IBM Plex Font from Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<!-- TOP 1 -->
 
-<div class="center-wrapper">
-  <div class="responsive-element">
-    <div class="text-content">
-<h1 id="welcomeHeading">Hie, <span id="user" style="color: #ff9b00;"></span></h1>
-      <h1>Become Top 1% in the AI-First World</h1>
-      <p>Whether it is Product, Growth, Design, Business, Tech or Data, Syncskill is the place to learn from top experts in the field to become the Top 1%</p>
-      <button class="explore-button">
-        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12" />
-        </svg>
-        EXPLORE
-      </button>
+      <div class="center-wrapper">
+    <div class="responsive-element">
+      <div class="text-content">
+        <h1 id="welcomeHeading">Hie, <span id="user" style="color: #ff9b00;"></span></h1>
+        <h1>Become Top 1% in the AI-First World</h1>
+        <p>Whether it's Product, Growth, Design, Business, Tech, or Data, Syncskill is the place to learn from top experts and join the elite.</p>
+        <button class="explore-button">
+          <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12" />
+          </svg>
+          Explore Now
+        </button>
+      </div>
     </div>
-    <div class="image-content">
-      <img src="https://static.uacdn.net/web-cms/learnanytimeanywhere_cb19d5de30_b92bc0c6a1.svg?q=75&auto=format,compress&w=3840" alt="AI Illustration">
-    </div>
-  </div>
 </div>
 
 <style>
-body {
-  font-family: 'IBM Plex Sans', 'ibmPlex', 'ibmPlex Fallback', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 .center-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 0px 0px;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  width: 100%;  /* Ensure full width available for the section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
 }
 
 .responsive-element {
-  background-color: #ffffff;
-  width: 1280px;              /* Exact width of the section */
-  height: 360px;              /* Exact height of the section */
-  color: #111827;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px 40px 0px 40px;
-  box-sizing: border-box;
-  border-radius: 12px;
-  gap: 40px;
-  border: 0px solid #002726;
-  margin: 0 auto;             /* Center it horizontally */
+    max-width: 1000px;
+    width: 100%;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+    align-items: center;
 }
 
 .text-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .text-content h1 {
-  margin: 0 0 16px;
-  font-size: 32px;
-  font-weight: 600;
-  color: #111827;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.2;
 }
 
 .text-content p {
-  margin: 0 0 24px;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #374151;
+    font-size: 1.25rem;
+    color: #374151;
+    max-width: 600px;
 }
 
 .explore-button {
-  background-color: #002726;
-  color: white;
-  padding: 12px 32px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-}
-
-.explore-button svg {
-  width: 20px;
-  height: 20px;
-  stroke: currentColor;
-  transition: transform 0.3s ease;
+    background-color: #059669;
+    color: white;
+    width: 120px;
+    height: 30px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
 .explore-button:hover {
-  background-color: #00b87b;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 255, 174, 0.3);
+    background-color: #047857;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.explore-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    transition: transform 0.3s ease;
 }
 
 .explore-button:hover svg {
-  transform: translateX(4px);
-}
-
-.image-content {
-    display: none;
-  }
-
-.image-content img {
-  width: 350px;
-  height: 350px;
-  object-fit: cover;
-  border-radius: 8px;
+    transform: translateX(0.25rem);
 }
 
 /* Mobile View */
-@media only screen and (max-width: 768px) {
-  body {
-    margin-left: 10px;  /* Small margin on the left */
-    margin-right: 10px; /* Small margin on the right */
-  }
+@media (max-width: 768px) {
+    .center-wrapper {
+        padding: 1.5rem 1rem;
+    }
 
-  .center-wrapper {
-    padding: 20px 0; /* Adjust padding for mobile */
-  }
+    .responsive-element {
+        flex-direction: column;
+        padding: 0 1rem;
+        max-width: 100%;
+    }
 
-  .responsive-element {
-    flex-direction: column;
-    width: 100%;
-    max-width: 430px;
-    padding: 24px 24px 0px 24px;
-    margin-left: 20px;
-    margin-right: 20px;
-    height: auto;  /* Let the height be dynamic for mobile */
-  }
+    .text-content {
+        gap: 1rem;
+    }
 
-  /* Hide image in mobile view */
-  .image-content {
-    display: none;
-  }
+    .text-content h1 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+        max-width: 100%;
+    }
 
-  .text-content h1 {
-    font-size: 20px;
-    white-space: nowrap;
-      font-weight: bold;
-  }
+    .text-content p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
 
-  .text-content p {
-    font-size: 14px; /* Decrease the size of the paragraph */
-  }
+    .explore-button {
+        width: 100%;
+        height: auto;
+        padding: 10px 24px;
+        font-size: 0.875rem;
+    }
 
-  .explore-button {
-    padding: 10px 24px;
-    font-size: 14px;
-  }
+    .explore-button svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}
+
+/* Extra Small Screens */
+@media (max-width: 360px) {
+    .text-content h1 {
+        font-size: 1.2rem;
+        line-height: 1.2;
+        max-width: 100%;
+    }
+}
+
+/* Accessibility Enhancements */
+.explore-button:focus {
+    outline: 2px solid #059669;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .explore-button,
+    .explore-button svg {
+        transition: none;
+    }
 }
 </style>
 
@@ -1811,81 +1802,226 @@ body {
 
 
 
-<section>
- <p class="section-growth-subtitlee" style="padding-left: 40px;">
-  Powered by
-</p>
-
-<div class="ticker-container" style="width:100%;max-width:1200px;margin:2rem;position:relative;overflow:hidden;border-radius:24px;background:#ffffff;box-shadow:0 16px 32px -8px rgba(0,0,0,0.12);border:1px solid rgba(255,255,255,0.12);transform:translateZ(0);transition:transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
-     onmouseover="this.querySelector('.ticker-track').style.animationPlayState='paused'"
-     onmouseout="this.querySelector('.ticker-track').style.animationPlayState='running'">
-  
-  <!-- Gradient Overlays -->
-  <div class="gradient-overlay" style="position:absolute;top:0;bottom:0;left:0;width:120px;background:linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%);pointer-events:none;z-index:2;"></div>
-  <div class="gradient-overlay" style="position:absolute;top:0;bottom:0;right:0;width:120px;background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 100%);pointer-events:none;z-index:2;"></div>
-
-  <div class="ticker-track" style="display:flex;will-change:transform;animation:scroll 40s linear infinite;padding:2rem 0;">
-    <!-- Logo Items -->
-    <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_c2d8e527c7.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
+<section class="section-growth">
+  <p class="section-growth-subtitle">Powered by</p>
+  <div class="ticker-container" 
+       role="region" 
+       aria-label="Partner logos ticker"
+       tabindex="0"
+       onmouseover="this.querySelector('.ticker-track').style.animationPlayState='paused'"
+       onmouseout="this.querySelector('.ticker-track').style.animationPlayState='running'"
+       onfocus="this.querySelector('.ticker-track').style.animationPlayState='paused'"
+       onblur="this.querySelector('.ticker-track').style.animationPlayState='running'">
+    <div class="gradient-overlay gradient-left"></div>
+    <div class="gradient-overlay gradient-right"></div>
+    <div class="ticker-track">
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Google logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_c2d8e527c7.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
+      </div>
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Partner logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Mask_group_4_f997505a34.png" alt="Partner logo" style="width:auto;height:40px;object-fit:contain;">
+      </div>
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Google logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_1_eb75fe0681.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
+      </div>
+      <!-- Repeated items for smooth looping -->
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Google logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_c2d8e527c7.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
+      </div>
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Partner logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Mask_group_4_f997505a34.png" alt="Partner logo" style="width:auto;height:40px;object-fit:contain;">
+      </div>
+      <div class="ticker-item" 
+           role="img" 
+           aria-label="Google logo"
+           tabindex="0"
+           onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'"
+           onfocus="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
+           onblur="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
+        <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_1_eb75fe0681.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
+      </div>
     </div>
-    <!-- Duplicate items 5x for smooth looping -->
-      <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="	https://d3kl8zsmmx4oop.cloudfront.net/Mask_group_4_f997505a34.png" alt="Google" style="width:auto;height:40px;object-fit:contain;">
-    </div>
-    <!-- Duplicate items 5x for smooth looping -->
-      <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="	https://d3kl8zsmmx4oop.cloudfront.net/Google_1_eb75fe0681.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
-    </div>
-     <!-- Logo Items -->
-    <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="https://d3kl8zsmmx4oop.cloudfront.net/Google_c2d8e527c7.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
-    </div>
-    <!-- Duplicate items 5x for smooth looping -->
-      <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="	https://d3kl8zsmmx4oop.cloudfront.net/Mask_group_4_f997505a34.png" alt="Google" style="width:auto;height:40px;object-fit:contain;">
-    </div>
-    <!-- Duplicate items 5x for smooth looping -->
-      <div class="ticker-item" style="flex-shrink:0;margin:0 2.5rem;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);transform-origin:center;filter:grayscale(100%) opacity(0.8);position:relative;"
-         onmouseover="this.style.transform='scale(1.15) translateY(-4px)';this.style.filter='grayscale(0%) opacity(1)';this.style.zIndex='1'"
-         onmouseout="this.style.transform='scale(1)';this.style.filter='grayscale(100%) opacity(0.8)';this.style.zIndex='0'">
-      <img src="	https://d3kl8zsmmx4oop.cloudfront.net/Google_1_eb75fe0681.svg" alt="Google" style="width:auto;height:40px;object-fit:contain;">
-    </div>
-      <!-- Duplicate items 5x for smooth looping -->
   </div>
-</div>
-<style>
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-50% - 5rem)); }
-    }
-    @media (max-width: 768px) {
-      .ticker-container { margin: 1rem !important; border-radius: 16px !important; }
-      .ticker-item { margin: 0 1.5rem !important; }
-      .ticker-item img { height: 30px !important; }
-      .gradient-overlay { width: 60px !important; }
-    }
-    @media (max-width: 480px) {
-      .ticker-track { padding: 1.5rem 0 !important; }
-      .ticker-item { margin: 0 1rem !important; }
-      .ticker-item img { height: 24px !important; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .ticker-track { animation: none !important; justify-content: center !important; }
-    }
-  </style>
-
 </section>
+
+<style>
+  :root {
+    --max-width: 1200px;
+    --container-padding: 32px;
+    --border-radius: 24px;
+    --shadow-color: rgba(0, 0, 0, 0.12);
+    --primary-color: #1a1a1a;
+    --secondary-color: #4a4a4a;
+    --accent-color: #006644;
+  }
+
+  .section-growth {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .section-growth-subtitle {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+  }
+
+  .ticker-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    background: #ffffff;
+    box-shadow: 0 16px 32px -8px var(--shadow-color);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transform: translateZ(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ticker-container:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .gradient-left {
+    left: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .gradient-right {
+    right: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 100%);
+  }
+
+  .ticker-track {
+    display: flex;
+    will-change: transform;
+    animation: scroll 40s linear infinite;
+    padding: 2rem 0;
+  }
+
+  .ticker-item {
+    flex-shrink: 0;
+    margin: 0 2.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    filter: grayscale(100%) opacity(0.8);
+    position: relative;
+  }
+
+  .ticker-item:focus {
+    outline: none;
+    transform: scale(1.15) translateY(-4px);
+    filter: grayscale(0%) opacity(1);
+    z-index: 1;
+  }
+
+  .ticker-item img {
+    width: auto;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 5rem)); }
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .ticker-container {
+      margin: 1rem auto !important;
+      border-radius: 16px !important;
+    }
+    .ticker-item {
+      margin: 0 1.5rem !important;
+    }
+    .ticker-item img {
+      height: 30px !important;
+    }
+    .gradient-overlay {
+      width: 60px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ticker-track {
+      padding: 1.5rem 0 !important;
+    }
+    .ticker-item {
+      margin: 0 1rem !important;
+    }
+    .ticker-item img {
+      height: 24px !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none !important;
+      justify-content: center !important;
+    }
+  }
+
+  /* High contrast for accessibility */
+  @media (prefers-contrast: high) {
+    .section-growth-subtitle {
+      color: #000;
+    }
+    .ticker-container {
+      border: 1px solid #000;
+    }
+  }
+</style>
 
 
 
